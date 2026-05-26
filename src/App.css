@@ -1,0 +1,925 @@
+.editorShell {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  height: 100vh;
+  color: #1e242e;
+  background: #deddf0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    transition-duration: 160ms;
+    transition-property:
+      background-color,
+      border-color,
+      box-shadow,
+      color,
+      opacity,
+      transform;
+    transition-timing-function: ease;
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  border-right: 1px solid rgba(34, 62, 144, 0.22);
+  background: #deddf0;
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 8px;
+}
+
+.brandIcon {
+  width: 22px;
+  height: 18px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  background: transparent;
+}
+
+.brand h1,
+.brand p,
+.controlGroup h2,
+.statusText {
+  margin: 0;
+}
+
+.brand h1 {
+  color: #1e242e;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.brand p,
+.statusText {
+  color: rgba(30, 36, 46, 0.68);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.controlGroup {
+  display: grid;
+  gap: 10px;
+}
+
+.nestedControlGroup {
+  display: block;
+  margin-top: 2px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(34, 62, 144, 0.14);
+}
+
+.nestedControlGroup[open] {
+  display: grid;
+  gap: 10px;
+}
+
+.collapsibleGroup {
+  display: block;
+}
+
+.collapsibleGroup summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 34px;
+  color: #1e242e;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.collapsibleGroup summary::-webkit-details-marker {
+  display: none;
+}
+
+.collapsibleGroup summary::after {
+  color: #223e90;
+  content: '+';
+  font-size: 16px;
+  line-height: 1;
+}
+
+.collapsibleGroup[open] {
+  display: grid;
+  gap: 10px;
+}
+
+.collapsibleGroup[open] summary::after {
+  content: '-';
+}
+
+.collapsibleGroup summary small {
+  color: rgba(30, 36, 46, 0.62);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: none;
+}
+
+.controlGroup h2 {
+  color: #1e242e;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.exportGroup {
+  margin-top: auto;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+select,
+input[type='text'],
+input[type='number'] {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid rgba(34, 62, 144, 0.16);
+  border-radius: 8px;
+  color: #1e242e;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: #9092c8;
+  background: rgba(255, 255, 255, 0.34);
+  transform: translateY(-1px);
+}
+
+button:disabled,
+input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+select,
+input[type='text'],
+input[type='number'] {
+  padding: 0 10px;
+}
+
+.primaryButton {
+  border-color: rgba(34, 62, 144, 0.82);
+  color: #deddf0;
+  background: #223e90;
+  font-weight: 600;
+  box-shadow: 0 8px 18px rgba(34, 62, 144, 0.16);
+}
+
+.primaryButton:hover {
+  border-color: #1e242e;
+  background: #1e242e;
+}
+
+.secondaryButton {
+  border-color: rgba(34, 62, 144, 0.16);
+  color: #223e90;
+  background: rgba(255, 255, 255, 0.14);
+  font-weight: 600;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.presetGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.presetGrid button {
+  display: grid;
+  gap: 2px;
+  min-height: 54px;
+  padding: 7px 8px;
+  text-align: left;
+}
+
+.presetGrid button.customPreset {
+  min-height: 40px;
+  align-content: center;
+  white-space: nowrap;
+}
+
+.presetGrid button.active {
+  border-color: rgba(34, 62, 144, 0.82);
+  color: #deddf0;
+  background: #223e90;
+  box-shadow: 0 8px 18px rgba(34, 62, 144, 0.16);
+}
+
+.presetGrid button span {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.presetGrid button small {
+  font-size: 11px;
+  line-height: 1.15;
+  opacity: 0.75;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  color: #1e242e;
+  font-size: 13px;
+}
+
+.colorControl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 40px;
+  padding: 6px 10px 6px 12px;
+  border: 1px solid rgba(34, 62, 144, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #1e242e;
+  font-size: 13px;
+}
+
+.colorControl input {
+  width: 42px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.colorControl input:disabled,
+.rangeRow input:disabled {
+  cursor: not-allowed;
+}
+
+.colorPalette {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  justify-items: center;
+  gap: 8px;
+}
+
+.colorPalette button {
+  width: 28px;
+  min-height: 28px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(34, 62, 144, 0.16);
+  border-radius: 999px;
+  background: var(--swatch-color);
+  box-shadow:
+    0 4px 12px rgba(30, 36, 46, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.colorPalette button.active {
+  border-color: rgba(34, 62, 144, 0.82);
+  box-shadow:
+    0 0 0 2px rgba(34, 62, 144, 0.14),
+    inset 0 0 0 2px #deddf0;
+  transform: scale(1.06);
+}
+
+.inputButtonRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 76px;
+  gap: 8px;
+}
+
+.rangeRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 62px;
+  align-items: center;
+  gap: 10px;
+}
+
+.rangeRow input {
+  width: 100%;
+}
+
+.rangeRow strong {
+  color: #1e242e;
+  font-size: 13px;
+  text-align: right;
+}
+
+.rangeRow input[type='number'] {
+  min-height: 32px;
+  padding: 0 6px;
+  text-align: center;
+}
+
+.sizeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.alignGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.alignGrid button {
+  min-height: 34px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.positionGrid,
+.cornerGrid {
+  display: grid;
+  gap: 6px;
+}
+
+.positionGrid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.cornerGrid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.positionGrid button,
+.cornerGrid button {
+  min-height: 34px;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.positionGrid button.active,
+.cornerGrid button.active {
+  border-color: rgba(34, 62, 144, 0.82);
+  color: #deddf0;
+  background: #223e90;
+}
+
+.positionGrid.compact button {
+  min-height: 30px;
+}
+
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1e242e;
+  font-size: 13px;
+}
+
+.checkRow input {
+  width: 16px;
+  height: 16px;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.exportFormatSegment {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.textAlignSegment {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.segmented button {
+  min-height: 36px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.segmented button.active {
+  border-color: rgba(34, 62, 144, 0.82);
+  color: #deddf0;
+  background: #223e90;
+  box-shadow: 0 8px 18px rgba(34, 62, 144, 0.14);
+}
+
+.textColorControl {
+  align-self: end;
+}
+
+.workspace {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  min-width: 0;
+  height: 100vh;
+  padding: 32px;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background:
+    linear-gradient(90deg, rgba(34, 62, 144, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(34, 62, 144, 0.08) 1px, transparent 1px),
+    #deddf0;
+  background-size: 24px 24px;
+}
+
+.workspace.isImageDragOver {
+  background:
+    linear-gradient(90deg, rgba(34, 62, 144, 0.14) 1px, transparent 1px),
+    linear-gradient(rgba(34, 62, 144, 0.14) 1px, transparent 1px),
+    #deddf0;
+  background-size: 24px 24px;
+}
+
+.canvasFrame {
+  position: relative;
+  width: var(--frame-width);
+  height: var(--frame-height);
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background:
+    linear-gradient(45deg, rgba(30, 36, 46, 0.08) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(30, 36, 46, 0.08) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(30, 36, 46, 0.08) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(30, 36, 46, 0.08) 75%),
+    #deddf0;
+  background-position:
+    0 0,
+    0 10px,
+    10px -10px,
+    -10px 0;
+  background-size: 20px 20px;
+  box-shadow:
+    0 22px 60px rgba(30, 36, 46, 0.18),
+    0 0 0 1px rgba(30, 36, 46, 0.08);
+  overflow: visible;
+}
+
+.canvasFrame::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 8px;
+  box-shadow: 0 0 0 9999px rgba(222, 221, 240, 0.66);
+  content: '';
+  pointer-events: none;
+}
+
+.canvasFrame::after {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border: 1px solid rgba(30, 36, 46, 0.72);
+  border-radius: 8px;
+  content: '';
+  pointer-events: none;
+}
+
+.safeInsetGuide {
+  position: absolute;
+  inset: var(--safe-inset);
+  z-index: 5;
+  display: none;
+  border: 1px dashed rgba(34, 62, 144, 0.86);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.canvasFrame.showSafeInset .safeInsetGuide {
+  display: block;
+}
+
+.canvasFrame .canvas-container {
+  position: absolute !important;
+  left: var(--canvas-offset) !important;
+  top: var(--canvas-offset) !important;
+  z-index: 2;
+  width: var(--workspace-display-width) !important;
+  height: var(--workspace-display-height) !important;
+  overflow: visible !important;
+}
+
+.canvasFrame canvas {
+  width: var(--workspace-display-width) !important;
+  height: var(--workspace-display-height) !important;
+}
+
+.canvasUploadButton {
+  position: absolute;
+  z-index: 5;
+  display: grid;
+  gap: 4px;
+  width: auto;
+  color: #223e90;
+  background: rgba(222, 221, 240, 0.94);
+  box-shadow: 0 12px 28px rgba(30, 36, 46, 0.16);
+}
+
+.canvasUploadButton.emptyState {
+  top: 50%;
+  left: 50%;
+  width: min(280px, calc(100% - 32px));
+  min-height: 78px;
+  padding: 12px 16px;
+  transform: translate(-50%, -50%);
+}
+
+.canvasUploadButton.compact {
+  top: 12px;
+  left: 12px;
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.canvasUploadButton.iconOnly {
+  top: -42px;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  min-height: 0;
+  padding: 0;
+  place-items: center;
+  border-radius: 8px;
+}
+
+.canvasUploadButton span {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.canvasUploadButton.iconOnly span {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.canvasUploadButton small {
+  color: rgba(30, 36, 46, 0.68);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.dropOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(34, 62, 144, 0.78);
+  border-radius: 8px;
+  color: #223e90;
+  background: rgba(222, 221, 240, 0.72);
+  font-size: 14px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.canvasResizeHandle {
+  position: absolute;
+  right: -13px;
+  bottom: -13px;
+  z-index: 7;
+  width: 28px;
+  height: 28px;
+  min-height: 0;
+  padding: 0;
+  border-color: rgba(34, 62, 144, 0.68);
+  border-radius: 8px;
+  background: #deddf0;
+  cursor: nwse-resize;
+  box-shadow: 0 8px 22px rgba(30, 36, 46, 0.22);
+}
+
+.canvasResizeHandle::before {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 12px;
+  height: 12px;
+  border-right: 3px solid #223e90;
+  border-bottom: 3px solid #223e90;
+  content: '';
+}
+
+.canvasResizeHandle:hover {
+  border-color: #1e242e;
+  background: #ffffff;
+}
+
+.resizeFormatPanel {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 14px);
+  z-index: 9;
+  display: grid;
+  gap: 8px;
+  width: 136px;
+  padding: 8px;
+  border: 1px solid rgba(34, 62, 144, 0.18);
+  border-radius: 8px;
+  background: rgba(222, 221, 240, 0.96);
+  box-shadow: 0 16px 42px rgba(30, 36, 46, 0.18);
+}
+
+.resizeFormatPanelHeader {
+  color: #1e242e;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.resizeFormatList {
+  display: grid;
+  gap: 4px;
+}
+
+.resizeFormatList button {
+  min-height: 28px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.resizeFormatList button.active {
+  border-color: rgba(34, 62, 144, 0.82);
+  color: #deddf0;
+  background: #223e90;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(30, 36, 46, 0.35);
+}
+
+.modal {
+  display: grid;
+  gap: 12px;
+  width: min(360px, 100%);
+  padding: 20px;
+  border-radius: 8px;
+  background: #deddf0;
+  box-shadow: 0 24px 70px rgba(30, 36, 46, 0.28);
+}
+
+.modal h2,
+.modal p {
+  margin: 0;
+}
+
+.modal h2 {
+  color: #1e242e;
+  font-size: 18px;
+}
+
+.modal p {
+  color: rgba(30, 36, 46, 0.72);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.guideTarget {
+  position: relative;
+  z-index: 12;
+  outline: 2px solid #223e90;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 8px rgba(34, 62, 144, 0.1);
+}
+
+.guideBubble {
+  position: fixed;
+  z-index: 40;
+  display: grid;
+  gap: 8px;
+  width: min(300px, calc(100vw - 28px));
+  padding: 12px;
+  border: 1px solid rgba(34, 62, 144, 0.2);
+  border-radius: 8px;
+  color: #1e242e;
+  background: rgba(222, 221, 240, 0.98);
+  box-shadow: 0 18px 52px rgba(30, 36, 46, 0.24);
+}
+
+.guideBubble.upload {
+  top: 24px;
+  left: calc(300px + 28px);
+}
+
+.guideBubble.objects,
+.guideBubble.overlay,
+.guideBubble.logo {
+  top: 96px;
+  left: 318px;
+}
+
+.guideBubble.overlay {
+  top: 300px;
+}
+
+.guideBubble.logo {
+  top: 166px;
+}
+
+.guideBubble strong,
+.guideBubble p {
+  margin: 0;
+}
+
+.guideBubble strong {
+  font-size: 13px;
+}
+
+.guideBubble p {
+  color: rgba(30, 36, 46, 0.76);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.guideActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.guideActions button {
+  min-height: 32px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.floatingMenu {
+  position: fixed;
+  z-index: 30;
+  display: grid;
+  gap: 8px;
+  width: min(280px, calc(100vw - 24px));
+  padding: 10px;
+  border: 1px solid rgba(34, 62, 144, 0.22);
+  border-radius: 8px;
+  background: rgba(222, 221, 240, 0.96);
+  box-shadow: 0 18px 48px rgba(30, 36, 46, 0.22);
+  backdrop-filter: blur(12px);
+}
+
+.floatingMenuRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 70px 38px;
+  gap: 6px;
+  align-items: center;
+}
+
+.floatingMenuRow:has(input[type='range']) {
+  grid-template-columns: 38px minmax(0, 1fr);
+}
+
+.floatingMenuRow.logoFloatingRow {
+  grid-template-columns: 38px minmax(0, 1fr) 58px;
+}
+
+.floatingMenuRow.textMetricRow {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.floatingMenuRow.textMetricRow label,
+.floatingMenuRow.imageMetricRow label {
+  display: grid;
+  gap: 4px;
+  color: #1e242e;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.floatingMenuRow.imageMetricRow {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.floatingMenu button,
+.floatingMenu select,
+.floatingMenu input[type='number'] {
+  min-height: 32px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.floatingMenu input[type='number'] {
+  padding: 0 6px;
+  text-align: center;
+}
+
+.floatingMenu input[type='color'] {
+  width: 38px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.floatingMenu input[type='range'] {
+  width: 100%;
+}
+
+.floatingSegment {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.floatingSegment.twoRows {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.floatingSegment.imageAlignGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.floatingSegment button {
+  padding: 0 6px;
+  font-weight: 600;
+}
+
+.floatingSegment button.active {
+  border-color: rgba(34, 62, 144, 0.82);
+  color: #deddf0;
+  background: #223e90;
+}
+
+.floatingCheckRow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #1e242e;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.floatingCheckRow input {
+  width: 15px;
+  height: 15px;
+}
+
+@media (max-width: 900px) {
+  .editorShell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 16px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(34, 62, 144, 0.22);
+  }
+
+  .brand {
+    grid-column: 1 / -1;
+  }
+
+  .exportGroup {
+    margin-top: 0;
+  }
+
+  .workspace {
+    height: auto;
+    min-height: 360px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  .sidebar {
+    grid-template-columns: 1fr;
+  }
+}

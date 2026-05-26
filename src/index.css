@@ -1,0 +1,28 @@
+:root {
+  font-family:
+    "Segoe UI Variable", Inter, "SF Pro Text", "Helvetica Neue", "Segoe UI",
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1e242e;
+  background: #deddf0;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-width: 320px;
+  width: 100%;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
