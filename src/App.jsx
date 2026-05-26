@@ -14,6 +14,7 @@ const DEFAULT_TEXT_SIZE = 72;
 const DEFAULT_TEXT_LINE_HEIGHT = 1;
 const DEFAULT_TEXT_LETTER_SPACING = 0;
 const DEFAULT_EDGE_INSET = 100;
+const TEXT_TEMPLATE_VALUE = 'Дважды кликните для редактирования';
 const DEFAULT_FONT_STYLE = 'Regular';
 const MIN_CANVAS_SIZE = 120;
 const HISTORY_PROPS = [
@@ -24,6 +25,7 @@ const HISTORY_PROPS = [
   'editorHorizontalAlign',
   'editorVerticalAlign',
   'editorFontStyleLabel',
+  'editorIsTemplate',
 ];
 const APP_ICON_SVG =
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120.77 100"><path fill="#1e242e" d="M0,80.6v19.4h81.98l7.53-19.4H0ZM32.67,40.27v19.4h64.86l7.53-19.4H32.67ZM0,0v19.4h113.23L120.77,0H0Z"/></svg>';
@@ -37,13 +39,13 @@ const FALLBACK_FONT_STYLES = [
 ];
 
 const PRESETS = [
-  { id: 'square', label: 'Квадрат', width: 1080, height: 1080 },
-  { id: 'stories', label: 'Сторис', width: 1080, height: 1920 },
-  { id: 'screen', label: 'Экран', width: 1920, height: 1080 },
-  { id: 'dzen', label: 'Дзен', width: 1200, height: 683 },
+  { id: 'square', label: 'Квадрат', icon: '□', width: 1080, height: 1080 },
+  { id: 'stories', label: 'Сторис', icon: '▯', width: 1080, height: 1920 },
+  { id: 'screen', label: 'Экран', icon: '▭', width: 1920, height: 1080 },
+  { id: 'dzen', label: 'Дзен', icon: '▰', width: 1200, height: 683 },
 ];
 
-const CUSTOM_PRESET = { id: 'custom', label: 'Свой' };
+const CUSTOM_PRESET = { id: 'custom', label: 'Другое', icon: '⌘' };
 const CANVAS_PRESETS = [...PRESETS, CUSTOM_PRESET];
 
 const RESIZE_FORMATS = [
@@ -63,12 +65,12 @@ const RESIZE_FORMATS = [
 ];
 
 const IMAGE_ALIGNMENTS = [
-  ['top', 'Верх'],
-  ['centerY', 'Центр Y'],
-  ['bottom', 'Низ'],
-  ['left', 'Лево'],
-  ['centerX', 'Центр X'],
-  ['right', 'Право'],
+  ['top', '↑'],
+  ['centerY', '↕'],
+  ['bottom', '↓'],
+  ['left', '←'],
+  ['centerX', '↔'],
+  ['right', '→'],
 ];
 
 const GUIDE_STEPS = [
@@ -95,6 +97,41 @@ const GUIDE_STEPS = [
     placement: 'logo',
     title: '4. Логотип',
     text: 'Добавьте логотип через “Объекты”, затем настройте цвет, прозрачность и угол размещения.',
+  },
+];
+
+const WORKFLOW_STEPS = [
+  {
+    id: 'image',
+    number: '01',
+    label: 'Изображение',
+    icon: '▧',
+    title: 'Загрузите основу',
+    text: 'Выберите формат, размер и подгоните изображение под макет.',
+  },
+  {
+    id: 'text',
+    number: '02',
+    label: 'Текст',
+    icon: 'T',
+    title: 'Добавьте сообщение',
+    text: 'Отредактируйте шаблон или оставьте макет без текста.',
+  },
+  {
+    id: 'logo',
+    number: '03',
+    label: 'Логотип',
+    icon: 'E',
+    title: 'Поставьте знак',
+    text: 'Выберите угол, цвет и прозрачность логотипа.',
+  },
+  {
+    id: 'export',
+    number: '04',
+    label: 'Экспорт',
+    icon: '↓',
+    title: 'Сохраните результат',
+    text: 'Проверьте макет и скачайте файл в нужном формате.',
   },
 ];
 
@@ -187,6 +224,12 @@ function getSafeInset(size, inset) {
   return Math.min(Math.max(0, numericInset), maxInset);
 }
 
+function getDefaultSafeInset(size) {
+  const squarePreset = PRESETS[0];
+  const baseRatio = DEFAULT_EDGE_INSET / Math.min(squarePreset.width, squarePreset.height);
+  return getSafeInset(size, Math.round(Math.min(size.width, size.height) * baseRatio));
+}
+
 function getSafeArea(size, inset) {
   const safeInset = getSafeInset(size, inset);
 
@@ -243,13 +286,6 @@ function getFabricCharSpacing(letterSpacingPx, fontSize) {
   return Math.round((spacing / size) * 1000);
 }
 
-function getTextLetterSpacingPx(text) {
-  const size = Number(text?.fontSize) || DEFAULT_TEXT_SIZE;
-  const charSpacing = Number(text?.charSpacing) || 0;
-
-  return Math.round((charSpacing * size) / 1000);
-}
-
 function getPreferredFontStyle(styles, preferred = 'Regular') {
   return (
     styles.find((style) => style.label.toLowerCase() === preferred.toLowerCase()) ||
@@ -272,19 +308,12 @@ function isTextObject(object) {
   return object?.editorRole === 'text';
 }
 
-function isLayerObject(object) {
-  return ['image', 'logo', 'text'].includes(object?.editorRole);
+function isTemplateTextObject(object) {
+  return isTextObject(object) && object.editorIsTemplate === true;
 }
 
-function getImageSize(object) {
-  if (!isImageObject(object)) {
-    return { width: '', height: '' };
-  }
-
-  return {
-    width: Math.round(object.getScaledWidth()),
-    height: Math.round(object.getScaledHeight()),
-  };
+function isLayerObject(object) {
+  return ['image', 'logo', 'text'].includes(object?.editorRole);
 }
 
 function fitObjectToCanvas(object, size, maxFill = 0.9) {
@@ -376,10 +405,17 @@ function applyTextStyleToObject(text, styles) {
   text.setCoords();
 }
 
-function scaleActiveImageToHeight(object, size) {
+function getImageCoverScale(object, size) {
+  return Math.max(
+    size.width / (object.width || 1),
+    size.height / (object.height || 1),
+  );
+}
+
+function coverImageToFrame(object, size) {
   if (!isPhotoObject(object)) return;
 
-  const scale = size.height / (object.height || 1);
+  const scale = getImageCoverScale(object, size);
   object.set({
     originX: 'center',
     originY: 'center',
@@ -391,6 +427,18 @@ function scaleActiveImageToHeight(object, size) {
   setImageClip(object, size);
   constrainImageToFrame(object, size);
   object.setCoords();
+}
+
+function keepImageProportional(object) {
+  if (!isPhotoObject(object)) return;
+
+  const scale = Math.max(Number(object.scaleX) || 1, Number(object.scaleY) || 1);
+  object.set({
+    scaleX: scale,
+    scaleY: scale,
+    skewX: 0,
+    skewY: 0,
+  });
 }
 
 function alignActiveImageToEdge(object, size, edge) {
@@ -433,6 +481,15 @@ function constrainImageToFrame(object, size) {
 
   object.setCoords();
 
+  const coverScale = getImageCoverScale(object, size);
+  if (object.getScaledWidth() < size.width || object.getScaledHeight() < size.height) {
+    object.set({
+      scaleX: coverScale,
+      scaleY: coverScale,
+    });
+    object.setCoords();
+  }
+
   const frame = {
     left: BLEED_SIZE,
     top: BLEED_SIZE,
@@ -469,6 +526,51 @@ function constrainImageToFrame(object, size) {
 
   object.set({ left: nextLeft, top: nextTop });
   object.setCoords();
+}
+
+function constrainObjectToFrame(object, size) {
+  if (!object || object.editorRole === 'background' || object.editorRole === 'overlay') return;
+
+  if (isPhotoObject(object)) {
+    constrainImageToFrame(object, size);
+    return;
+  }
+
+  object.setCoords();
+
+  const frame = {
+    left: BLEED_SIZE,
+    top: BLEED_SIZE,
+    right: BLEED_SIZE + size.width,
+    bottom: BLEED_SIZE + size.height,
+  };
+  const bounds = object.getBoundingRect();
+  let nextLeft = object.left || 0;
+  let nextTop = object.top || 0;
+
+  if (bounds.left < frame.left) nextLeft += frame.left - bounds.left;
+  if (bounds.top < frame.top) nextTop += frame.top - bounds.top;
+  if (bounds.left + bounds.width > frame.right) {
+    nextLeft -= bounds.left + bounds.width - frame.right;
+  }
+  if (bounds.top + bounds.height > frame.bottom) {
+    nextTop -= bounds.top + bounds.height - frame.bottom;
+  }
+
+  object.set({ left: nextLeft, top: nextTop });
+  object.setCoords();
+}
+
+function constrainActiveObjectToFrame(object, size) {
+  if (!object) return;
+
+  if (typeof object.getObjects === 'function' && !isLayerObject(object)) {
+    constrainObjectToFrame(object, size);
+    object.setCoords();
+    return;
+  }
+
+  constrainObjectToFrame(object, size);
 }
 
 function styleControls(object) {
@@ -741,6 +843,7 @@ function App() {
   const overlayRef = useRef(null);
   const cropGuideRef = useRef(null);
   const canvasSizeRef = useRef(PRESETS[0]);
+  const edgeInsetRef = useRef(getDefaultSafeInset(PRESETS[0]));
   const objectIdRef = useRef(1);
   const imageInputRef = useRef(null);
   const resizeDragRef = useRef(null);
@@ -757,7 +860,7 @@ function App() {
   const [canvasSize, setCanvasSize] = useState(PRESETS[0]);
   const [customWidth, setCustomWidth] = useState(PRESETS[0].width);
   const [customHeight, setCustomHeight] = useState(PRESETS[0].height);
-  const [edgeInset, setEdgeInset] = useState(DEFAULT_EDGE_INSET);
+  const [edgeInset, setEdgeInset] = useState(getDefaultSafeInset(PRESETS[0]));
   const [showFontPrompt, setShowFontPrompt] = useState(true);
   const [viewportSize, setViewportSize] = useState(() => ({
     width: typeof window === 'undefined' ? 1440 : window.innerWidth,
@@ -782,18 +885,14 @@ function App() {
   );
   const [textColor, setTextColor] = useState(DEFAULT_TEXT_COLOR);
   const [textSize, setTextSize] = useState(DEFAULT_TEXT_SIZE);
-  const [textLineHeight, setTextLineHeight] = useState(DEFAULT_TEXT_LINE_HEIGHT);
-  const [textLetterSpacing, setTextLetterSpacing] = useState(DEFAULT_TEXT_LETTER_SPACING);
   const [textAlign, setTextAlign] = useState('left');
   const [textVerticalAlign, setTextVerticalAlign] = useState('top');
   const [fontStatus, setFontStatus] = useState('');
   const [selectedRole, setSelectedRole] = useState('none');
-  const [imageSize, setImageSize] = useState({ width: '', height: '' });
   const [layers, setLayers] = useState([]);
   const [blockedLogoCorners, setBlockedLogoCorners] = useState([]);
   const [floatingMenu, setFloatingMenu] = useState({ visible: false, x: 0, y: 0, role: null });
   const [workspaceZoom, setWorkspaceZoom] = useState(1);
-  const [lockRatio, setLockRatio] = useState(true);
   const [exportFormat, setExportFormat] = useState('png');
   const [exportScale, setExportScale] = useState(1);
   const [activeColorPalette, setActiveColorPalette] = useState(null);
@@ -802,19 +901,23 @@ function App() {
   const [resizeFormatId, setResizeFormatId] = useState('free');
   const [showGuide, setShowGuide] = useState(false);
   const [guideStepIndex, setGuideStepIndex] = useState(0);
-  const [objectsPanelOpen, setObjectsPanelOpen] = useState(false);
-  const [textPanelOpen, setTextPanelOpen] = useState(false);
-  const [logoPanelOpen, setLogoPanelOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState(WORKFLOW_STEPS[0].id);
 
   const hasTextSelection = selectedRole === 'text';
   const hasLogoSelection = selectedRole === 'logo';
   const hasLogoLayer = layers.some((layer) => layer.role === 'logo');
   const hasImageLayer = layers.some((layer) => layer.role === 'image');
   const hasCanvasObjects = layers.length > 0;
-  const hasSelectedObject = selectedRole !== 'none';
   const activeResizeFormat =
     RESIZE_FORMATS.find((format) => format.id === resizeFormatId) || RESIZE_FORMATS[0];
   const activeGuideStep = GUIDE_STEPS[guideStepIndex] || GUIDE_STEPS[0];
+  const currentStepIndex = Math.max(
+    0,
+    WORKFLOW_STEPS.findIndex((step) => step.id === currentStep),
+  );
+  const activeWorkflowStep = WORKFLOW_STEPS[currentStepIndex] || WORKFLOW_STEPS[0];
+  const canGoNext = currentStep !== 'image' || hasImageLayer;
+  const showFloatingMenu = false;
   const showCustomSizeControls = activePresetId === CUSTOM_PRESET.id;
   const workspaceSize = getWorkspaceSize(canvasSize);
   const sidebarWidth = viewportSize.width <= 900 ? 0 : 300;
@@ -900,7 +1003,6 @@ function App() {
 
     if (isImageObject(activeObject)) {
       setSelectedRole(activeObject.editorRole);
-      setImageSize(getImageSize(activeObject));
 
       if (activeObject.editorRole === 'logo') {
         setLogoOpacity(Math.round((activeObject.opacity ?? 1) * 100));
@@ -918,8 +1020,6 @@ function App() {
       setSelectedFont(activeObject.fontFamily || DEFAULT_FONT);
       setTextColor(activeObject.fill || DEFAULT_TEXT_COLOR);
       setTextSize(Math.round(activeObject.fontSize || DEFAULT_TEXT_SIZE));
-      setTextLineHeight(Number(activeObject.lineHeight || DEFAULT_TEXT_LINE_HEIGHT));
-      setTextLetterSpacing(getTextLetterSpacingPx(activeObject));
       setTextAlign(activeObject.textAlign || 'left');
       setTextVerticalAlign(activeObject.editorVerticalAlign || 'top');
       setSelectedFontStyle(
@@ -929,16 +1029,11 @@ function App() {
           style: activeObject.fontStyle || 'normal',
         }),
       );
-      setImageSize({ width: '', height: '' });
       updateFloatingMenu(canvas);
       return;
     }
 
     setSelectedRole('none');
-    setObjectsPanelOpen(false);
-    setTextPanelOpen(false);
-    setLogoPanelOpen(false);
-    setImageSize({ width: '', height: '' });
     refreshLayers(canvas);
     updateFloatingMenu(canvas);
   }
@@ -947,6 +1042,20 @@ function App() {
     if (!disabled) {
       setActiveColorPalette(paletteId);
     }
+  }
+
+  function removeUnusedTemplateText(canvas = canvasRef.current) {
+    if (!canvas) return;
+
+    const templateText = canvas.getObjects().find(isTemplateTextObject);
+    if (!templateText) return;
+
+    canvas.remove(templateText);
+    canvas.discardActiveObject();
+    syncCanvasLayers(canvas, overlayRef.current, backgroundRef.current);
+    syncSelectionPanel(canvas);
+    refreshLayers(canvas);
+    canvas.requestRenderAll();
   }
 
   function getHistorySnapshot(canvas = canvasRef.current) {
@@ -958,7 +1067,7 @@ function App() {
       canvas: canvas.toJSON(HISTORY_PROPS),
       size: { ...size },
       activePresetId: size.id || CUSTOM_PRESET.id,
-      edgeInset,
+      edgeInset: edgeInsetRef.current,
       overlayEnabled,
       overlayColor,
       overlayOpacity,
@@ -1024,6 +1133,10 @@ function App() {
       } else if (isPhotoObject(object)) {
         setImageClip(object, canvasSizeRef.current);
         styleControls(object);
+        object.set({
+          lockRotation: true,
+          lockScalingFlip: true,
+        });
       } else if (object.editorRole === 'logo') {
         styleControls(object);
         lockLogoObject(object);
@@ -1054,6 +1167,7 @@ function App() {
       setCustomWidth(size.width);
       setCustomHeight(size.height);
       setEdgeInset(snapshot.edgeInset);
+      edgeInsetRef.current = snapshot.edgeInset;
       setOverlayEnabled(snapshot.overlayEnabled);
       setOverlayColor(snapshot.overlayColor);
       setOverlayOpacity(snapshot.overlayOpacity);
@@ -1070,10 +1184,6 @@ function App() {
       restoreCanvasObjectMetadata(canvas);
       syncCanvasLayers(canvas, overlayRef.current, backgroundRef.current);
       setSelectedRole('none');
-      setObjectsPanelOpen(false);
-      setTextPanelOpen(false);
-      setLogoPanelOpen(false);
-      setImageSize({ width: '', height: '' });
       refreshLayers(canvas);
       updateFloatingMenu(canvas);
       canvas.calcOffset();
@@ -1090,15 +1200,18 @@ function App() {
     const cropGuide = cropGuideRef.current;
     const normalizedSize = {
       id: nextSize.id || 'custom',
-      label: nextSize.label || 'Свой',
+      label: nextSize.label || CUSTOM_PRESET.label,
       width: clampCanvasDimension(nextSize.width),
       height: clampCanvasDimension(nextSize.height),
     };
+    const nextEdgeInset = getDefaultSafeInset(normalizedSize);
 
     setActivePresetId(normalizedSize.id);
     setCanvasSize(normalizedSize);
     setCustomWidth(normalizedSize.width);
     setCustomHeight(normalizedSize.height);
+    setEdgeInset(nextEdgeInset);
+    edgeInsetRef.current = nextEdgeInset;
     canvasSizeRef.current = normalizedSize;
 
     if (!canvas || !overlay || !cropGuide) return;
@@ -1124,12 +1237,12 @@ function App() {
       .filter((object) => ['image', 'logo', 'text'].includes(object.editorRole))
       .forEach((object) => {
         if (object.editorRole === 'image') {
-          scaleActiveImageToHeight(object, normalizedSize);
+          coverImageToFrame(object, normalizedSize);
         } else if (object.editorRole === 'logo') {
           positionObjectInSafeArea(
             object,
             normalizedSize,
-            edgeInset,
+            nextEdgeInset,
             object.editorHorizontalAlign || logoAlign,
             object.editorVerticalAlign || logoVerticalAlign,
           );
@@ -1137,7 +1250,7 @@ function App() {
           positionTextInSafeArea(
             object,
             normalizedSize,
-            edgeInset,
+            nextEdgeInset,
             object.textAlign || textAlign,
             object.editorVerticalAlign || textVerticalAlign,
           );
@@ -1251,7 +1364,7 @@ function App() {
 
       updateArtboardSize({
         id: 'custom',
-        label: 'Свой',
+        label: CUSTOM_PRESET.label,
         width,
         height,
       }, { recordHistory: false });
@@ -1351,7 +1464,7 @@ function App() {
       canvas: canvas.toJSON(HISTORY_PROPS),
       size: { ...canvasSizeRef.current },
       activePresetId: PRESETS[0].id,
-      edgeInset: DEFAULT_EDGE_INSET,
+      edgeInset: getDefaultSafeInset(canvasSizeRef.current),
       overlayEnabled: false,
       overlayColor: DEFAULT_OVERLAY_COLOR,
       overlayOpacity: DEFAULT_OVERLAY_OPACITY,
@@ -1373,7 +1486,6 @@ function App() {
 
       if (isImageObject(activeObject)) {
         setSelectedRole(activeObject.editorRole);
-        setImageSize(getImageSize(activeObject));
 
         if (activeObject.editorRole === 'logo') {
           setLogoOpacity(Math.round((activeObject.opacity ?? 1) * 100));
@@ -1392,8 +1504,6 @@ function App() {
         setSelectedFont(activeObject.fontFamily || DEFAULT_FONT);
         setTextColor(activeObject.fill || DEFAULT_TEXT_COLOR);
         setTextSize(Math.round(activeObject.fontSize || DEFAULT_TEXT_SIZE));
-        setTextLineHeight(Number(activeObject.lineHeight || DEFAULT_TEXT_LINE_HEIGHT));
-        setTextLetterSpacing(getTextLetterSpacingPx(activeObject));
         setTextAlign(activeObject.textAlign || 'left');
         setTextVerticalAlign(activeObject.editorVerticalAlign || 'top');
         setSelectedFontStyle(
@@ -1403,17 +1513,12 @@ function App() {
             style: activeObject.fontStyle || 'normal',
           }),
         );
-        setImageSize({ width: '', height: '' });
         refreshLayers(canvas);
         updateFloatingMenu(canvas);
         return;
       }
 
       setSelectedRole('none');
-      setObjectsPanelOpen(false);
-      setTextPanelOpen(false);
-      setLogoPanelOpen(false);
-      setImageSize({ width: '', height: '' });
       refreshLayers(canvas);
       updateFloatingMenu(canvas);
     };
@@ -1427,12 +1532,9 @@ function App() {
       const activeObject = canvas.getActiveObject();
 
       if (isPhotoObject(activeObject)) {
-        if (activeObject.getScaledHeight() < canvasSizeRef.current.height) {
-          scaleActiveImageToHeight(activeObject, canvasSizeRef.current);
-        } else {
-          constrainImageToFrame(activeObject, canvasSizeRef.current);
-        }
+        keepImageProportional(activeObject);
       }
+      constrainActiveObjectToFrame(activeObject, canvasSizeRef.current);
 
       syncCanvasLayers(canvas, overlay);
       updateSelection();
@@ -1446,12 +1548,9 @@ function App() {
       const activeObject = canvas.getActiveObject();
 
       if (isPhotoObject(activeObject)) {
-        if (activeObject.getScaledHeight() < canvasSizeRef.current.height) {
-          scaleActiveImageToHeight(activeObject, canvasSizeRef.current);
-        } else {
-          constrainImageToFrame(activeObject, canvasSizeRef.current);
-        }
+        keepImageProportional(activeObject);
       }
+      constrainActiveObjectToFrame(activeObject, canvasSizeRef.current);
 
       updateSelection();
       canvas.requestRenderAll();
@@ -1560,7 +1659,11 @@ function App() {
     canvas.on('object:modified', handleObjectModified);
     canvas.on('object:added', () => refreshLayers(canvas));
     canvas.on('object:removed', () => refreshLayers(canvas));
-    canvas.on('text:changed', () => {
+    canvas.on('text:changed', (event) => {
+      if (isTemplateTextObject(event.target)) {
+        event.target.editorIsTemplate = false;
+        event.target.excludeFromExport = false;
+      }
       refreshLayers(canvas);
       window.clearTimeout(textHistoryTimerRef.current);
       textHistoryTimerRef.current = window.setTimeout(
@@ -1670,12 +1773,8 @@ function App() {
   }, [edgeInset, logoAlign, logoVerticalAlign, textAlign, textVerticalAlign]);
 
   useEffect(() => {
-    if (showFontPrompt || guideStartedRef.current) return;
-
-    guideStartedRef.current = true;
-    setGuideStepIndex(0);
-    setShowGuide(true);
-  }, [showFontPrompt]);
+    guideStartedRef.current = false;
+  }, []);
 
   useEffect(() => {
     const handlePaste = (event) => {
@@ -1708,8 +1807,12 @@ function App() {
     const image = await FabricImage.fromURL(url);
 
     registerLayerObject(image, role, file.name || 'Изображение');
-    scaleActiveImageToHeight(image, canvasSizeRef.current);
+    coverImageToFrame(image, canvasSizeRef.current);
     styleControls(image);
+    image.set({
+      lockRotation: true,
+      lockScalingFlip: true,
+    });
     image.set(options.fabricOptions || {});
 
     canvas.add(image);
@@ -1793,28 +1896,30 @@ function App() {
     pushHistorySnapshot(canvas);
   }
 
-  function addText() {
+  function addText({ isTemplate = false, recordHistory = true } = {}) {
     const canvas = canvasRef.current;
     const overlay = overlayRef.current;
     if (!canvas) return;
 
-    const text = new Textbox('Дважды кликните для редактирования', {
+    const text = new Textbox(TEXT_TEMPLATE_VALUE, {
       width: getSafeArea(canvasSizeRef.current, edgeInset).width,
       fill: textColor,
       fontFamily: selectedFont,
       fontSize: textSize,
       fontWeight: 700,
-      lineHeight: textLineHeight,
-      charSpacing: getFabricCharSpacing(textLetterSpacing, textSize),
+      lineHeight: DEFAULT_TEXT_LINE_HEIGHT,
+      charSpacing: getFabricCharSpacing(DEFAULT_TEXT_LETTER_SPACING, textSize),
       textAlign,
       padding: 8,
     });
     const fontStyle = parseFontStyleValue(selectedFontStyle);
 
     registerLayerObject(text, 'text', 'Текст');
+    text.editorIsTemplate = isTemplate;
     text.set({
       fontWeight: fontStyle.weight,
       fontStyle: fontStyle.style,
+      excludeFromExport: isTemplate,
     });
     text.editorFontStyleLabel = fontStyle.label;
     text.editorVerticalAlign = textVerticalAlign;
@@ -1834,7 +1939,9 @@ function App() {
     syncSelectionPanel(canvas);
     refreshLayers(canvas);
     canvas.requestRenderAll();
-    pushHistorySnapshot(canvas);
+    if (recordHistory) {
+      pushHistorySnapshot(canvas);
+    }
   }
 
   async function loadSystemFonts({ closePrompt = false } = {}) {
@@ -1962,7 +2069,7 @@ function App() {
     if (isTextObject(activeObject)) {
       applyTextStyleToObject(activeObject, { fontSize: numericSize });
       activeObject.set({
-        charSpacing: getFabricCharSpacing(textLetterSpacing, numericSize),
+        charSpacing: getFabricCharSpacing(DEFAULT_TEXT_LETTER_SPACING, numericSize),
       });
       positionTextInSafeArea(
         activeObject,
@@ -1971,42 +2078,6 @@ function App() {
         activeObject.textAlign || textAlign,
         activeObject.editorVerticalAlign || textVerticalAlign,
       );
-      canvas.requestRenderAll();
-      pushHistorySnapshot(canvas);
-    }
-  }
-
-  function applyTextLineHeight(value) {
-    const canvas = canvasRef.current;
-    const activeObject = canvas?.getActiveObject();
-    const numericValue = Number(value);
-
-    setTextLineHeight(value);
-
-    if (!Number.isFinite(numericValue) || numericValue <= 0) return;
-
-    if (isTextObject(activeObject)) {
-      activeObject.set({ lineHeight: numericValue });
-      activeObject.setCoords();
-      canvas.requestRenderAll();
-      pushHistorySnapshot(canvas);
-    }
-  }
-
-  function applyTextLetterSpacing(value) {
-    const canvas = canvasRef.current;
-    const activeObject = canvas?.getActiveObject();
-    const numericValue = Number(value);
-
-    setTextLetterSpacing(value);
-
-    if (!Number.isFinite(numericValue)) return;
-
-    if (isTextObject(activeObject)) {
-      activeObject.set({
-        charSpacing: getFabricCharSpacing(numericValue, activeObject.fontSize || textSize),
-      });
-      activeObject.setCoords();
       canvas.requestRenderAll();
       pushHistorySnapshot(canvas);
     }
@@ -2125,58 +2196,13 @@ function App() {
     }
   }
 
-  function resizeActiveImage(axis, value) {
-    const canvas = canvasRef.current;
-    const activeObject = canvas?.getActiveObject();
-
-    setImageSize((current) => ({ ...current, [axis]: value }));
-
-    if (!isPhotoObject(activeObject)) return;
-
-    const numericValue = Number(value);
-    if (!Number.isFinite(numericValue) || numericValue <= 0) return;
-
-    const currentWidth = activeObject.getScaledWidth();
-    const currentHeight = activeObject.getScaledHeight();
-    const ratio = currentWidth / currentHeight || 1;
-
-    let nextWidth =
-      axis === 'width' ? numericValue : Number(imageSize.width) || currentWidth;
-    let nextHeight =
-      axis === 'height' ? numericValue : Number(imageSize.height) || currentHeight;
-
-    if (lockRatio) {
-      if (axis === 'width') {
-        nextHeight = nextWidth / ratio;
-      } else {
-        nextWidth = nextHeight * ratio;
-      }
-    }
-
-    activeObject.set({
-      scaleX: nextWidth / (activeObject.width || 1),
-      scaleY: nextHeight / (activeObject.height || 1),
-    });
-
-    setImageClip(activeObject, canvasSizeRef.current);
-    if (activeObject.getScaledHeight() < canvasSizeRef.current.height) {
-      scaleActiveImageToHeight(activeObject, canvasSizeRef.current);
-    } else {
-      constrainImageToFrame(activeObject, canvasSizeRef.current);
-    }
-    activeObject.setCoords();
-    syncSelectionPanel(canvas);
-    canvas.requestRenderAll();
-    pushHistorySnapshot(canvas);
-  }
-
-  function fillSelectedImageHeight() {
+  function fillSelectedImageFrame() {
     const canvas = canvasRef.current;
     const activeObject = canvas?.getActiveObject();
 
     if (!isPhotoObject(activeObject)) return;
 
-    scaleActiveImageToHeight(activeObject, canvasSizeRef.current);
+    coverImageToFrame(activeObject, canvasSizeRef.current);
     syncSelectionPanel(canvas);
     canvas.requestRenderAll();
     pushHistorySnapshot(canvas);
@@ -2226,6 +2252,8 @@ function App() {
   }
 
   function exportImage() {
+    removeUnusedTemplateText();
+
     const size = canvasSizeRef.current;
     const scale = Number(exportScale) || 1;
 
@@ -2277,6 +2305,40 @@ function App() {
     setGuideStepIndex((current) => current + 1);
   }
 
+  function goToWorkflowStep(stepId) {
+    const nextIndex = WORKFLOW_STEPS.findIndex((step) => step.id === stepId);
+    if (nextIndex < 0) return;
+    if (!hasImageLayer && nextIndex > 0) return;
+
+    if (currentStep === 'text' && stepId !== 'text') {
+      removeUnusedTemplateText();
+    }
+
+    if (stepId === 'text' && !canvasRef.current?.getObjects().some(isTextObject)) {
+      addText({ isTemplate: true, recordHistory: false });
+    }
+
+    setCurrentStep(stepId);
+    setShowGuide(false);
+    setActiveColorPalette(null);
+  }
+
+  function goToPreviousStep() {
+    const previousStep = WORKFLOW_STEPS[currentStepIndex - 1];
+    if (previousStep) {
+      goToWorkflowStep(previousStep.id);
+    }
+  }
+
+  function goToNextStep() {
+    if (!canGoNext) return;
+
+    const nextStep = WORKFLOW_STEPS[currentStepIndex + 1];
+    if (nextStep) {
+      goToWorkflowStep(nextStep.id);
+    }
+  }
+
   return (
     <main className="editorShell">
       <aside className="sidebar">
@@ -2287,381 +2349,393 @@ function App() {
           </div>
         </div>
 
-        <section className="controlGroup">
-          <h2>Холст</h2>
-          <div className="presetGrid">
-            {CANVAS_PRESETS.map((preset) => (
+        {hasImageLayer && <nav className="stepRail" aria-label="Шаги создания макета">
+          {WORKFLOW_STEPS.map((step, index) => {
+            const isLocked = !hasImageLayer && index > 0;
+
+            return (
               <button
-                key={preset.id}
+                key={step.id}
                 type="button"
-                className={`${activePresetId === preset.id ? 'active' : ''} ${
-                  preset.id === CUSTOM_PRESET.id ? 'customPreset' : ''
-                }`}
-                onClick={() =>
-                  preset.id === CUSTOM_PRESET.id
-                    ? activateCustomCanvasSize()
-                    : updateArtboardSize(getPresetById(preset.id))
-                }
+                className={currentStep === step.id ? 'active' : ''}
+                disabled={isLocked}
+                aria-label={step.label}
+                onClick={() => goToWorkflowStep(step.id)}
               >
-                <span>{preset.label}</span>
-                {preset.width && (
-                  <small>
-                    {preset.width}x{preset.height}
-                  </small>
-                )}
+                <span className="stepIcon" aria-hidden="true">{step.icon}</span>
               </button>
-            ))}
+            );
+          })}
+        </nav>}
+      </aside>
+
+      {hasImageLayer && (
+        <aside className="inspector">
+        <section className="workflowPanel">
+          <div className="workflowHeader">
+            <span>{activeWorkflowStep.number}</span>
+            <h2>{activeWorkflowStep.title}</h2>
+            <p>{activeWorkflowStep.text}</p>
           </div>
-          {showCustomSizeControls && (
-            <div className="sizeGrid">
-              <label className="field">
-                <span>Ширина</span>
-                <input
-                  type="number"
-                  min={MIN_CANVAS_SIZE}
-                  value={customWidth}
-                  onChange={(event) =>
-                    updateCustomCanvasSize(event.target.value, customHeight)
-                  }
-                />
-              </label>
-              <label className="field">
-                <span>Высота</span>
-                <input
-                  type="number"
-                  min={MIN_CANVAS_SIZE}
-                  value={customHeight}
-                  onChange={(event) =>
-                    updateCustomCanvasSize(customWidth, event.target.value)
-                  }
-                />
-              </label>
-            </div>
-          )}
-          <label className="field">
-            <span>Безопасный отступ</span>
-            <input
-              type="number"
-              min="0"
-              value={edgeInset}
-              onChange={(event) =>
-                setEdgeInset(getSafeInset(canvasSizeRef.current, event.target.value))
-              }
-            />
-          </label>
-        </section>
 
-        <details
-          className={`controlGroup collapsibleGroup ${
-            showGuide && ['objects', 'logo'].includes(activeGuideStep.id) ? 'guideTarget' : ''
-          }`}
-          open={
-            objectsPanelOpen ||
-            hasTextSelection ||
-            hasLogoSelection ||
-            (showGuide && ['objects', 'logo'].includes(activeGuideStep.id))
-          }
-          onToggle={(event) => setObjectsPanelOpen(event.currentTarget.open)}
-        >
-          <summary>
-            <span>Объекты</span>
-            <small>Добавить</small>
-          </summary>
-          <button type="button" onClick={addText}>
-            Добавить текст
-          </button>
-          <button type="button" onClick={addEtalonLogo}>
-            Добавить логотип
-          </button>
-
-        <details
-          className="nestedControlGroup collapsibleGroup"
-          open={textPanelOpen || hasTextSelection || (showGuide && activeGuideStep.id === 'objects')}
-          onToggle={(event) => setTextPanelOpen(event.currentTarget.open)}
-        >
-          <summary>
-            <span>Текст</span>
-            <small>{hasTextSelection ? 'Выбран' : 'По умолчанию'}</small>
-          </summary>
-          <label className="field">
-            <span>Шрифт</span>
-            <select
-              value={selectedFont}
-              onChange={(event) => applyFont(event.target.value)}
-            >
-              {fontOptions.map((font) => (
-                <option key={font} value={font}>
-                  {font}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="field">
-            <span>Начертание</span>
-            <select
-              value={selectedFontStyle}
-              onChange={(event) => applyFontStyle(event.target.value)}
-            >
-              {selectedFontStyles.map((fontStyle) => (
-                <option key={getFontStyleValue(fontStyle)} value={getFontStyleValue(fontStyle)}>
-                  {fontStyle.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <div className="sizeGrid">
-            <label className="field">
-              <span>Размер</span>
-              <input
-                type="number"
-                min="1"
-                value={textSize}
-                onChange={(event) => applyTextSize(event.target.value)}
-              />
-            </label>
-            <label className="colorControl textColorControl">
-              <span>Цвет</span>
-              <input
-                type="color"
-                value={textColor}
-                onFocus={() => openColorPalette('text')}
-                onClick={() => openColorPalette('text')}
-                onChange={(event) => applyTextColor(event.target.value)}
-              />
-            </label>
-          </div>
-          <ColorPalette
-            value={textColor}
-            visible={activeColorPalette === 'text'}
-            onChange={applyTextColor}
-          />
-          <div className="sizeGrid">
-            <label className="field">
-              <span>Высота строки</span>
-              <input
-                type="number"
-                min="0.5"
-                step="0.05"
-                value={textLineHeight}
-                onChange={(event) => applyTextLineHeight(event.target.value)}
-              />
-            </label>
-            <label className="field">
-              <span>Межбукв. px</span>
-              <input
-                type="number"
-                step="1"
-                value={textLetterSpacing}
-                onChange={(event) => applyTextLetterSpacing(event.target.value)}
-              />
-            </label>
-          </div>
-          <div className="positionGrid" aria-label="Расположение текста">
-            {TEXT_POSITIONS.map((position) => (
-              <button
-                key={`${position.horizontal}-${position.vertical}`}
-                type="button"
-                className={
-                  textAlign === position.horizontal && textVerticalAlign === position.vertical
-                    ? 'active'
-                    : ''
-                }
-                onClick={() => applyTextPosition(position.horizontal, position.vertical)}
-              >
-                {position.label}
-              </button>
-            ))}
-          </div>
-          {!fontsLoaded && (
-            <button type="button" onClick={loadSystemFonts}>
-              Загрузить системные шрифты
-            </button>
-          )}
-          <p className="statusText">
-            {hasTextSelection ? 'Изменится выбранный текст' : fontStatus}
-          </p>
-        </details>
-
-          {hasLogoLayer && (
-            <details
-              className="nestedControlGroup collapsibleGroup"
-              open={logoPanelOpen || hasLogoSelection}
-              onToggle={(event) => setLogoPanelOpen(event.currentTarget.open)}
-            >
-              <summary>
-                <span>Логотип</span>
-                <small>{hasLogoSelection ? 'Выбран' : 'Добавлен'}</small>
-              </summary>
-              <label className="colorControl">
-                <span>Цвет</span>
-                <input
-                  type="color"
-                  value={logoColor}
-                  onFocus={() => openColorPalette('logo')}
-                  onClick={() => openColorPalette('logo')}
-                  onChange={(event) => applyLogoColor(event.target.value)}
-                />
-              </label>
-              <ColorPalette
-                value={logoColor}
-                visible={activeColorPalette === 'logo'}
-                onChange={applyLogoColor}
-              />
-              <label className="field">
-                <span>Прозрачность</span>
-                <div className="rangeRow">
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={logoOpacity}
-                    onChange={(event) => applyLogoOpacity(Number(event.target.value))}
-                  />
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    value={logoOpacity}
-                    aria-label="Прозрачность логотипа"
-                    onChange={(event) => applyLogoOpacity(event.target.value)}
-                  />
-                </div>
-              </label>
-              <div className="cornerGrid" aria-label="Угол логотипа">
-                {LOGO_CORNERS.map((corner) => {
-                  const cornerKey = getCornerKey(corner.horizontal, corner.vertical);
-                  const isBlocked = blockedLogoCorners.includes(cornerKey);
-
-                  return (
-                  <button
-                    key={cornerKey}
-                    type="button"
-                    className={
-                      logoAlign === corner.horizontal && logoVerticalAlign === corner.vertical
-                        ? 'active'
-                        : ''
-                    }
-                    disabled={isBlocked}
-                    title={isBlocked ? 'В этом углу уже расположен текст' : 'Поставить логотип в угол'}
-                    onClick={() => applyLogoCorner(corner.horizontal, corner.vertical)}
-                  >
-                    {corner.label}
-                  </button>
-                  );
-                })}
-              </div>
-              <p className="statusText">
-                {hasLogoSelection ? 'Изменится выбранный логотип' : 'Выберите логотип для настройки'}
-              </p>
-            </details>
-          )}
-        </details>
-
-        <section
-          className={`controlGroup ${
-            showGuide && activeGuideStep.id === 'overlay' ? 'guideTarget' : ''
-          }`}
-        >
-          <h2>Оверлей</h2>
-          <label className="checkRow">
-            <input
-              type="checkbox"
-              checked={overlayEnabled}
-              onChange={(event) => setOverlayEnabled(event.target.checked)}
-            />
-            <span>Включить оверлей</span>
-          </label>
-          {overlayEnabled && (
+          {currentStep === 'image' && (
             <>
-              <label className="colorControl">
-                <span>Цвет</span>
-                <input
-                  type="color"
-                  value={overlayColor}
-                  onFocus={() => openColorPalette('overlay')}
-                  onClick={() => openColorPalette('overlay')}
-                  onChange={(event) => setOverlayColor(event.target.value)}
-                />
-              </label>
-              <ColorPalette
-                value={overlayColor}
-                visible={activeColorPalette === 'overlay'}
-                onChange={setOverlayColor}
-              />
-              <label className="field">
-                <span>Прозрачность</span>
-                <div className="rangeRow">
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={overlayOpacity}
-                    onChange={(event) => applyOverlayOpacity(event.target.value)}
-                  />
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    value={overlayOpacity}
-                    aria-label="Прозрачность оверлея"
-                    onChange={(event) => applyOverlayOpacity(event.target.value)}
-                  />
+              <section className="controlGroup">
+                <button
+                  type="button"
+                  className="uploadHeroButton"
+                  onClick={() => imageInputRef.current?.click()}
+                >
+                  {hasImageLayer ? 'Заменить изображение' : 'Загрузить изображение'}
+                </button>
+                <div className="presetGrid">
+                  {CANVAS_PRESETS.map((preset) => (
+                    <button
+                      key={preset.id}
+                      type="button"
+                      className={`${activePresetId === preset.id ? 'active' : ''} ${
+                        preset.id === CUSTOM_PRESET.id ? 'customPreset' : ''
+                      }`}
+                      onClick={() =>
+                        preset.id === CUSTOM_PRESET.id
+                          ? activateCustomCanvasSize()
+                          : updateArtboardSize(getPresetById(preset.id))
+                      }
+                    >
+                      <span className="presetIcon" aria-hidden="true">{preset.icon}</span>
+                      <span>{preset.label}</span>
+                      {preset.width && <small>{preset.width}x{preset.height}</small>}
+                    </button>
+                  ))}
                 </div>
-              </label>
+                {showCustomSizeControls && (
+                  <>
+                    <div className="resizeFormatList inlineResizeFormats">
+                      {RESIZE_FORMATS.filter((format) => format.id !== 'free').map((format) => (
+                        <button
+                          key={format.id}
+                          type="button"
+                          className={resizeFormatId === format.id ? 'active' : ''}
+                          onClick={() => applyResizeFormat(format)}
+                        >
+                          {format.label}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="sizeGrid">
+                      <label className="field">
+                        <span>Ширина</span>
+                        <input
+                          type="number"
+                          min={MIN_CANVAS_SIZE}
+                          value={customWidth}
+                          onChange={(event) =>
+                            updateCustomCanvasSize(event.target.value, customHeight)
+                          }
+                        />
+                      </label>
+                      <label className="field">
+                        <span>Высота</span>
+                        <input
+                          type="number"
+                          min={MIN_CANVAS_SIZE}
+                          value={customHeight}
+                          onChange={(event) =>
+                            updateCustomCanvasSize(customWidth, event.target.value)
+                          }
+                        />
+                      </label>
+                    </div>
+                  </>
+                )}
+              </section>
+              <section className="controlGroup inspectorToolGroup">
+                <h2>Подгонка</h2>
+                <button
+                  type="button"
+                  className="fitIconButton"
+                  title="Заполнить холст"
+                  aria-label="Заполнить холст изображением"
+                  onClick={fillSelectedImageFrame}
+                >
+                  ⤢
+                </button>
+                <div className="floatingSegment imageAlignGrid" aria-label="Выравнивание изображения">
+                  {IMAGE_ALIGNMENTS.map(([edge, label]) => (
+                    <button key={edge} type="button" onClick={() => alignSelectedImage(edge)}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </section>
             </>
           )}
+
+          {currentStep === 'text' && (
+            <>
+              <section className="controlGroup">
+                <label className="field">
+                  <span>Шрифт</span>
+                  <select value={selectedFont} onChange={(event) => applyFont(event.target.value)}>
+                    {fontOptions.map((font) => (
+                      <option key={font} value={font}>
+                        {font}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="field">
+                  <span>Начертание</span>
+                  <select
+                    value={selectedFontStyle}
+                    onChange={(event) => applyFontStyle(event.target.value)}
+                  >
+                    {selectedFontStyles.map((fontStyle) => (
+                      <option key={getFontStyleValue(fontStyle)} value={getFontStyleValue(fontStyle)}>
+                        {fontStyle.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <div className="sizeGrid">
+                  <label className="field">
+                    <span>Размер</span>
+                    <input
+                      type="number"
+                      min="1"
+                      value={textSize}
+                      onChange={(event) => applyTextSize(event.target.value)}
+                    />
+                  </label>
+                  <label className="colorControl textColorControl">
+                    <span>Цвет</span>
+                    <input
+                      type="color"
+                      value={textColor}
+                      onFocus={() => openColorPalette('text')}
+                      onClick={() => openColorPalette('text')}
+                      onChange={(event) => applyTextColor(event.target.value)}
+                    />
+                  </label>
+                </div>
+                <ColorPalette
+                  value={textColor}
+                  visible={activeColorPalette === 'text'}
+                  onChange={applyTextColor}
+                />
+                {!fontsLoaded && (
+                  <button type="button" onClick={loadSystemFonts}>
+                    Загрузить системные шрифты
+                  </button>
+                )}
+                <p className="statusText">
+                  {hasTextSelection ? 'Изменится выбранный текст' : fontStatus}
+                </p>
+              </section>
+              <section className="controlGroup inspectorToolGroup">
+                <h2>Позиция текста</h2>
+                <div className="positionGrid" aria-label="Расположение текста">
+                  {TEXT_POSITIONS.map((position) => (
+                    <button
+                      key={`${position.horizontal}-${position.vertical}`}
+                      type="button"
+                      className={
+                        textAlign === position.horizontal && textVerticalAlign === position.vertical
+                          ? 'active'
+                          : ''
+                      }
+                      onClick={() => applyTextPosition(position.horizontal, position.vertical)}
+                    >
+                      {position.label}
+                    </button>
+                  ))}
+                </div>
+              </section>
+
+              <section className="controlGroup">
+                <h2>Цвет подложки</h2>
+                <label className="checkRow">
+                  <input
+                    type="checkbox"
+                    checked={overlayEnabled}
+                    onChange={(event) => setOverlayEnabled(event.target.checked)}
+                  />
+                  <span>Включить подложку</span>
+                </label>
+                {overlayEnabled && (
+                  <>
+                    <label className="colorControl">
+                      <span>Цвет</span>
+                      <input
+                        type="color"
+                        value={overlayColor}
+                        onFocus={() => openColorPalette('overlay')}
+                        onClick={() => openColorPalette('overlay')}
+                        onChange={(event) => setOverlayColor(event.target.value)}
+                      />
+                    </label>
+                    <ColorPalette
+                      value={overlayColor}
+                      visible={activeColorPalette === 'overlay'}
+                      onChange={setOverlayColor}
+                    />
+                    <label className="field">
+                      <span>Прозрачность</span>
+                      <div className="rangeRow">
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={overlayOpacity}
+                          onChange={(event) => applyOverlayOpacity(event.target.value)}
+                        />
+                        <input
+                          type="number"
+                          min="0"
+                          max="100"
+                          value={overlayOpacity}
+                          aria-label="Прозрачность оверлея"
+                          onChange={(event) => applyOverlayOpacity(event.target.value)}
+                        />
+                      </div>
+                    </label>
+                  </>
+                )}
+              </section>
+            </>
+          )}
+
+          {currentStep === 'logo' && (
+            <section className="controlGroup">
+              <button type="button" className="primaryButton" onClick={addEtalonLogo}>
+                {hasLogoLayer ? 'Добавить ещё логотип' : 'Добавить логотип'}
+              </button>
+              {hasLogoLayer ? (
+                <>
+                  <label className="colorControl">
+                    <span>Цвет</span>
+                    <input
+                      type="color"
+                      value={logoColor}
+                      onFocus={() => openColorPalette('logo')}
+                      onClick={() => openColorPalette('logo')}
+                      onChange={(event) => applyLogoColor(event.target.value)}
+                    />
+                  </label>
+                  <ColorPalette
+                    value={logoColor}
+                    visible={activeColorPalette === 'logo'}
+                    onChange={applyLogoColor}
+                  />
+                  <label className="field">
+                    <span>Прозрачность</span>
+                    <div className="rangeRow">
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={logoOpacity}
+                        onChange={(event) => applyLogoOpacity(Number(event.target.value))}
+                      />
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        value={logoOpacity}
+                        aria-label="Прозрачность логотипа"
+                        onChange={(event) => applyLogoOpacity(event.target.value)}
+                      />
+                    </div>
+                  </label>
+                  <p className="statusText">
+                    {hasLogoSelection ? 'Изменится выбранный логотип' : 'Выберите логотип на холсте'}
+                  </p>
+                  <div className="cornerGrid" aria-label="Угол логотипа">
+                    {LOGO_CORNERS.map((corner) => {
+                      const cornerKey = getCornerKey(corner.horizontal, corner.vertical);
+                      const isBlocked = blockedLogoCorners.includes(cornerKey);
+
+                      return (
+                        <button
+                          key={cornerKey}
+                          type="button"
+                          className={
+                            logoAlign === corner.horizontal && logoVerticalAlign === corner.vertical
+                              ? 'active'
+                              : ''
+                          }
+                          disabled={isBlocked}
+                          title={
+                            isBlocked ? 'В этом углу уже расположен текст' : 'Поставить логотип в угол'
+                          }
+                          onClick={() => applyLogoCorner(corner.horizontal, corner.vertical)}
+                        >
+                          {corner.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              ) : (
+                <p className="statusText">Логотип появится в свободном углу и не перекроет текст.</p>
+              )}
+            </section>
+          )}
+
+          {currentStep === 'export' && (
+            <section className="controlGroup exportGroup">
+              <div className="segmented exportFormatSegment">
+                {['png', 'jpg', 'pdf'].map((format) => (
+                  <button
+                    key={format}
+                    type="button"
+                    className={exportFormat === format ? 'active' : ''}
+                    onClick={() => setExportFormat(format)}
+                  >
+                    {format}
+                  </button>
+                ))}
+              </div>
+              <div className="segmented">
+                {[1, 2, 3].map((scale) => (
+                  <button
+                    key={scale}
+                    type="button"
+                    className={exportScale === scale ? 'active' : ''}
+                    onClick={() => setExportScale(scale)}
+                  >
+                    x{scale}
+                  </button>
+                ))}
+              </div>
+              <button type="button" className="primaryButton exportButton" onClick={exportImage}>
+                Скачать макет
+              </button>
+            </section>
+          )}
         </section>
 
-        <section className="controlGroup">
-          <h2>Фон</h2>
-          <label className="colorControl">
-            <span>Цвет</span>
-            <input
-              type="color"
-              value={backgroundColor}
-              onFocus={() => openColorPalette('background')}
-              onClick={() => openColorPalette('background')}
-              onChange={(event) => setBackgroundColor(event.target.value)}
-            />
-          </label>
-          <ColorPalette
-            value={backgroundColor}
-            visible={activeColorPalette === 'background'}
-            onChange={setBackgroundColor}
-          />
-        </section>
-
-        <section className="controlGroup exportGroup">
-          <h2>Экспорт</h2>
-          <div className="segmented exportFormatSegment">
-            {['png', 'jpg', 'pdf'].map((format) => (
-              <button
-                key={format}
-                type="button"
-                className={exportFormat === format ? 'active' : ''}
-                onClick={() => setExportFormat(format)}
-              >
-                {format}
-              </button>
-            ))}
-          </div>
-          <div className="segmented">
-            {[1, 2, 3].map((scale) => (
-              <button
-                key={scale}
-                type="button"
-                className={exportScale === scale ? 'active' : ''}
-                onClick={() => setExportScale(scale)}
-              >
-                x{scale}
-              </button>
-            ))}
-          </div>
-          <button type="button" className="primaryButton" onClick={exportImage}>
-            Сохранить
+        <div className="stepActions">
+          <button type="button" onClick={goToPreviousStep} disabled={currentStepIndex === 0}>
+            Назад
           </button>
-        </section>
-      </aside>
+          {currentStep === 'export' ? (
+            <button type="button" className="primaryButton" onClick={exportImage}>
+              Скачать
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="primaryButton"
+              onClick={goToNextStep}
+              disabled={!canGoNext}
+            >
+              Далее
+            </button>
+          )}
+        </div>
+        </aside>
+      )}
 
       {showFontPrompt && !fontsLoaded && (
         <div className="modalOverlay" role="dialog" aria-modal="true">
@@ -2699,7 +2773,7 @@ function App() {
         </div>
       )}
 
-      {floatingMenu.visible && hasSelectedObject && (
+      {showFloatingMenu && (
         <div
           className="floatingMenu"
           style={{
@@ -2735,29 +2809,6 @@ function App() {
                   onChange={(event) => applyTextColor(event.target.value)}
                 />
               </div>
-              <div className="floatingMenuRow textMetricRow">
-                <label>
-                  <span>Строка</span>
-                  <input
-                    type="number"
-                    min="0.5"
-                    step="0.05"
-                    value={textLineHeight}
-                    aria-label="Высота строки"
-                    onChange={(event) => applyTextLineHeight(event.target.value)}
-                  />
-                </label>
-                <label>
-                  <span>Буквы</span>
-                  <input
-                    type="number"
-                    step="1"
-                    value={textLetterSpacing}
-                    aria-label="Межбуквенное расстояние"
-                    onChange={(event) => applyTextLetterSpacing(event.target.value)}
-                  />
-                </label>
-              </div>
               <div className="positionGrid compact" aria-label="Расположение текста">
                 {TEXT_POSITIONS.map((position) => (
                   <button
@@ -2779,8 +2830,14 @@ function App() {
 
           {floatingMenu.role === 'image' && (
             <>
-              <button type="button" onClick={fillSelectedImageHeight}>
-                По высоте
+              <button
+                type="button"
+                className="fitIconButton"
+                title="Заполнить холст"
+                aria-label="Заполнить холст изображением"
+                onClick={fillSelectedImageFrame}
+              >
+                ⤢
               </button>
               <div className="floatingSegment imageAlignGrid" aria-label="Выравнивание изображения">
                 {IMAGE_ALIGNMENTS.map(([edge, label]) => (
@@ -2793,36 +2850,6 @@ function App() {
                   </button>
                 ))}
               </div>
-              <div className="floatingMenuRow imageMetricRow">
-                <label>
-                  <span>Ширина</span>
-                  <input
-                    type="number"
-                    min="1"
-                    value={imageSize.width}
-                    aria-label="Ширина изображения"
-                    onChange={(event) => resizeActiveImage('width', event.target.value)}
-                  />
-                </label>
-                <label>
-                  <span>Высота</span>
-                  <input
-                    type="number"
-                    min="1"
-                    value={imageSize.height}
-                    aria-label="Высота изображения"
-                    onChange={(event) => resizeActiveImage('height', event.target.value)}
-                  />
-                </label>
-              </div>
-              <label className="floatingCheckRow">
-                <input
-                  type="checkbox"
-                  checked={lockRatio}
-                  onChange={(event) => setLockRatio(event.target.checked)}
-                />
-                <span>Сохранять пропорции</span>
-              </label>
             </>
           )}
 
@@ -2880,12 +2907,15 @@ function App() {
       )}
 
       <section
-        className={`workspace ${isImageDragOver ? 'isImageDragOver' : ''}`}
+        className={`workspace ${!hasImageLayer ? 'isEmpty' : ''} ${
+          isImageDragOver ? 'isImageDragOver' : ''
+        }`}
         onWheel={handleWorkspaceWheel}
         onDragOver={handleCanvasDragOver}
         onDragLeave={handleCanvasDragLeave}
         onDrop={handleCanvasDrop}
       >
+        <div className="workspaceStage">
         <div
           className={`canvasFrame ${edgeInset > 0 ? 'showSafeInset' : ''}`}
           style={{
@@ -2910,37 +2940,40 @@ function App() {
             height={workspaceSize.height}
           />
           <div className="safeInsetGuide" aria-hidden="true" />
-          <button
-            type="button"
-            className={`canvasUploadButton ${
-              hasImageLayer ? 'iconOnly' : hasCanvasObjects ? 'compact' : 'emptyState'
-            } ${showGuide && activeGuideStep.id === 'upload' ? 'guideTarget' : ''}`}
-            aria-label="Добавить изображение"
-            onClick={() => imageInputRef.current?.click()}
-          >
-            {hasImageLayer ? (
-              <span aria-hidden="true">+</span>
-            ) : (
-              <>
-                <span>Загрузить изображение</span>
-                {!hasCanvasObjects && (
-                  <small>Нажмите, перетащите файл сюда или вставьте из буфера</small>
-                )}
-              </>
-            )}
-          </button>
+          {currentStep === 'image' && (
+            <button
+              type="button"
+              className={`canvasUploadButton ${
+                hasImageLayer ? 'iconOnly' : hasCanvasObjects ? 'compact' : 'emptyState'
+              } ${showGuide && activeGuideStep.id === 'upload' ? 'guideTarget' : ''}`}
+              aria-label="Добавить изображение"
+              onClick={() => imageInputRef.current?.click()}
+            >
+              {hasImageLayer ? (
+                <span aria-hidden="true">+</span>
+              ) : (
+                <>
+                  <span aria-hidden="true" className="uploadGlyph">+</span>
+                  <span>Добавьте изображение</span>
+                  <small>Нажмите на холст, перетащите файл или вставьте из буфера</small>
+                </>
+              )}
+            </button>
+          )}
           {isImageDragOver && (
             <div className="dropOverlay" aria-hidden="true">
               Отпустите изображение на холст
             </div>
           )}
-          <button
-            type="button"
-            className="canvasResizeHandle"
-            aria-label="Изменить размер холста"
-            onPointerDown={handleCanvasResizePointerDown}
-          />
-          {showResizeFormats && (
+          {currentStep === 'image' && (
+            <button
+              type="button"
+              className="canvasResizeHandle"
+              aria-label="Изменить размер холста"
+              onPointerDown={handleCanvasResizePointerDown}
+            />
+          )}
+          {currentStep === 'image' && showResizeFormats && (
             <div className="resizeFormatPanel">
               <div className="resizeFormatPanelHeader">
                 <span>Формат при перетягивании</span>
@@ -2959,6 +2992,7 @@ function App() {
               </div>
             </div>
           )}
+        </div>
         </div>
       </section>
     </main>

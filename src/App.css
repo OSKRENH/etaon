@@ -923,3 +923,644 @@ input[type='number'] {
     grid-template-columns: 1fr;
   }
 }
+
+/* Step workflow dark interface */
+.editorShell {
+  grid-template-columns: minmax(340px, 380px) minmax(0, 1fr);
+  color: #eef2ff;
+  background: #080b13;
+}
+
+.sidebar {
+  gap: 18px;
+  padding: 20px;
+  border-right: 1px solid rgba(144, 146, 200, 0.18);
+  background:
+    linear-gradient(180deg, rgba(34, 62, 144, 0.08), transparent 34%),
+    #0d111b;
+}
+
+.brand {
+  align-items: flex-start;
+  padding-bottom: 0;
+}
+
+.brandIcon {
+  width: 26px;
+  height: 22px;
+  filter: invert(1);
+  opacity: 0.92;
+}
+
+.brand h1 {
+  color: #f8fbff;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.brand p,
+.statusText {
+  color: rgba(238, 242, 255, 0.58);
+}
+
+.stepRail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid rgba(144, 146, 200, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.stepRail button {
+  display: grid;
+  gap: 4px;
+  min-height: 58px;
+  padding: 8px 6px;
+  border-color: transparent;
+  color: rgba(238, 242, 255, 0.62);
+  background: transparent;
+  box-shadow: none;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.stepRail button span {
+  color: rgba(144, 146, 200, 0.82);
+  font-size: 10px;
+}
+
+.stepRail button .stepIcon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto;
+  place-items: center;
+  border-radius: 8px;
+  color: rgba(238, 242, 255, 0.8);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.stepRail button.active {
+  border-color: rgba(144, 146, 200, 0.32);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: inset 0 0 0 1px rgba(34, 62, 144, 0.44);
+}
+
+.stepRail button.active span {
+  color: #deddf0;
+}
+
+.stepRail button.active .stepIcon {
+  color: #ffffff;
+  background: rgba(34, 62, 144, 0.72);
+}
+
+.workflowPanel {
+  display: grid;
+  gap: 12px;
+}
+
+.workflowHeader {
+  display: grid;
+  gap: 7px;
+  padding: 16px;
+  border: 1px solid rgba(144, 146, 200, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.workflowHeader span {
+  width: max-content;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: #deddf0;
+  background: rgba(34, 62, 144, 0.72);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.workflowHeader h2,
+.workflowHeader p {
+  margin: 0;
+}
+
+.workflowHeader h2 {
+  color: #ffffff;
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.workflowHeader p {
+  color: rgba(238, 242, 255, 0.64);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.controlGroup {
+  gap: 10px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(238, 242, 255, 0.08);
+}
+
+.controlGroup:last-child {
+  border-bottom: 0;
+}
+
+.inspectorToolGroup {
+  padding-top: 8px;
+}
+
+.controlGroup h2 {
+  color: rgba(238, 242, 255, 0.72);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+button,
+select,
+input[type='text'],
+input[type='number'] {
+  border-color: rgba(144, 146, 200, 0.18);
+  color: #eef2ff;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: none;
+}
+
+button:hover {
+  border-color: rgba(144, 146, 200, 0.52);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+select {
+  color-scheme: dark;
+}
+
+select option {
+  color: #eef2ff;
+  background: #11141d;
+}
+
+select option:checked {
+  color: #ffffff;
+  background: #223e90;
+}
+
+input {
+  color-scheme: dark;
+}
+
+.primaryButton,
+.presetGrid button.active,
+.segmented button.active,
+.positionGrid button.active,
+.cornerGrid button.active,
+.resizeFormatList button.active {
+  border-color: rgba(144, 146, 200, 0.36);
+  color: #ffffff;
+  background: rgba(34, 62, 144, 0.56);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+.primaryButton:hover {
+  border-color: rgba(222, 221, 240, 0.7);
+  background: rgba(34, 62, 144, 0.72);
+}
+
+.uploadHeroButton {
+  min-height: 64px;
+  border-color: rgba(144, 146, 200, 0.34);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: inset 0 0 0 1px rgba(34, 62, 144, 0.4);
+  font-weight: 750;
+}
+
+.field,
+.checkRow {
+  color: rgba(238, 242, 255, 0.72);
+}
+
+.colorControl {
+  border-color: rgba(144, 146, 200, 0.18);
+  color: rgba(238, 242, 255, 0.76);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.presetGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.presetGrid button small {
+  color: rgba(238, 242, 255, 0.5);
+}
+
+.rangeRow input[type='number'] {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.stepActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(144, 146, 200, 0.14);
+}
+
+.exportButton {
+  min-height: 58px;
+  font-size: 15px;
+}
+
+.workspace {
+  height: 100vh;
+  padding: 40px;
+  background:
+    linear-gradient(90deg, rgba(144, 146, 200, 0.06) 1px, transparent 1px),
+    linear-gradient(rgba(144, 146, 200, 0.06) 1px, transparent 1px),
+    #080b13;
+  background-size: 28px 28px;
+}
+
+.workspace.isImageDragOver {
+  background:
+    linear-gradient(90deg, rgba(144, 146, 200, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(144, 146, 200, 0.12) 1px, transparent 1px),
+    #0b1020;
+  background-size: 28px 28px;
+}
+
+.canvasFrame {
+  border-radius: 8px;
+  background:
+    linear-gradient(45deg, rgba(255, 255, 255, 0.055) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.055) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.055) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.055) 75%),
+    #111827;
+  background-position:
+    0 0,
+    0 10px,
+    10px -10px,
+    -10px 0;
+  background-size: 20px 20px;
+  box-shadow:
+    0 26px 90px rgba(0, 0, 0, 0.46),
+    0 0 0 1px rgba(144, 146, 200, 0.2);
+}
+
+.canvasFrame::before {
+  box-shadow: 0 0 0 9999px rgba(8, 11, 19, 0.74);
+}
+
+.canvasFrame::after {
+  border-color: rgba(222, 221, 240, 0.46);
+}
+
+.safeInsetGuide {
+  border-color: rgba(144, 146, 200, 0.92);
+}
+
+.canvasUploadButton {
+  color: #ffffff;
+  background: rgba(13, 17, 27, 0.92);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.32);
+}
+
+.canvasUploadButton small {
+  color: rgba(238, 242, 255, 0.58);
+}
+
+.canvasResizeHandle,
+.resizeFormatPanel,
+.floatingMenu,
+.modal,
+.guideBubble {
+  border-color: rgba(144, 146, 200, 0.22);
+  color: #eef2ff;
+  background: rgba(13, 17, 27, 0.96);
+  box-shadow: 0 22px 64px rgba(0, 0, 0, 0.36);
+}
+
+.canvasResizeHandle::before {
+  border-color: #9092c8;
+}
+
+.resizeFormatPanelHeader,
+.floatingMenuRow.textMetricRow label,
+.floatingMenuRow.imageMetricRow label,
+.floatingCheckRow,
+.modal h2 {
+  color: #eef2ff;
+}
+
+.modal p,
+.guideBubble p {
+  color: rgba(238, 242, 255, 0.64);
+}
+
+.dropOverlay {
+  border-color: rgba(144, 146, 200, 0.78);
+  color: #ffffff;
+  background: rgba(13, 17, 27, 0.78);
+}
+
+@media (max-width: 900px) {
+  .editorShell {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
+  }
+
+  .sidebar {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .stepRail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .workspace {
+    height: min(72vh, 680px);
+    min-height: 420px;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .sidebar {
+    padding: 14px;
+  }
+
+  .workflowHeader h2 {
+    font-size: 19px;
+  }
+
+  .workspace {
+    height: 58vh;
+    min-height: 360px;
+    padding: 16px;
+  }
+}
+
+/* Minimal rail + inspector layout */
+.editorShell {
+  grid-template-columns: 76px minmax(0, 1fr) minmax(300px, 340px);
+}
+
+.sidebar {
+  grid-column: 1;
+  grid-row: 1;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 10px;
+  overflow: hidden;
+}
+
+.brand {
+  justify-content: center;
+}
+
+.brand div {
+  display: none;
+}
+
+.brandIcon {
+  width: 28px;
+  height: 24px;
+}
+
+.stepRail {
+  grid-template-columns: 1fr;
+  width: 48px;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.stepRail button {
+  width: 48px;
+  min-height: 48px;
+  padding: 6px 4px;
+  border-radius: 8px;
+  font-size: 0;
+}
+
+.stepRail button::after {
+  content: none;
+  display: none;
+}
+
+.stepRail button .stepIcon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto;
+  place-items: center;
+  border-radius: 8px;
+  color: rgba(238, 242, 255, 0.8);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.stepRail button.active .stepIcon {
+  color: #ffffff;
+  background: rgba(34, 62, 144, 0.72);
+}
+
+.inspector {
+  grid-column: 3;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+  height: 100vh;
+  padding: 18px;
+  border-left: 1px solid rgba(144, 146, 200, 0.12);
+  background: rgba(9, 12, 20, 0.92);
+  overflow-y: auto;
+}
+
+.workflowHeader {
+  padding: 0 0 8px;
+  border: 0;
+  background: transparent;
+}
+
+.workflowHeader span {
+  display: none;
+}
+
+.workflowHeader h2 {
+  font-size: 18px;
+}
+
+.workflowHeader p {
+  font-size: 12px;
+}
+
+.presetGrid {
+  grid-template-columns: 1fr;
+}
+
+.presetGrid button {
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 52px;
+  padding: 8px 10px;
+  gap: 10px;
+}
+
+.presetGrid button.customPreset {
+  min-height: 52px;
+}
+
+.presetIcon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid rgba(238, 242, 255, 0.14);
+  border-radius: 7px;
+  color: rgba(238, 242, 255, 0.76);
+  background: rgba(255, 255, 255, 0.045);
+  font-size: 16px;
+}
+
+.presetGrid button span:not(.presetIcon) {
+  min-width: 0;
+}
+
+.presetGrid button small {
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.inlineResizeFormats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.inlineResizeFormats button {
+  min-height: 34px;
+  padding: 7px 6px;
+  text-align: center;
+}
+
+.imageAlignGrid button {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.fitIconButton {
+  min-height: 34px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.workspace {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 28px;
+}
+
+.workspace.isEmpty {
+  grid-column: 2 / -1;
+}
+
+.workspaceStage {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.canvasUploadButton.emptyState {
+  inset: 0;
+  width: 100%;
+  min-height: 100%;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  color: rgba(30, 36, 46, 0.52);
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.canvasUploadButton.emptyState:hover {
+  background: rgba(34, 62, 144, 0.025);
+  transform: none;
+}
+
+.canvasUploadButton.emptyState > span:not(.uploadGlyph),
+.canvasUploadButton.emptyState small {
+  display: block;
+  width: min(360px, calc(100% - 40px));
+  text-align: center;
+}
+
+.canvasUploadButton.emptyState > span:not(.uploadGlyph) {
+  color: rgba(30, 36, 46, 0.64);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.canvasUploadButton.emptyState small {
+  color: rgba(30, 36, 46, 0.36);
+  font-size: 12px;
+}
+
+.uploadGlyph {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  margin: 0 auto 8px;
+  place-items: center;
+  border: 1px solid rgba(30, 36, 46, 0.12);
+  border-radius: 999px;
+  color: rgba(30, 36, 46, 0.52);
+  background: rgba(255, 255, 255, 0.42);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.canvasUploadButton.iconOnly {
+  color: #eef2ff;
+}
+
+.canvasUploadButton.iconOnly:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+@media (max-width: 1100px) {
+  .editorShell {
+    grid-template-columns: 68px minmax(0, 1fr);
+  }
+
+  .inspector {
+    grid-column: 1 / -1;
+    height: auto;
+    border-left: 0;
+    border-top: 1px solid rgba(144, 146, 200, 0.12);
+  }
+
+  .workspace.isEmpty {
+    grid-column: 2;
+  }
+
+}
