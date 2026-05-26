@@ -585,6 +585,106 @@ input[type='number'] {
   line-height: 1.25;
 }
 
+.aiGenerateButton {
+  position: absolute;
+  left: -46px;
+  bottom: 0;
+  z-index: 7;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  min-height: 0;
+  padding: 0;
+  place-items: center;
+  border-color: rgba(144, 146, 200, 0.28);
+  border-radius: 10px;
+  color: #ffffff;
+  background:
+    linear-gradient(135deg, rgba(144, 146, 200, 0.32), rgba(34, 62, 144, 0.86)),
+    rgba(13, 17, 27, 0.94);
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.32),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  font-size: 19px;
+  line-height: 1;
+}
+
+.aiGenerateButton:hover {
+  border-color: rgba(222, 221, 240, 0.58);
+  background:
+    linear-gradient(135deg, rgba(222, 221, 240, 0.26), rgba(34, 62, 144, 0.96)),
+    rgba(13, 17, 27, 0.98);
+}
+
+.aiGenerateButton:disabled {
+  opacity: 0.72;
+  cursor: wait;
+}
+
+.aiPromptPanel {
+  position: absolute;
+  left: -46px;
+  bottom: 46px;
+  z-index: 30;
+  width: min(420px, calc(100vw - 40px));
+  padding: 14px;
+  border: 1px solid rgba(144, 146, 200, 0.22);
+  border-radius: 8px;
+  color: #eef2ff;
+  background: rgba(13, 17, 27, 0.99);
+  box-shadow: 0 22px 64px rgba(0, 0, 0, 0.36);
+  pointer-events: auto;
+}
+
+.aiPromptHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.aiPromptHeader button {
+  width: 28px;
+  height: 28px;
+  min-height: 0;
+  padding: 0;
+  border-radius: 8px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.aiPromptPanel textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 92px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(144, 146, 200, 0.34);
+  border-radius: 8px;
+  padding: 10px;
+  color: #eef2ff;
+  background: rgba(255, 255, 255, 0.09);
+  font: inherit;
+  outline: none;
+  opacity: 1;
+}
+
+.aiPromptPanel textarea:focus {
+  border-color: rgba(222, 221, 240, 0.62);
+  box-shadow: 0 0 0 3px rgba(34, 62, 144, 0.24);
+}
+
+.aiPromptPanel textarea::placeholder {
+  color: rgba(238, 242, 255, 0.42);
+}
+
+.aiPromptError {
+  margin: 0 0 10px;
+  color: #ffb4b4;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
 .dropOverlay {
   position: absolute;
   inset: 0;

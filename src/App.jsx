@@ -846,6 +846,7 @@ function App() {
   const edgeInsetRef = useRef(getDefaultSafeInset(PRESETS[0]));
   const objectIdRef = useRef(1);
   const imageInputRef = useRef(null);
+  const aiPromptInputRef = useRef(null);
   const resizeDragRef = useRef(null);
   const imageMoveStartRef = useRef(null);
   const addImageFromFileRef = useRef(null);
@@ -902,6 +903,10 @@ function App() {
   const [showGuide, setShowGuide] = useState(false);
   const [guideStepIndex, setGuideStepIndex] = useState(0);
   const [currentStep, setCurrentStep] = useState(WORKFLOW_STEPS[0].id);
+  const [aiPromptOpen, setAiPromptOpen] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+  const [aiGenerationError, setAiGenerationError] = useState('');
 
   const hasTextSelection = selectedRole === 'text';
   const hasLogoSelection = selectedRole === 'logo';
@@ -1712,6 +1717,16 @@ function App() {
   }, [workspaceDisplayWidth, workspaceDisplayHeight]);
 
   useEffect(() => {
+    if (!aiPromptOpen) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      aiPromptInputRef.current?.focus();
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [aiPromptOpen]);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     const overlay = overlayRef.current;
     if (!canvas || !overlay) return;
@@ -1831,6 +1846,55 @@ function App() {
   function handleImageUpload(event) {
     addImageFromFile(getImageFileFromList(event.target.files), 'image');
     event.target.value = '';
+  }
+
+  async function generateImageWithAi() {
+    const prompt = aiPrompt.trim();
+    if (!prompt || isGeneratingImage) return;
+
+    setIsGeneratingImage(true);
+    setAiGenerationError('');
+
+    try {
+      const response = await fetch('/api/generate-image', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+          width: canvasSizeRef.current.width,
+          height: canvasSizeRef.current.height,
+        }),
+      });
+      const contentType = response.headers.get('content-type') || '';
+      const data = contentType.includes('application/json')
+        ? await response.json()
+        : { error: await response.text() };
+
+      if (!response.ok) {
+        const isLocalMissingFunction =
+          response.status === 404 && window.location.hostname === '127.0.0.1';
+        throw new Error(
+          isLocalMissingFunction
+            ? 'Локальный Vite не запускает Cloudflare Function. Проверьте генерацию онлайн после публикации.'
+            : data.error || 'Не удалось сгенерировать изображение.',
+        );
+      }
+
+      if (!data.image) {
+        throw new Error('Сервис вернул пустой результат.');
+      }
+
+      const imageBytes = dataUrlToBytes(data.image);
+      const imageFile = new File([imageBytes], 'ai-generated-image.png', { type: 'image/png' });
+      await addImageFromFile(imageFile, 'image');
+      setAiPromptOpen(false);
+    } catch (error) {
+      setAiGenerationError(error.message || 'Не удалось сгенерировать изображение.');
+    } finally {
+      setIsGeneratingImage(false);
+    }
   }
 
   function handleCanvasDragOver(event) {
@@ -2960,6 +3024,21 @@ function App() {
               )}
             </button>
           )}
+          {currentStep === 'image' && (
+            <button
+              type="button"
+              className="aiGenerateButton"
+              title="Сгенерировать изображение с ИИ"
+              aria-label="Сгенерировать изображение с ИИ"
+              disabled={isGeneratingImage}
+              onClick={() => {
+                setAiGenerationError('');
+                setAiPromptOpen(true);
+              }}
+            >
+              <span aria-hidden="true">✦</span>
+            </button>
+          )}
           {isImageDragOver && (
             <div className="dropOverlay" aria-hidden="true">
               Отпустите изображение на холст
@@ -2990,6 +3069,36 @@ function App() {
                   </button>
                 ))}
               </div>
+            </div>
+          )}
+          {aiPromptOpen && (
+            <div className="aiPromptPanel" role="dialog" aria-modal="true">
+              <div className="aiPromptHeader">
+                <strong>Сгенерировать изображение</strong>
+                <button
+                  type="button"
+                  aria-label="Закрыть генерацию"
+                  onClick={() => setAiPromptOpen(false)}
+                >
+                  ×
+                </button>
+              </div>
+              <textarea
+                ref={aiPromptInputRef}
+                value={aiPrompt}
+                rows={4}
+                placeholder="Например: современный жилой комплекс у парка, мягкий дневной свет, фотореализм"
+                onChange={(event) => setAiPrompt(event.target.value)}
+              />
+              {aiGenerationError && <p className="aiPromptError">{aiGenerationError}</p>}
+              <button
+                type="button"
+                className="primaryButton"
+                disabled={!aiPrompt.trim() || isGeneratingImage}
+                onClick={generateImageWithAi}
+              >
+                {isGeneratingImage ? 'Генерирую...' : 'Сгенерировать'}
+              </button>
             </div>
           )}
         </div>
