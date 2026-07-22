@@ -4,6 +4,62 @@ const mobileMenu = document.querySelector('[data-mobile-menu]');
 const leadForm = document.querySelector('[data-lead-form]');
 const formStatus = document.querySelector('[data-form-status]');
 
+function ensureStylesheet(id, href) {
+  if (document.getElementById(id)) return;
+  const link = document.createElement('link');
+  link.id = id;
+  link.rel = 'stylesheet';
+  link.href = href;
+  document.head.appendChild(link);
+}
+
+ensureStylesheet('gilroy-fonts', 'https://fonts.cdnfonts.com/css/gilroy-bold');
+ensureStylesheet('landing-typography', './typography.css');
+
+function mountEtalonLogos() {
+  const tabHeader = document.querySelector('[data-brand-tab="etalon"] .brand-tab-header');
+  if (tabHeader) {
+    tabHeader.innerHTML = '<img class="brand-tab-logo-etalon" src="./etalon-blue.svg" alt="Эталон" />';
+  }
+
+  const summaryName = document.querySelector('[data-brand-panel="etalon"] .brand-summary span');
+  if (summaryName) {
+    const logo = document.createElement('img');
+    logo.className = 'brand-summary-logo-etalon';
+    logo.src = './etalon-blue.svg';
+    logo.alt = 'Эталон';
+    summaryName.replaceWith(logo);
+  }
+}
+
+mountEtalonLogos();
+
+const TYPOGRAPHY_EXCLUDED_TAGS = new Set(['SCRIPT', 'STYLE', 'TEXTAREA', 'CODE', 'PRE']);
+const SHORT_RUSSIAN_WORDS = /(^|[\s([{"«])((?:а|без|бы|в|во|для|до|же|за|и|из|или|к|как|ко|ли|между|на|над|не|ни|но|о|об|от|по|под|при|про|с|со|у|через|что))\s+(?=\S)/giu;
+
+function fixHangingWords(root = document.body) {
+  if (!root) return;
+
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (!parent || !node.nodeValue?.trim()) return NodeFilter.FILTER_REJECT;
+      if (TYPOGRAPHY_EXCLUDED_TAGS.has(parent.tagName)) return NodeFilter.FILTER_REJECT;
+      if (parent.closest('[data-no-typography]')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+
+  nodes.forEach((node) => {
+    node.nodeValue = node.nodeValue.replace(SHORT_RUSSIAN_WORDS, '$1$2\u00A0');
+  });
+}
+
+fixHangingWords();
+
 function syncHeader() {
   header?.classList.toggle('is-scrolled', window.scrollY > 24);
 }
