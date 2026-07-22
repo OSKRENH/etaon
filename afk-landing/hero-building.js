@@ -31,29 +31,25 @@
     .offer-panel {
       position: relative;
       z-index: 5;
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(3px);
     }
 
     .hero-building-art {
       position: absolute;
-      z-index: 1;
-      right: max(-54px, calc((100vw - 1600px) / 2 - 40px));
-      bottom: -48px;
-      width: min(31vw, 440px);
-      height: min(500px, 78%);
+      z-index: 3;
+      right: max(-38px, calc((100vw - 1640px) / 2 - 22px));
+      bottom: -82px;
+      width: auto;
+      height: min(700px, 96%);
+      max-width: 43vw;
       object-fit: contain;
       object-position: right bottom;
       pointer-events: none;
       user-select: none;
-      opacity: 0;
-      transform: translate3d(22px, 18px, 0) scale(.985);
-      filter: drop-shadow(0 28px 52px rgba(30, 60, 132, .17));
-      transition: opacity .65s ease, transform .8s cubic-bezier(.22, 1, .36, 1);
-    }
-
-    .hero.has-building .hero-building-art {
-      opacity: .82;
-      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 1;
+      filter:
+        drop-shadow(0 38px 68px rgba(25, 53, 120, .22))
+        drop-shadow(0 0 34px rgba(71, 120, 220, .13));
     }
 
     .hero::after {
@@ -62,22 +58,29 @@
       z-index: 1;
       right: 0;
       bottom: 0;
-      width: min(40vw, 620px);
-      height: 130px;
+      width: min(44vw, 720px);
+      height: 72px;
       pointer-events: none;
-      background: linear-gradient(to top, rgba(246, 249, 255, .96), rgba(246, 249, 255, 0));
+      background: linear-gradient(to top, rgba(246, 249, 255, .9), rgba(246, 249, 255, 0));
     }
 
-    @media (max-width: 1280px) {
+    @media (max-width: 1380px) {
       .hero-building-art {
-        right: -90px;
-        bottom: -42px;
-        width: min(34vw, 390px);
-        height: min(450px, 75%);
+        right: -86px;
+        bottom: -68px;
+        height: min(610px, 90%);
+        max-width: 42vw;
+        opacity: .96;
       }
+    }
 
-      .hero.has-building .hero-building-art {
-        opacity: .6;
+    @media (max-width: 1120px) {
+      .hero-building-art {
+        right: -118px;
+        bottom: -52px;
+        height: min(530px, 82%);
+        max-width: 41vw;
+        opacity: .82;
       }
     }
 
@@ -85,13 +88,6 @@
       .hero-building-art,
       .hero::after {
         display: none;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .hero-building-art {
-        transition: none;
-        transform: none;
       }
     }
   `;
@@ -113,11 +109,6 @@
       image.alt = '';
       image.setAttribute('aria-hidden', 'true');
       image.decoding = 'async';
-
-      image.addEventListener('load', () => {
-        hero.classList.add('has-building');
-      }, { once: true });
-
       hero.appendChild(image);
     })
     .catch((error) => console.error(error));
