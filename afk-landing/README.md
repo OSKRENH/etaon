@@ -2,6 +2,11 @@
 
 Статический редизайн лендинга для предложения сотрудникам АФК «Система».
 
+## Посмотреть онлайн
+
+- [Открыть быстрый предпросмотр](https://htmlpreview.github.io/?https://github.com/OSKRENH/etaon/blob/main/afk-landing/index.html)
+- GitHub Pages после активации репозитория: `https://oskrenh.github.io/etaon/`
+
 ## Что внутри
 
 - адаптивная desktop-first сетка с максимальной шириной 1440 px;
