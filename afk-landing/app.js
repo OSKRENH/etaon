@@ -29,12 +29,12 @@ ensureStylesheet(
 
 ensureStylesheet(
   'editorial-layout',
-  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@f7d371ff07cf90c85889a13112927dc9a8d32f2d/afk-landing/editorial.css',
+  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@6b14ecef4c28634c4eaeeca0d4580d4f66601d66/afk-landing/editorial.css',
 );
 
 ensureScript(
   'hero-building',
-  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@313d1c555cc8c326745265aa392ed2c0b056c7c2/afk-landing/hero-building.js',
+  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@9514e252ba268a118b66f5603126e38d4e0f3653/afk-landing/hero-building.js',
 );
 
 function normalizeBrandNames() {
@@ -81,11 +81,6 @@ function setHTML(selector, html) {
   if (element) element.innerHTML = html;
 }
 
-function setText(selector, text) {
-  const element = document.querySelector(selector);
-  if (element) element.textContent = text;
-}
-
 function applyEditorialCopy() {
   setHTML(
     '.hero-copy .eyebrow',
@@ -97,7 +92,7 @@ function applyEditorialCopy() {
   );
   setHTML(
     '.hero-lead',
-    'Выберите бренд и&nbsp;жилой проект. Дополнительная скидка, персональный расчёт ипотеки или&nbsp;рассрочки — для&nbsp;сотрудников АФК&nbsp;«Система».',
+    'Выберите бренд и&nbsp;проект. Получите дополнительную скидку и&nbsp;персональный расчёт условий.',
   );
   setHTML(
     '.hero-footnote p',
