@@ -1,17 +1,19 @@
 (() => {
   const PARTS_BASE = 'https://raw.githubusercontent.com/OSKRENH/etaon/main/afk-landing/assets/project-sprite';
   const partUrls = Array.from({ length: 6 }, (_, index) => `${PARTS_BASE}/part-${index + 1}.txt`);
+  const CELL_WIDTH = 480;
+  const CELL_HEIGHT = 267;
 
   const projects = [
-    { panel: 'etalon', index: 0, position: '0% 0%', alt: 'ЖК Шагал' },
-    { panel: 'etalon', index: 1, position: '100% 0%', alt: 'ЖК Соколин Парк' },
-    { panel: 'aurix', index: 0, position: '0% 50%', alt: 'Резиденция Омега' },
-    { panel: 'aurix', index: 1, position: '100% 50%', alt: 'ЛДМ' },
-    { panel: 'rsk', index: 0, position: '0% 100%', alt: 'Кленовая аллея' },
-    { panel: 'rsk', index: 1, position: '100% 100%', alt: 'Центральный квартал' },
+    { panel: 'etalon', index: 0, column: 0, row: 0, alt: 'ЖК Шагал' },
+    { panel: 'etalon', index: 1, column: 1, row: 0, alt: 'ЖК Соколин Парк' },
+    { panel: 'aurix', index: 0, column: 0, row: 1, alt: 'Резиденция Омега' },
+    { panel: 'aurix', index: 1, column: 1, row: 1, alt: 'ЛДМ' },
+    { panel: 'rsk', index: 0, column: 0, row: 2, alt: 'Кленовая аллея' },
+    { panel: 'rsk', index: 1, column: 1, row: 2, alt: 'Центральный квартал' },
   ];
 
-  const cssForSprite = (sprite) => `
+  const cardStyles = `
     .project-card {
       min-height: 440px;
       overflow: hidden;
@@ -51,14 +53,15 @@
         linear-gradient(180deg, #f5fbff 0%, #eaf8ff 100%);
     }
 
-    .project-card-visual {
-      width: min(396px, 100%);
-      aspect-ratio: 480 / 267;
-      flex: 0 0 auto;
+    .project-card-media img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: min(396px, 100%);
+      max-height: 220px;
       margin-left: auto;
-      background-image: url("data:image/webp;base64,${sprite}");
-      background-repeat: no-repeat;
-      background-size: 200% 300%;
+      object-fit: contain;
+      object-position: right bottom;
       filter: drop-shadow(0 16px 24px rgba(18, 36, 83, .12));
     }
 
@@ -68,38 +71,75 @@
         flex-basis: 190px;
         height: 190px;
       }
-      .project-card-visual { width: min(342px, 100%); }
+      .project-card-media img {
+        max-width: min(342px, 100%);
+        max-height: 190px;
+      }
     }
   `;
 
-  function mountProjectImages(sprite) {
-    projects.forEach(({ panel, index, position, alt }) => {
+  function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = src;
+    });
+  }
+
+  function cropProjectImage(sheet, column, row) {
+    const canvas = document.createElement('canvas');
+    canvas.width = CELL_WIDTH;
+    canvas.height = CELL_HEIGHT;
+
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, CELL_WIDTH, CELL_HEIGHT);
+    context.drawImage(
+      sheet,
+      column * CELL_WIDTH,
+      row * CELL_HEIGHT,
+      CELL_WIDTH,
+      CELL_HEIGHT,
+      0,
+      0,
+      CELL_WIDTH,
+      CELL_HEIGHT,
+    );
+
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => resolve(URL.createObjectURL(blob)), 'image/png');
+    });
+  }
+
+  async function mountProjectImages(sprite) {
+    const sheet = await loadImage(`data:image/webp;base64,${sprite}`);
+
+    const style = document.createElement('style');
+    style.id = 'project-images-style';
+    style.textContent = cardStyles;
+    document.head.appendChild(style);
+
+    await Promise.all(projects.map(async ({ panel, index, column, row, alt }) => {
       const cards = document.querySelectorAll(`[data-brand-panel="${panel}"] .project-card`);
       const card = cards[index];
       if (!card || card.querySelector('.project-card-media')) return;
 
       const media = document.createElement('div');
       media.className = 'project-card-media';
-      media.setAttribute('role', 'img');
-      media.setAttribute('aria-label', alt);
 
-      const visual = document.createElement('div');
-      visual.className = 'project-card-visual';
-      visual.style.backgroundPosition = position;
+      const image = document.createElement('img');
+      image.src = await cropProjectImage(sheet, column, row);
+      image.alt = alt;
+      image.decoding = 'async';
 
-      media.appendChild(visual);
+      media.appendChild(image);
       card.prepend(media);
-    });
-
-    const style = document.createElement('style');
-    style.id = 'project-images-style';
-    style.textContent = cssForSprite(sprite);
-    document.head.appendChild(style);
+    }));
   }
 
   Promise.all(partUrls.map(async (url) => {
     const response = await fetch(url, { cache: 'force-cache' });
-    if (!response.ok) throw new Error(`Не удалось загрузить изображение проектов: ${response.status}`);
+    if (!response.ok) throw new Error(`Не удалось загрузить изображения проектов: ${response.status}`);
     return response.text();
   }))
     .then((parts) => mountProjectImages(parts.join('').trim()))
