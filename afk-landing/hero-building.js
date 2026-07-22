@@ -39,8 +39,8 @@
     .hero-layout {
       position: relative;
       z-index: auto;
-      grid-template-columns: minmax(0, 1fr) 336px;
-      gap: 36px;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 34px;
     }
 
     .hero-copy {
@@ -71,9 +71,9 @@
       position: relative;
       z-index: auto;
       justify-self: end;
-      width: 336px;
-      min-height: 342px;
-      padding: 28px 22px 26px 76px;
+      width: 320px;
+      min-height: 326px;
+      padding: 25px 24px;
       overflow: visible;
       background: linear-gradient(160deg, #3d5ebd 0%, #223d90 55%, #192f73 100%);
       box-shadow: 0 26px 60px rgba(34, 61, 144, .19);
@@ -155,8 +155,8 @@
 
     @media (max-width: 1380px) {
       .hero-layout {
-        grid-template-columns: minmax(0, 1fr) 312px;
-        gap: 28px;
+        grid-template-columns: minmax(0, 1fr) 304px;
+        gap: 26px;
       }
 
       .hero-copy {
@@ -169,16 +169,16 @@
       }
 
       .offer-panel {
-        width: 312px;
-        min-height: 330px;
-        padding: 26px 20px 24px 68px;
+        width: 304px;
+        min-height: 318px;
+        padding: 24px 22px;
       }
     }
 
     @media (max-width: 1120px) {
       .hero-layout {
-        grid-template-columns: minmax(0, 1fr) 292px;
-        gap: 22px;
+        grid-template-columns: minmax(0, 1fr) 288px;
+        gap: 20px;
       }
 
       .hero-copy h1 {
@@ -190,9 +190,9 @@
       }
 
       .offer-panel {
-        width: 292px;
-        min-height: 318px;
-        padding: 24px 18px 22px 62px;
+        width: 288px;
+        min-height: 310px;
+        padding: 22px 20px;
       }
     }
 
@@ -233,7 +233,7 @@
 
     const top = Math.max(112, titleRect.top - heroRect.top - 2);
     const height = Math.max(410, heroRect.height - top + 10);
-    const overlap = window.innerWidth <= 1120 ? 42 : window.innerWidth <= 1380 ? 48 : 56;
+    const overlap = window.innerWidth <= 1120 ? 8 : window.innerWidth <= 1380 ? 10 : 12;
 
     image.style.top = `${Math.round(top)}px`;
     image.style.bottom = 'auto';
