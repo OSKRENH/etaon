@@ -7,6 +7,7 @@
     <meta name="theme-color" content="#223d90" />
     <title>Эталон × АФК Система — специальные условия</title>
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./projects.css" />
   </head>
   <body>
     <header class="site-header" data-header>
@@ -22,7 +23,7 @@
         </a>
 
         <nav class="desktop-nav" aria-label="Основная навигация">
-          <a href="#benefits">Преимущества</a>
+          <a href="#projects">Проекты</a>
           <a href="#programs">Условия</a>
           <a href="#steps">Как получить</a>
         </nav>
@@ -33,7 +34,7 @@
         </button>
       </div>
       <div class="mobile-menu" data-mobile-menu>
-        <a href="#benefits">Преимущества</a>
+        <a href="#projects">Проекты</a>
         <a href="#programs">Условия</a>
         <a href="#steps">Как получить</a>
         <a href="#consultation">Консультация</a>
@@ -46,11 +47,11 @@
         <div class="container hero-layout">
           <div class="hero-copy">
             <div class="eyebrow"><span></span> Предложение для сотрудников АФК «Система»</div>
-            <h1>Квартира в проектах <span>«Эталона»</span> на специальных условиях</h1>
-            <p class="hero-lead">Дополнительная скидка к действующим предложениям, персональный расчёт ипотеки или рассрочки и подбор проекта под ваш запрос.</p>
+            <h1>Квартиры в проектах <span>«Эталона», Aurix и РСК</span> на специальных условиях</h1>
+            <p class="hero-lead">Выберите направление и конкретный жилой проект. Дополнительная скидка, персональный расчёт ипотеки или рассрочки — для сотрудников АФК «Система».</p>
             <div class="hero-actions">
               <a class="button button-primary" href="#consultation">Подобрать квартиру</a>
-              <a class="text-link" href="#programs">Посмотреть условия <span>↓</span></a>
+              <a class="text-link" href="#projects">Посмотреть проекты <span>↓</span></a>
             </div>
           </div>
 
@@ -89,10 +90,100 @@
         </div>
       </section>
 
+      <section class="brand-projects" id="projects">
+        <div class="container">
+          <div class="section-intro projects-intro">
+            <p class="section-index">02 / ПРОЕКТЫ</p>
+            <div>
+              <h2>Три направления — один формат спецпредложения</h2>
+              <p>Переключайтесь между брендами и выбирайте подходящий проект по классу, городу и бюджету.</p>
+            </div>
+          </div>
+
+          <div class="brand-tabs" role="tablist" aria-label="Направления проектов">
+            <button class="brand-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-etalon" id="tab-etalon" data-brand-tab="etalon">
+              <span class="brand-tab-name">ЭТАЛОН</span>
+              <span>Бизнес и комфорт</span>
+            </button>
+            <button class="brand-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-aurix" id="tab-aurix" data-brand-tab="aurix">
+              <span class="brand-tab-name brand-tab-aurix">AURIX</span>
+              <span>Премиум</span>
+            </button>
+            <button class="brand-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-rsk" id="tab-rsk" data-brand-tab="rsk">
+              <span class="brand-tab-name brand-tab-rsk">РСК</span>
+              <span>Комфорт</span>
+            </button>
+          </div>
+
+          <div class="brand-panel is-active" id="panel-etalon" role="tabpanel" aria-labelledby="tab-etalon" data-brand-panel="etalon">
+            <div class="brand-summary brand-summary-etalon">
+              <div><span>ЭТАЛОН</span><strong>Бизнес- и комфорт-класс</strong></div>
+              <p>Проекты в Москве, Санкт-Петербурге и регионах России.</p>
+            </div>
+            <div class="project-cards">
+              <article class="project-card">
+                <div class="project-card-top"><span>Москва</span><b>17–100 млн ₽</b></div>
+                <h3>Шагал</h3>
+                <p>Масштабный квартал на первой линии набережной Марка Шагала, в 9 км от Кремля.</p>
+                <button type="button" data-project-choice="Шагал — Эталон">Выбрать проект <span>→</span></button>
+              </article>
+              <article class="project-card">
+                <div class="project-card-top"><span>Москва</span><b>19–49 млн ₽</b></div>
+                <h3>Соколин Парк</h3>
+                <p>Городская среда рядом с природным окружением в Богородском районе Москвы.</p>
+                <button type="button" data-project-choice="Соколин Парк — Эталон">Выбрать проект <span>→</span></button>
+              </article>
+            </div>
+          </div>
+
+          <div class="brand-panel" id="panel-aurix" role="tabpanel" aria-labelledby="tab-aurix" data-brand-panel="aurix" hidden>
+            <div class="brand-summary brand-summary-aurix">
+              <div><span>AURIX</span><strong>Премиальные резиденции</strong></div>
+              <p>Камерные проекты в Москве и Санкт-Петербурге.</p>
+            </div>
+            <div class="project-cards">
+              <article class="project-card project-card-aurix">
+                <div class="project-card-top"><span>Москва</span><b>153–258 млн ₽</b></div>
+                <h3>Резиденция Омега</h3>
+                <p>Премиальный дом в Гагаринском районе среди парков, науки и образования.</p>
+                <button type="button" data-project-choice="Резиденция Омега — Aurix">Выбрать проект <span>→</span></button>
+              </article>
+              <article class="project-card project-card-aurix">
+                <div class="project-card-top"><span>Санкт-Петербург</span><b>47–437 млн ₽</b></div>
+                <h3>ЛДМ</h3>
+                <p>Эксклюзивный квартал на Аптекарском острове с видовыми сити-виллами.</p>
+                <button type="button" data-project-choice="ЛДМ — Aurix">Выбрать проект <span>→</span></button>
+              </article>
+            </div>
+          </div>
+
+          <div class="brand-panel" id="panel-rsk" role="tabpanel" aria-labelledby="tab-rsk" data-brand-panel="rsk" hidden>
+            <div class="brand-summary brand-summary-rsk">
+              <div><span>РСК</span><strong>Современный комфорт-класс</strong></div>
+              <p>Новые жилые проекты в Мариуполе и Луганске.</p>
+            </div>
+            <div class="project-cards">
+              <article class="project-card project-card-rsk">
+                <div class="project-card-top"><span>Мариуполь</span><b>7–12 млн ₽</b></div>
+                <h3>Кленовая аллея</h3>
+                <p>Современный жилой комплекс в десяти минутах от центра города.</p>
+                <button type="button" data-project-choice="Кленовая аллея — РСК">Выбрать проект <span>→</span></button>
+              </article>
+              <article class="project-card project-card-rsk">
+                <div class="project-card-top"><span>Луганск</span><b>5–10 млн ₽</b></div>
+                <h3>Центральный квартал</h3>
+                <p>18 корпусов, благоустроенные дворы, паркинг и спортивная инфраструктура.</p>
+                <button type="button" data-project-choice="Центральный квартал — РСК">Выбрать проект <span>→</span></button>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="programs" id="programs">
         <div class="container">
           <div class="section-intro">
-            <p class="section-index">02 / ФИНАНСИРОВАНИЕ</p>
+            <p class="section-index">03 / ФИНАНСИРОВАНИЕ</p>
             <div>
               <h2>Сравните варианты покупки</h2>
               <p>Менеджер рассчитает доступные условия для выбранного проекта.</p>
@@ -155,7 +246,7 @@
       <section class="steps" id="steps">
         <div class="container">
           <div class="section-intro section-intro-dark steps-intro">
-            <p class="section-index">03 / КАК ЭТО РАБОТАЕТ</p>
+            <p class="section-index">04 / КАК ЭТО РАБОТАЕТ</p>
             <div>
               <h2>Три коротких шага до персонального предложения</h2>
               <p>Без лишней коммуникации: заявка, расчёт и подбор конкретных вариантов.</p>
@@ -172,9 +263,9 @@
       <section class="consultation" id="consultation">
         <div class="container consultation-layout">
           <div class="consultation-copy">
-            <p class="section-index">04 / КОНСУЛЬТАЦИЯ</p>
+            <p class="section-index">05 / КОНСУЛЬТАЦИЯ</p>
             <h2>Получите подборку квартир со специальными условиями</h2>
-            <p>Оставьте заявку — специалист «Эталона» свяжется с вами, уточнит задачу и подготовит подходящие варианты.</p>
+            <p>Оставьте заявку — специалист группы «Эталон» свяжется с вами, уточнит задачу и подготовит подходящие варианты.</p>
             <div class="consultation-note"><span>i</span><p>Для подтверждения предложения потребуется корпоративный e-mail сотрудника компании группы АФК «Система».</p></div>
           </div>
 
@@ -190,9 +281,19 @@
             <label><span>Желаемый проект</span>
               <select name="project" required>
                 <option value="">Выберите проект</option>
-                <option>Shagal</option><option>Shagal Residence</option><option>Voxhall</option><option>Mariinn Park</option>
-                <option>Sokolinn Park</option><option>Nagatino i-Land</option><option>Квартал Che</option><option>Domino</option>
-                <option>Новоорловский</option><option>Пулковский дом</option><option>Счастье в Казани</option><option>Другой проект</option>
+                <optgroup label="Эталон">
+                  <option>Шагал — Эталон</option>
+                  <option>Соколин Парк — Эталон</option>
+                  <option>Другой проект Эталона</option>
+                </optgroup>
+                <optgroup label="Aurix">
+                  <option>Резиденция Омега — Aurix</option>
+                  <option>ЛДМ — Aurix</option>
+                </optgroup>
+                <optgroup label="РСК">
+                  <option>Кленовая аллея — РСК</option>
+                  <option>Центральный квартал — РСК</option>
+                </optgroup>
               </select>
             </label>
             <label class="checkbox-label">
