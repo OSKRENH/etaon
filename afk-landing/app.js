@@ -1,29 +1,3 @@
-const themeLink = document.createElement('link');
-themeLink.rel = 'stylesheet';
-themeLink.href = './theme-light.css';
-document.head.appendChild(themeLink);
-
-function replaceLogo(selector, src, alt) {
-  document.querySelectorAll(selector).forEach((container) => {
-    const image = new Image();
-    image.src = src;
-    image.alt = alt;
-    image.decoding = 'async';
-    container.replaceChildren(image);
-  });
-}
-
-replaceLogo(
-  '.etalon-logo',
-  'https://static.tildacdn.com/tild3365-6236-4633-b064-666561653563/etalon-black.svg',
-  'Эталон',
-);
-replaceLogo(
-  '.afk-logo',
-  'https://static.tildacdn.com/tild6362-6262-4566-b733-306331626335/afk.svg',
-  'АФК Система',
-);
-
 const header = document.querySelector('[data-header]');
 const menuButton = document.querySelector('[data-menu-button]');
 const mobileMenu = document.querySelector('[data-mobile-menu]');
