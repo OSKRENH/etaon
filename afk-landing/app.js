@@ -4,6 +4,17 @@ const mobileMenu = document.querySelector('[data-mobile-menu]');
 const leadForm = document.querySelector('[data-lead-form]');
 const formStatus = document.querySelector('[data-form-status]');
 
+function ensureStylesheet(id, href) {
+  if (document.getElementById(id)) return;
+  const link = document.createElement('link');
+  link.id = id;
+  link.rel = 'stylesheet';
+  link.href = href;
+  document.head.appendChild(link);
+}
+
+ensureStylesheet('landing-typography', './typography.css');
+
 function mountEtalonLogos() {
   const tabHeader = document.querySelector('[data-brand-tab="etalon"] .brand-tab-header');
   if (tabHeader) {
