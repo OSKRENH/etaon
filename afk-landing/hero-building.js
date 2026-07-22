@@ -11,81 +11,95 @@
   style.textContent = `
     .hero {
       isolation: isolate;
+      overflow: hidden;
     }
 
     .hero-grid {
       z-index: 0;
     }
 
-    .hero-layout,
-    .hero-footnote {
-      position: relative;
-      z-index: 2;
+    .hero::before {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      width: min(48vw, 760px);
+      height: 100%;
+      pointer-events: none;
+      background: radial-gradient(circle at 72% 42%, rgba(74, 126, 232, .2), rgba(74, 126, 232, 0) 64%);
     }
 
-    .hero-copy {
+    .hero-layout,
+    .hero-footnote {
       position: relative;
       z-index: 4;
     }
 
-    .offer-panel {
+    .hero-copy {
       position: relative;
       z-index: 5;
-      backdrop-filter: blur(3px);
+    }
+
+    .offer-panel {
+      position: relative;
+      z-index: 6;
+      background: linear-gradient(145deg, rgba(58, 92, 190, .97), rgba(29, 58, 139, .98));
+      box-shadow: 0 26px 56px rgba(29, 58, 139, .2);
     }
 
     .hero-building-art {
       position: absolute;
-      z-index: 3;
-      right: max(-38px, calc((100vw - 1640px) / 2 - 22px));
-      bottom: -82px;
+      z-index: 2;
+      right: max(-12px, calc((100vw - 1540px) / 2 - 8px));
+      bottom: -34px;
       width: auto;
-      height: min(700px, 96%);
-      max-width: 43vw;
+      height: min(640px, 91%);
+      max-width: 39vw;
       object-fit: contain;
       object-position: right bottom;
       pointer-events: none;
       user-select: none;
       opacity: 1;
       filter:
-        drop-shadow(0 38px 68px rgba(25, 53, 120, .22))
-        drop-shadow(0 0 34px rgba(71, 120, 220, .13));
+        drop-shadow(0 34px 62px rgba(25, 53, 120, .21))
+        drop-shadow(0 0 26px rgba(71, 120, 220, .1));
     }
 
     .hero::after {
       content: '';
       position: absolute;
-      z-index: 1;
+      z-index: 3;
       right: 0;
       bottom: 0;
       width: min(44vw, 720px);
-      height: 72px;
+      height: 56px;
       pointer-events: none;
-      background: linear-gradient(to top, rgba(246, 249, 255, .9), rgba(246, 249, 255, 0));
+      background: linear-gradient(to top, rgba(246, 249, 255, .94), rgba(246, 249, 255, 0));
     }
 
     @media (max-width: 1380px) {
       .hero-building-art {
-        right: -86px;
-        bottom: -68px;
-        height: min(610px, 90%);
-        max-width: 42vw;
-        opacity: .96;
+        right: -34px;
+        bottom: -28px;
+        height: min(570px, 86%);
+        max-width: 37vw;
       }
     }
 
     @media (max-width: 1120px) {
       .hero-building-art {
-        right: -118px;
-        bottom: -52px;
-        height: min(530px, 82%);
-        max-width: 41vw;
-        opacity: .82;
+        right: -62px;
+        bottom: -22px;
+        height: min(500px, 79%);
+        max-width: 36vw;
+        opacity: .9;
       }
     }
 
     @media (max-width: 980px) {
       .hero-building-art,
+      .hero::before,
       .hero::after {
         display: none;
       }
