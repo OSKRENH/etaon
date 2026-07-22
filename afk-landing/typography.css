@@ -1,4 +1,4 @@
-/* Gilroy typography. The external stylesheet exposes Regular, Medium, Bold and Heavy families. */
+/* Gilroy typography. Loaded after the base styles so the whole landing uses the requested family. */
 html,
 body,
 button,
@@ -34,6 +34,20 @@ b,
 .footer-links {
   font-family: "Gilroy-Medium", "Gilroy-Regular", Arial, sans-serif;
   font-weight: 400;
+}
+
+.brand-tab-logo-etalon {
+  display: block;
+  width: auto;
+  height: 29px;
+  max-width: 170px;
+}
+
+.brand-summary-logo-etalon {
+  display: block;
+  width: auto;
+  height: 30px;
+  flex: 0 0 auto;
 }
 
 h1 { letter-spacing: -0.045em; }
