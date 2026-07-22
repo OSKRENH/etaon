@@ -29,7 +29,7 @@ ensureStylesheet(
 
 ensureScript(
   'hero-building',
-  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@979d24157290570bf3cbbebd9109922cab871568/afk-landing/hero-building.js',
+  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@ffc58d479c56f21e7fa780ae154c1bf6c7445641/afk-landing/hero-building.js',
 );
 
 function mountEtalonLogos() {
