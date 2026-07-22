@@ -29,7 +29,7 @@ ensureStylesheet(
 
 ensureScript(
   'hero-building',
-  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@35a4d6ada8e78a46ba0d965c2f217ae79ac3d046/afk-landing/hero-building.js',
+  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@e4ae77267af8c1f4ff940683e3da38db3e32f965/afk-landing/hero-building.js',
 );
 
 function normalizeBrandNames() {
