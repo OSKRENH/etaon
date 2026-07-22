@@ -32,6 +32,47 @@ ensureScript(
   'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@35a4d6ada8e78a46ba0d965c2f217ae79ac3d046/afk-landing/hero-building.js',
 );
 
+function normalizeBrandNames() {
+  const replacements = [
+    [/«Эталона»/g, '«Эталон»'],
+    [/Эталона/g, 'Эталон'],
+    [/Aurix/g, 'AURIX'],
+  ];
+
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+
+  while (walker.nextNode()) {
+    const parent = walker.currentNode.parentElement;
+    if (!parent || parent.closest('script, style')) continue;
+    textNodes.push(walker.currentNode);
+  }
+
+  textNodes.forEach((node) => {
+    let value = node.nodeValue;
+    replacements.forEach(([pattern, replacement]) => {
+      value = value.replace(pattern, replacement);
+    });
+    node.nodeValue = value;
+  });
+
+  document.querySelectorAll('img[alt="Aurix"]').forEach((image) => {
+    image.alt = 'AURIX';
+  });
+
+  document.querySelectorAll('optgroup[label="Aurix"]').forEach((group) => {
+    group.label = 'AURIX';
+  });
+
+  document.querySelectorAll('[data-project-choice]').forEach((button) => {
+    button.dataset.projectChoice = button.dataset.projectChoice
+      .replace(/Эталона/g, 'Эталон')
+      .replace(/Aurix/g, 'AURIX');
+  });
+}
+
+normalizeBrandNames();
+
 function mountEtalonLogos() {
   const tabHeader = document.querySelector('[data-brand-tab="etalon"] .brand-tab-header');
   if (tabHeader) {
