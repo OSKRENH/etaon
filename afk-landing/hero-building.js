@@ -40,26 +40,26 @@
       position: relative;
       z-index: auto;
       grid-template-columns: minmax(0, 1fr) 320px;
-      gap: 34px;
+      gap: 38px;
     }
 
     .hero-copy {
       position: relative;
       z-index: 8;
-      max-width: 730px;
+      max-width: 660px;
     }
 
     .hero-copy h1 {
-      max-width: 720px;
-      font-size: clamp(48px, 4.25vw, 66px);
-      line-height: .97;
-      letter-spacing: -.048em;
+      max-width: 650px;
+      font-size: clamp(44px, 3.9vw, 61px);
+      line-height: .98;
+      letter-spacing: -.046em;
     }
 
     .hero-copy .hero-lead {
-      max-width: 610px;
-      font-size: 16px;
-      line-height: 1.48;
+      max-width: 555px;
+      font-size: 15.5px;
+      line-height: 1.46;
     }
 
     .hero-footnote {
@@ -156,16 +156,21 @@
     @media (max-width: 1380px) {
       .hero-layout {
         grid-template-columns: minmax(0, 1fr) 304px;
-        gap: 26px;
+        gap: 30px;
       }
 
       .hero-copy {
-        max-width: 660px;
+        max-width: 600px;
       }
 
       .hero-copy h1 {
-        max-width: 650px;
-        font-size: clamp(46px, 4vw, 59px);
+        max-width: 590px;
+        font-size: clamp(42px, 3.7vw, 54px);
+      }
+
+      .hero-copy .hero-lead {
+        max-width: 520px;
+        font-size: 15px;
       }
 
       .offer-panel {
@@ -178,15 +183,21 @@
     @media (max-width: 1120px) {
       .hero-layout {
         grid-template-columns: minmax(0, 1fr) 288px;
-        gap: 20px;
+        gap: 24px;
+      }
+
+      .hero-copy {
+        max-width: 540px;
       }
 
       .hero-copy h1 {
-        font-size: clamp(43px, 4.1vw, 52px);
+        max-width: 530px;
+        font-size: clamp(40px, 3.8vw, 47px);
       }
 
       .hero-copy .hero-lead {
-        font-size: 15px;
+        max-width: 470px;
+        font-size: 14.5px;
       }
 
       .offer-panel {
@@ -208,6 +219,11 @@
       }
 
       .hero-copy {
+        max-width: none;
+      }
+
+      .hero-copy h1,
+      .hero-copy .hero-lead {
         max-width: none;
       }
 
