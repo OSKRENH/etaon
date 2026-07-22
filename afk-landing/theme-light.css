@@ -1,0 +1,170 @@
+:root {
+  --ink: #17305f;
+  --navy: #3f75dd;
+  --navy-2: #3268d2;
+  --blue: #2f61c9;
+  --blue-bright: #2f61c9;
+  --paper: #f6f9ff;
+  --line: rgba(47, 97, 201, .14);
+  --muted: #6f84a8;
+}
+
+body {
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.site-header {
+  color: var(--ink);
+  background: linear-gradient(to bottom, rgba(246,249,255,.96), rgba(246,249,255,.78), transparent);
+}
+
+.site-header.is-scrolled {
+  background: rgba(246,249,255,.94);
+  border-bottom-color: rgba(47,97,201,.12);
+  box-shadow: 0 10px 30px rgba(47,97,201,.08);
+}
+
+.brand-pair { gap: 18px; }
+.etalon-logo { width: 154px; height: auto; }
+.afk-logo { width: 88px; height: auto; font-size: 0; }
+.etalon-logo img,
+.afk-logo img { display: block; width: 100%; height: auto; }
+.brand-divider { background: rgba(35,77,159,.24); opacity: 1; }
+.desktop-nav { color: rgba(23,48,95,.72); }
+.desktop-nav a:hover { color: #234d9f; }
+
+.button-light,
+.button-primary {
+  color: #fff;
+  background: #2f61c9;
+  box-shadow: 0 12px 30px rgba(47,97,201,.18);
+}
+.button-light:hover,
+.button-primary:hover { background: #234d9f; }
+
+.hero {
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 0% 20%, rgba(135,178,255,.32), transparent 30%),
+    radial-gradient(circle at 85% 8%, rgba(109,158,247,.22), transparent 30%),
+    linear-gradient(180deg, #f7fbff 0%, #ebf3ff 55%, #f6f9ff 100%);
+}
+
+.hero-grid {
+  opacity: .36;
+  background-image:
+    linear-gradient(rgba(47,97,201,.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47,97,201,.10) 1px, transparent 1px);
+}
+
+.eyebrow { color: #234d9f; }
+h1 span { color: #2f61c9; }
+.hero-lead { color: #44628f; }
+.text-link { color: #234d9f; font-weight: 600; }
+
+.offer-panel {
+  color: #fff;
+  border-color: rgba(47,97,201,.14);
+  background: linear-gradient(160deg, #4d82ea 0%, #2f61c9 55%, #224b9e 100%);
+  box-shadow: 0 30px 70px rgba(47,97,201,.20);
+  backdrop-filter: none;
+}
+.offer-kicker { color: rgba(255,255,255,.78); }
+.offer-panel > p { color: rgba(255,255,255,.78); }
+.offer-panel ul { border-top-color: rgba(255,255,255,.22); }
+.offer-panel li {
+  color: rgba(255,255,255,.92);
+  border-bottom-color: rgba(255,255,255,.22);
+}
+.offer-panel li::before { background: #fff; }
+
+.hero-footnote {
+  border-top-color: rgba(47,97,201,.14);
+  color: #6f84a8;
+}
+.hero-footnote span { color: #234d9f; }
+
+.stats {
+  color: #fff;
+  background: linear-gradient(180deg, #5a8ff1 0%, #3f75dd 100%);
+}
+.stats .section-index,
+.steps .section-index { color: rgba(255,255,255,.62); }
+.section-intro-dark p:not(.section-index) { color: rgba(255,255,255,.84); }
+.stats-grid { border-top-color: rgba(255,255,255,.25); }
+.stats-grid article { border-right-color: rgba(255,255,255,.25); }
+.stats-grid span { color: rgba(255,255,255,.88); }
+
+.programs { background: #f6f9ff; }
+.programs .section-index,
+.consultation .section-index { color: rgba(35,77,159,.52); }
+.program-card {
+  border-color: rgba(47,97,201,.14);
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 10px 25px rgba(47,97,201,.05);
+}
+.program-card-featured {
+  color: #fff;
+  border-color: #2f61c9;
+  background: linear-gradient(165deg, #4c7feb 0%, #2f61c9 100%);
+}
+.program-icon { color: #2f61c9; }
+.program-card > a { color: #234d9f; }
+.program-card-featured > a { color: #fff; }
+
+.steps {
+  color: #fff;
+  background: linear-gradient(180deg, #4d82ea 0%, #3268d2 100%);
+}
+.steps-list { border-top-color: rgba(255,255,255,.24); }
+.steps-list li { border-right-color: rgba(255,255,255,.24); }
+.steps-list > li > span { color: rgba(255,255,255,.72); }
+.steps-list p { color: rgba(255,255,255,.88); }
+
+.consultation { background: #edf4ff; }
+.consultation-copy > p:not(.section-index),
+.consultation-note { color: #6f84a8; }
+.consultation-note { border-top-color: rgba(47,97,201,.14); }
+.consultation-note span { background: #2f61c9; }
+.lead-form { box-shadow: 0 20px 60px rgba(47,97,201,.10); }
+.lead-form input,
+.lead-form select {
+  border-color: #d8e2f2;
+  background: #f9fbff;
+}
+.checkbox-label a,
+.form-status { color: #234d9f; }
+
+.site-footer {
+  color: var(--ink);
+  background: #dceafe;
+}
+.footer-top { border-bottom-color: rgba(47,97,201,.14); }
+.footer-links { color: rgba(23,48,95,.72); }
+.footer-links a:hover { color: #234d9f; }
+.footer-bottom { color: rgba(23,48,95,.54); }
+
+@media (max-width: 900px) {
+  .menu-button {
+    border-color: rgba(47,97,201,.24);
+    background: rgba(255,255,255,.72);
+  }
+  .menu-button span { background: #234d9f; }
+  .mobile-menu {
+    color: var(--ink);
+    background: rgba(246,249,255,.97);
+    border-bottom: 1px solid rgba(47,97,201,.12);
+  }
+  .mobile-menu a { border-bottom-color: rgba(47,97,201,.10); }
+  .stats-grid article:nth-child(-n+2) { border-bottom-color: rgba(255,255,255,.25); }
+  .steps-list li:last-child { border-top-color: rgba(255,255,255,.24); }
+}
+
+@media (max-width: 620px) {
+  .etalon-logo { width: 122px; }
+  .afk-logo { width: 66px; display: block; }
+  .brand-divider { display: block; }
+  .stats-grid article,
+  .steps-list li { border-bottom-color: rgba(255,255,255,.24); }
+}
