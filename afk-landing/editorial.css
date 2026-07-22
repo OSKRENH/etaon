@@ -1,0 +1,87 @@
+/* Editorial typography and responsive line-break control. */
+
+:where(h1, h2, h3, .offer-title) {
+  text-wrap: balance;
+}
+
+:where(
+  .hero-lead,
+  .hero-footnote p,
+  .section-intro p:not(.section-index),
+  .brand-summary p,
+  .project-card p,
+  .program-card li,
+  .program-disclaimer,
+  .steps-list p,
+  .consultation-copy > p,
+  .consultation-note p,
+  .checkbox-label span,
+  .footer-bottom p
+) {
+  text-wrap: pretty;
+}
+
+.section-intro {
+  grid-template-columns: 210px minmax(0, 900px);
+}
+
+.projects-intro > div {
+  width: min(100%, 900px);
+}
+
+.projects-intro h2 {
+  max-width: 860px;
+}
+
+.brand-summary > div {
+  gap: 0;
+}
+
+.brand-summary > div > .brand-summary-logo,
+.brand-summary > div > span {
+  display: none !important;
+}
+
+.brand-summary strong {
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.project-card h3,
+.program-card h3,
+.steps-list h3 {
+  text-wrap: balance;
+}
+
+@media (max-width: 1180px) {
+  .section-intro {
+    grid-template-columns: 170px minmax(0, 1fr);
+  }
+
+  .projects-intro h2 {
+    max-width: 760px;
+  }
+}
+
+@media (max-width: 900px) {
+  .section-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-intro > div,
+  .projects-intro h2 {
+    max-width: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .section-intro h2,
+  .consultation h2 {
+    font-size: clamp(34px, 10vw, 39px);
+    line-height: 1.02;
+  }
+
+  .project-card h3 {
+    font-size: 27px;
+  }
+}
