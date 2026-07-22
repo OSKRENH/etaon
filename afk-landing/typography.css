@@ -1,0 +1,41 @@
+/* Gilroy typography. The external stylesheet exposes Regular, Medium, Bold and Heavy families. */
+html,
+body,
+button,
+input,
+select,
+textarea {
+  font-family: "Gilroy-Regular", "Gilroy-Medium", Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+strong,
+b,
+.button,
+.offer-value,
+.offer-title,
+.stats-grid strong,
+.program-rate b,
+.brand-tab-name,
+.project-card button {
+  font-family: "Gilroy-Bold", "Gilroy-Medium", Arial, sans-serif;
+  font-weight: 400;
+}
+
+.eyebrow,
+.section-index,
+.desktop-nav,
+.mobile-menu,
+.brand-tab-caption,
+.project-card-top,
+.lead-form label > span:first-child,
+.footer-links {
+  font-family: "Gilroy-Medium", "Gilroy-Regular", Arial, sans-serif;
+  font-weight: 400;
+}
+
+h1 { letter-spacing: -0.045em; }
+h2 { letter-spacing: -0.035em; }
+h3 { letter-spacing: -0.025em; }
