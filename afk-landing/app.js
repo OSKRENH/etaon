@@ -13,9 +13,23 @@ function ensureStylesheet(id, href) {
   document.head.appendChild(link);
 }
 
+function ensureScript(id, src) {
+  if (document.getElementById(id)) return;
+  const script = document.createElement('script');
+  script.id = id;
+  script.src = src;
+  script.async = true;
+  document.head.appendChild(script);
+}
+
 ensureStylesheet(
   'landing-typography',
   'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@bde632be4df271b1d6d73376668b7ed21902691d/afk-landing/typography.css',
+);
+
+ensureScript(
+  'hero-building',
+  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@f35016fb1c4fcb0a552b6049dca0fa12957b5385/afk-landing/hero-building.js',
 );
 
 function mountEtalonLogos() {
