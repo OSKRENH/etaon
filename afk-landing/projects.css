@@ -15,11 +15,13 @@
 }
 
 .brand-tab {
-  min-height: 92px;
+  --brand-color: #223d90;
+  min-height: 102px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  gap: 14px;
   padding: 18px 20px;
   color: #6f7d98;
   border: 1px solid rgba(34, 61, 144, .14);
@@ -31,14 +33,43 @@
 
 .brand-tab:hover {
   transform: translateY(-2px);
-  border-color: rgba(34, 61, 144, .28);
+  border-color: color-mix(in srgb, var(--brand-color) 40%, white);
 }
 
 .brand-tab.is-active {
-  color: #ffffff;
-  border-color: #223d90;
-  background: #223d90;
-  box-shadow: 0 16px 38px rgba(34, 61, 144, .16);
+  border-color: color-mix(in srgb, var(--brand-color) 52%, white);
+  background: color-mix(in srgb, var(--brand-color) 10%, white);
+  box-shadow: 0 16px 38px rgba(34, 61, 144, .10);
+}
+
+.brand-tab[data-brand-tab="etalon"] {
+  --brand-color: #223d90;
+}
+
+.brand-tab[data-brand-tab="aurix"] {
+  --brand-color: #1f0048;
+}
+
+.brand-tab[data-brand-tab="rsk"] {
+  --brand-color: #69caff;
+}
+
+.brand-tab-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.brand-tab-logo {
+  display: block;
+  height: 26px;
+  width: auto;
+  max-width: 172px;
+}
+
+.brand-tab-logo-rsk {
+  height: 34px;
+  max-width: 190px;
 }
 
 .brand-tab-name {
@@ -49,17 +80,46 @@
   letter-spacing: .02em;
 }
 
-.brand-tab.is-active .brand-tab-name { color: #ffffff; }
-.brand-tab-aurix { font-family: Georgia, serif; font-weight: 400; letter-spacing: .08em; }
-.brand-tab-rsk { color: #57bfe8; }
-.brand-tab.is-active .brand-tab-rsk { color: #ffffff; }
-.brand-tab > span:last-child { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+.brand-tab-caption {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: color-mix(in srgb, var(--brand-color) 78%, #6f7d98);
+}
+
+.brand-tab-aurix {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  letter-spacing: .08em;
+  color: #1f0048;
+}
+
+.brand-tab-rsk {
+  color: #57bfe8;
+}
 
 .brand-panel {
+  --panel-color: #223d90;
   padding: 24px;
   border: 1px solid rgba(34, 61, 144, .13);
   border-radius: 22px;
   background: #f7f9fe;
+}
+
+.brand-panel[data-brand-panel="etalon"] {
+  --panel-color: #223d90;
+}
+
+.brand-panel[data-brand-panel="aurix"] {
+  --panel-color: #1f0048;
+  border-color: rgba(31, 0, 72, .14);
+  background: linear-gradient(180deg, rgba(31, 0, 72, .05), rgba(31, 0, 72, .02));
+}
+
+.brand-panel[data-brand-panel="rsk"] {
+  --panel-color: #55bff2;
+  border-color: rgba(85, 191, 242, .26);
+  background: linear-gradient(180deg, rgba(105, 202, 255, .12), rgba(105, 202, 255, .05));
 }
 
 .brand-panel[hidden] { display: none; }
@@ -74,10 +134,29 @@
   border-bottom: 1px solid rgba(34, 61, 144, .12);
 }
 
+.brand-panel[data-brand-panel="aurix"] .brand-summary {
+  border-bottom-color: rgba(31, 0, 72, .12);
+}
+
+.brand-panel[data-brand-panel="rsk"] .brand-summary {
+  border-bottom-color: rgba(85, 191, 242, .22);
+}
+
 .brand-summary div {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 18px;
+}
+
+.brand-summary-logo {
+  display: block;
+  width: auto;
+  height: 30px;
+  flex: 0 0 auto;
+}
+
+.brand-summary-logo-rsk {
+  height: 42px;
 }
 
 .brand-summary span {
@@ -109,7 +188,9 @@
   letter-spacing: .08em;
 }
 
-.brand-summary-rsk span { color: #57bfe8; }
+.brand-summary-rsk span {
+  color: #57bfe8;
+}
 
 .project-cards {
   display: grid;
@@ -194,8 +275,15 @@
   text-align: left;
 }
 
-.project-card-aurix button { color: #2b174c; }
-.project-card-rsk button { color: #38a9d8; }
+.project-card-aurix button {
+  color: #2b174c;
+  border-top-color: rgba(31, 0, 72, .12);
+}
+
+.project-card-rsk button {
+  color: #38a9d8;
+  border-top-color: rgba(85, 191, 242, .22);
+}
 
 @media (max-width: 900px) {
   .brand-projects { padding: 64px 0; }
@@ -205,10 +293,12 @@
 
 @media (max-width: 720px) {
   .brand-tabs { grid-template-columns: 1fr; }
-  .brand-tab { min-height: 76px; }
+  .brand-tab { min-height: 84px; }
   .brand-summary { flex-direction: column; gap: 10px; }
-  .brand-summary div { flex-direction: column; gap: 8px; }
+  .brand-summary div { flex-direction: column; align-items: flex-start; gap: 10px; }
   .project-cards { grid-template-columns: 1fr; }
   .brand-panel { padding: 16px; }
   .project-card { min-height: 220px; }
+  .brand-tab-logo-rsk { height: 30px; }
+  .brand-summary-logo-rsk { height: 34px; }
 }
