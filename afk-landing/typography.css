@@ -1,11 +1,19 @@
-/* Gilroy typography. Loaded after the base styles so the whole landing uses the requested family. */
+@import url("https://gistcdn.githack.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css");
+
 html,
 body,
 button,
 input,
 select,
 textarea {
-  font-family: "Gilroy-Regular", "Gilroy-Medium", Arial, sans-serif;
+  font-family: "Gilroy", Arial, sans-serif !important;
+}
+
+body,
+input,
+select,
+textarea {
+  font-weight: 400;
 }
 
 h1,
@@ -18,10 +26,9 @@ b,
 .offer-title,
 .stats-grid strong,
 .program-rate b,
-.brand-tab-name,
 .project-card button {
-  font-family: "Gilroy-Bold", "Gilroy-Medium", Arial, sans-serif;
-  font-weight: 400;
+  font-family: "Gilroy", Arial, sans-serif !important;
+  font-weight: 700;
 }
 
 .eyebrow,
@@ -32,22 +39,8 @@ b,
 .project-card-top,
 .lead-form label > span:first-child,
 .footer-links {
-  font-family: "Gilroy-Medium", "Gilroy-Regular", Arial, sans-serif;
-  font-weight: 400;
-}
-
-.brand-tab-logo-etalon {
-  display: block;
-  width: auto;
-  height: 29px;
-  max-width: 170px;
-}
-
-.brand-summary-logo-etalon {
-  display: block;
-  width: auto;
-  height: 30px;
-  flex: 0 0 auto;
+  font-family: "Gilroy", Arial, sans-serif !important;
+  font-weight: 500;
 }
 
 h1 { letter-spacing: -0.045em; }
