@@ -13,7 +13,7 @@ body,
 input,
 select,
 textarea {
-  font-weight: 400;
+  font-weight: 400 !important;
 }
 
 h1,
@@ -27,8 +27,8 @@ b,
 .stats-grid strong,
 .program-rate b,
 .project-card button {
-  font-family: "Gilroy", Arial, sans-serif !important;
-  font-weight: 700;
+  font-family: "Gilroy-Semibold", "Gilroy", Arial, sans-serif !important;
+  font-weight: 600 !important;
 }
 
 .eyebrow,
@@ -39,8 +39,8 @@ b,
 .project-card-top,
 .lead-form label > span:first-child,
 .footer-links {
-  font-family: "Gilroy", Arial, sans-serif !important;
-  font-weight: 500;
+  font-family: "Gilroy-Medium", "Gilroy", Arial, sans-serif !important;
+  font-weight: 500 !important;
 }
 
 h1 { letter-spacing: -0.045em; }
