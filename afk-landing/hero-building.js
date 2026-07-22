@@ -1,7 +1,8 @@
 (() => {
   const hero = document.querySelector('.hero');
   const offerPanel = document.querySelector('.offer-panel');
-  if (!hero || !offerPanel || hero.querySelector('.hero-building-art')) return;
+  const heroTitle = document.querySelector('.hero-copy h1');
+  if (!hero || !offerPanel || !heroTitle || hero.querySelector('.hero-building-art')) return;
 
   const partsBase =
     'https://raw.githubusercontent.com/OSKRENH/etaon/main/afk-landing/assets/hero-building-v2';
@@ -25,21 +26,40 @@
       z-index: 1;
       top: 0;
       right: 0;
-      width: min(54vw, 860px);
+      width: min(50vw, 780px);
       height: 100%;
       pointer-events: none;
       background: radial-gradient(
-        circle at 66% 42%,
-        rgba(74, 126, 232, .22),
-        rgba(74, 126, 232, 0) 65%
+        circle at 62% 40%,
+        rgba(74, 126, 232, .20),
+        rgba(74, 126, 232, 0) 66%
       );
     }
 
     .hero-layout {
       position: relative;
       z-index: auto;
-      grid-template-columns: minmax(0, 1fr) 440px;
-      gap: 54px;
+      grid-template-columns: minmax(0, 1fr) 336px;
+      gap: 36px;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 8;
+      max-width: 730px;
+    }
+
+    .hero-copy h1 {
+      max-width: 720px;
+      font-size: clamp(48px, 4.25vw, 66px);
+      line-height: .97;
+      letter-spacing: -.048em;
+    }
+
+    .hero-copy .hero-lead {
+      max-width: 610px;
+      font-size: 16px;
+      line-height: 1.48;
     }
 
     .hero-footnote {
@@ -47,54 +67,74 @@
       z-index: 9;
     }
 
-    .hero-copy {
-      position: relative;
-      z-index: 8;
-    }
-
     .offer-panel {
       position: relative;
       z-index: auto;
       justify-self: end;
-      width: 440px;
-      min-height: 350px;
-      padding: 30px 26px 28px 214px;
+      width: 336px;
+      min-height: 342px;
+      padding: 28px 22px 26px 76px;
       overflow: visible;
       background: linear-gradient(160deg, #3d5ebd 0%, #223d90 55%, #192f73 100%);
-      box-shadow: 0 30px 70px rgba(34, 61, 144, .20);
+      box-shadow: 0 26px 60px rgba(34, 61, 144, .19);
     }
 
     .offer-panel > * {
       position: relative;
       z-index: 7;
       width: 100%;
-      max-width: 200px;
+      max-width: none;
       text-shadow: 0 1px 10px rgba(12, 28, 78, .18);
     }
 
+    .offer-panel .offer-kicker {
+      font-size: 9px;
+      letter-spacing: .13em;
+    }
+
     .offer-panel .offer-value {
-      font-size: clamp(62px, 5vw, 82px);
+      margin-top: 17px;
+      font-size: clamp(58px, 4.2vw, 72px);
+    }
+
+    .offer-panel .offer-title {
+      margin-top: 9px;
+      font-size: 17px;
+    }
+
+    .offer-panel > p {
+      margin: 7px 0 17px;
+      font-size: 12px;
+      line-height: 1.42;
     }
 
     .offer-panel li {
-      padding-left: 17px;
+      padding: 10px 0 10px 16px;
+      font-size: 11.5px;
+      line-height: 1.3;
+    }
+
+    .offer-panel li::before {
+      top: 15px;
+      width: 5px;
+      height: 5px;
     }
 
     .hero-building-art {
       position: absolute;
       z-index: 4;
-      bottom: -32px;
-      width: 430px;
-      height: auto;
-      max-height: 88%;
+      top: 0;
+      left: 0;
+      width: auto;
+      height: 500px;
       object-fit: contain;
       object-position: right bottom;
       pointer-events: none;
       user-select: none;
       opacity: .98;
       filter:
-        drop-shadow(0 34px 62px rgba(25, 53, 120, .21))
-        drop-shadow(0 0 24px rgba(71, 120, 220, .10));
+        drop-shadow(0 32px 58px rgba(25, 53, 120, .20))
+        drop-shadow(0 0 22px rgba(71, 120, 220, .09));
     }
 
     .hero::after {
@@ -103,8 +143,8 @@
       z-index: 6;
       right: 0;
       bottom: 0;
-      width: min(46vw, 760px);
-      height: 54px;
+      width: min(43vw, 680px);
+      height: 48px;
       pointer-events: none;
       background: linear-gradient(
         to top,
@@ -115,48 +155,44 @@
 
     @media (max-width: 1380px) {
       .hero-layout {
-        grid-template-columns: minmax(0, 1fr) 400px;
-        gap: 38px;
+        grid-template-columns: minmax(0, 1fr) 312px;
+        gap: 28px;
+      }
+
+      .hero-copy {
+        max-width: 660px;
+      }
+
+      .hero-copy h1 {
+        max-width: 650px;
+        font-size: clamp(46px, 4vw, 59px);
       }
 
       .offer-panel {
-        width: 400px;
-        min-height: 342px;
-        padding-left: 184px;
-        padding-right: 22px;
-      }
-
-      .offer-panel > * {
-        max-width: 194px;
-      }
-
-      .hero-building-art {
-        width: 374px;
-        bottom: -28px;
+        width: 312px;
+        min-height: 330px;
+        padding: 26px 20px 24px 68px;
       }
     }
 
     @media (max-width: 1120px) {
       .hero-layout {
-        grid-template-columns: minmax(0, 1fr) 365px;
-        gap: 28px;
+        grid-template-columns: minmax(0, 1fr) 292px;
+        gap: 22px;
+      }
+
+      .hero-copy h1 {
+        font-size: clamp(43px, 4.1vw, 52px);
+      }
+
+      .hero-copy .hero-lead {
+        font-size: 15px;
       }
 
       .offer-panel {
-        width: 365px;
-        min-height: 330px;
-        padding-left: 164px;
-        padding-right: 20px;
-      }
-
-      .offer-panel > * {
-        max-width: 181px;
-      }
-
-      .hero-building-art {
-        width: 330px;
-        bottom: -22px;
-        opacity: .94;
+        width: 292px;
+        min-height: 318px;
+        padding: 24px 18px 22px 62px;
       }
     }
 
@@ -169,6 +205,10 @@
 
       .hero-layout {
         grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        max-width: none;
       }
 
       .offer-panel {
@@ -188,13 +228,24 @@
     if (window.innerWidth <= 980) return;
 
     const heroRect = hero.getBoundingClientRect();
+    const titleRect = heroTitle.getBoundingClientRect();
     const panelRect = offerPanel.getBoundingClientRect();
-    const overlap = window.innerWidth <= 1120 ? 145 : window.innerWidth <= 1380 ? 166 : 198;
-    const imageWidth = image.getBoundingClientRect().width || 430;
-    const panelLeft = panelRect.left - heroRect.left;
 
-    image.style.left = `${Math.round(panelLeft - imageWidth + overlap)}px`;
-    image.style.right = 'auto';
+    const top = Math.max(112, titleRect.top - heroRect.top - 2);
+    const height = Math.max(410, heroRect.height - top + 10);
+    const overlap = window.innerWidth <= 1120 ? 42 : window.innerWidth <= 1380 ? 48 : 56;
+
+    image.style.top = `${Math.round(top)}px`;
+    image.style.bottom = 'auto';
+    image.style.height = `${Math.round(height)}px`;
+    image.style.width = 'auto';
+
+    requestAnimationFrame(() => {
+      const imageWidth = image.getBoundingClientRect().width;
+      const panelLeft = panelRect.left - heroRect.left;
+      image.style.left = `${Math.round(panelLeft - imageWidth + overlap)}px`;
+      image.style.right = 'auto';
+    });
   }
 
   Promise.all(
