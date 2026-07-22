@@ -29,7 +29,7 @@ ensureStylesheet(
 
 ensureScript(
   'project-images',
-  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@6c552eb7c5784530ea2b3809149be3cd78081353/afk-landing/project-images.js',
+  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@75df24cecfa5531cd22c90609153692c65c79087/afk-landing/project-images.js',
 );
 
 function mountEtalonLogos() {
