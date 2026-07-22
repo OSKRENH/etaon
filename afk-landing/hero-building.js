@@ -4,7 +4,7 @@
 
   const partsBase =
     'https://raw.githubusercontent.com/OSKRENH/etaon/main/afk-landing/assets/hero-building-v2';
-  const partNames = Array.from({ length: 7 }, (_, index) => `chunk-${index + 1}.txt`);
+  const partNames = Array.from({ length: 9 }, (_, index) => `chunk-${index + 1}.txt`);
 
   const style = document.createElement('style');
   style.id = 'hero-building-style';
@@ -37,22 +37,22 @@
     .hero-building-art {
       position: absolute;
       z-index: 1;
-      right: max(-74px, calc((100vw - 1600px) / 2 - 70px));
-      bottom: -76px;
-      width: min(41vw, 640px);
-      height: min(620px, 86%);
+      right: max(-54px, calc((100vw - 1600px) / 2 - 40px));
+      bottom: -48px;
+      width: min(31vw, 440px);
+      height: min(500px, 78%);
       object-fit: contain;
       object-position: right bottom;
       pointer-events: none;
       user-select: none;
       opacity: 0;
-      transform: translate3d(26px, 20px, 0) scale(.985);
-      filter: drop-shadow(0 34px 62px rgba(30, 60, 132, .19));
+      transform: translate3d(22px, 18px, 0) scale(.985);
+      filter: drop-shadow(0 28px 52px rgba(30, 60, 132, .17));
       transition: opacity .65s ease, transform .8s cubic-bezier(.22, 1, .36, 1);
     }
 
     .hero.has-building .hero-building-art {
-      opacity: .83;
+      opacity: .82;
       transform: translate3d(0, 0, 0) scale(1);
     }
 
@@ -62,34 +62,22 @@
       z-index: 1;
       right: 0;
       bottom: 0;
-      width: min(48vw, 760px);
-      height: 180px;
+      width: min(40vw, 620px);
+      height: 130px;
       pointer-events: none;
       background: linear-gradient(to top, rgba(246, 249, 255, .96), rgba(246, 249, 255, 0));
     }
 
-    @media (max-width: 1380px) {
+    @media (max-width: 1280px) {
       .hero-building-art {
-        right: -105px;
-        bottom: -64px;
-        width: min(44vw, 570px);
-        height: min(560px, 82%);
+        right: -90px;
+        bottom: -42px;
+        width: min(34vw, 390px);
+        height: min(450px, 75%);
       }
 
       .hero.has-building .hero-building-art {
-        opacity: .69;
-      }
-    }
-
-    @media (max-width: 1120px) {
-      .hero-building-art {
-        right: -145px;
-        width: 510px;
-        opacity: 0;
-      }
-
-      .hero.has-building .hero-building-art {
-        opacity: .42;
+        opacity: .6;
       }
     }
 
