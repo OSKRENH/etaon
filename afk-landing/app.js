@@ -29,7 +29,7 @@ ensureStylesheet(
 
 ensureStylesheet(
   'editorial-layout',
-  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@6b14ecef4c28634c4eaeeca0d4580d4f66601d66/afk-landing/editorial.css',
+  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@8811bb340a73ee656004edf8ec22d31a59f95083/afk-landing/editorial.css',
 );
 
 ensureScript(
