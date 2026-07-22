@@ -27,10 +27,7 @@ ensureStylesheet(
   'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@68a8332008a12d081ab680f5ae341b552e47372e/afk-landing/typography.css',
 );
 
-ensureScript(
-  'project-images',
-  'https://cdn.jsdelivr.net/gh/OSKRENH/etaon@92fe4904f4718b2a2d5b3ab17cfbf6b34f413a04/afk-landing/project-images.js',
-);
+ensureScript('project-images', './project-images.js');
 
 function mountEtalonLogos() {
   const tabHeader = document.querySelector('[data-brand-tab="etalon"] .brand-tab-header');
