@@ -1,0 +1,214 @@
+.brand-projects {
+  padding: 76px 0 72px;
+  background: #ffffff;
+}
+
+.projects-intro .section-index {
+  color: rgba(34, 61, 144, .52);
+}
+
+.brand-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.brand-tab {
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 18px 20px;
+  color: #6f7d98;
+  border: 1px solid rgba(34, 61, 144, .14);
+  border-radius: 18px;
+  background: #f7f9fe;
+  text-align: left;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
+}
+
+.brand-tab:hover {
+  transform: translateY(-2px);
+  border-color: rgba(34, 61, 144, .28);
+}
+
+.brand-tab.is-active {
+  color: #ffffff;
+  border-color: #223d90;
+  background: #223d90;
+  box-shadow: 0 16px 38px rgba(34, 61, 144, .16);
+}
+
+.brand-tab-name {
+  color: #223d90;
+  font-size: 23px;
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: .02em;
+}
+
+.brand-tab.is-active .brand-tab-name { color: #ffffff; }
+.brand-tab-aurix { font-family: Georgia, serif; font-weight: 400; letter-spacing: .08em; }
+.brand-tab-rsk { color: #57bfe8; }
+.brand-tab.is-active .brand-tab-rsk { color: #ffffff; }
+.brand-tab > span:last-child { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+
+.brand-panel {
+  padding: 24px;
+  border: 1px solid rgba(34, 61, 144, .13);
+  border-radius: 22px;
+  background: #f7f9fe;
+}
+
+.brand-panel[hidden] { display: none; }
+
+.brand-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  margin-bottom: 20px;
+  padding: 4px 2px 20px;
+  border-bottom: 1px solid rgba(34, 61, 144, .12);
+}
+
+.brand-summary div {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+}
+
+.brand-summary span {
+  color: #223d90;
+  font-size: 28px;
+  font-weight: 760;
+  letter-spacing: .02em;
+}
+
+.brand-summary strong {
+  color: #53627e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.brand-summary p {
+  max-width: 450px;
+  margin-bottom: 0;
+  color: #6f84a8;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.brand-summary-aurix span {
+  color: #2b174c;
+  font-family: Georgia, serif;
+  font-weight: 400;
+  letter-spacing: .08em;
+}
+
+.brand-summary-rsk span { color: #57bfe8; }
+
+.project-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.project-card {
+  min-height: 238px;
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  border: 1px solid rgba(34, 61, 144, .12);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(34, 61, 144, .09), transparent 35%),
+    #ffffff;
+}
+
+.project-card-aurix {
+  border-color: rgba(43, 23, 76, .14);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(43, 23, 76, .09), transparent 35%),
+    #ffffff;
+}
+
+.project-card-rsk {
+  border-color: rgba(87, 191, 232, .28);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(87, 191, 232, .17), transparent 38%),
+    #ffffff;
+}
+
+.project-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  color: #7b89a3;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.project-card-top b {
+  color: #223d90;
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.project-card-aurix .project-card-top b { color: #2b174c; }
+.project-card-rsk .project-card-top b { color: #38a9d8; }
+
+.project-card h3 {
+  margin: 34px 0 10px;
+  color: #17305f;
+  font-size: 29px;
+  line-height: 1;
+  letter-spacing: -.035em;
+}
+
+.project-card p {
+  max-width: 500px;
+  margin-bottom: 22px;
+  color: #6f7d98;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.project-card button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding: 14px 0 0;
+  color: #223d90;
+  border: 0;
+  border-top: 1px solid rgba(34, 61, 144, .12);
+  background: transparent;
+  font-weight: 650;
+  text-align: left;
+}
+
+.project-card-aurix button { color: #2b174c; }
+.project-card-rsk button { color: #38a9d8; }
+
+@media (max-width: 900px) {
+  .brand-projects { padding: 64px 0; }
+  .brand-summary { align-items: flex-start; }
+  .brand-summary p { text-align: left; }
+}
+
+@media (max-width: 720px) {
+  .brand-tabs { grid-template-columns: 1fr; }
+  .brand-tab { min-height: 76px; }
+  .brand-summary { flex-direction: column; gap: 10px; }
+  .brand-summary div { flex-direction: column; gap: 8px; }
+  .project-cards { grid-template-columns: 1fr; }
+  .brand-panel { padding: 16px; }
+  .project-card { min-height: 220px; }
+}
