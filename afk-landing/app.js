@@ -26,6 +26,35 @@ mobileMenu?.querySelectorAll('a').forEach((link) => {
   });
 });
 
+const brandTabs = [...document.querySelectorAll('[data-brand-tab]')];
+const brandPanels = [...document.querySelectorAll('[data-brand-panel]')];
+const projectSelect = leadForm?.querySelector('select[name="project"]');
+
+function activateBrand(brand) {
+  brandTabs.forEach((tab) => {
+    const active = tab.dataset.brandTab === brand;
+    tab.classList.toggle('is-active', active);
+    tab.setAttribute('aria-selected', String(active));
+  });
+
+  brandPanels.forEach((panel) => {
+    const active = panel.dataset.brandPanel === brand;
+    panel.classList.toggle('is-active', active);
+    panel.hidden = !active;
+  });
+}
+
+brandTabs.forEach((tab) => {
+  tab.addEventListener('click', () => activateBrand(tab.dataset.brandTab));
+});
+
+document.querySelectorAll('[data-project-choice]').forEach((button) => {
+  button.addEventListener('click', () => {
+    if (projectSelect) projectSelect.value = button.dataset.projectChoice;
+    document.querySelector('#consultation')?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
 leadForm?.addEventListener('submit', (event) => {
   event.preventDefault();
   formStatus.textContent = '';
