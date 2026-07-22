@@ -4,6 +4,7 @@
 
   const PARTS_BASE =
     'https://raw.githubusercontent.com/OSKRENH/etaon/main/afk-landing/assets/hero-building';
+  const partNames = ['prefix.txt', 'part-1.txt', 'part-2.txt'];
 
   const style = document.createElement('style');
   style.id = 'hero-building-style';
@@ -46,8 +47,8 @@
   document.head.appendChild(style);
 
   Promise.all(
-    [1, 2].map(async (part) => {
-      const response = await fetch(`${PARTS_BASE}/part-${part}.txt`, {
+    partNames.map(async (name) => {
+      const response = await fetch(`${PARTS_BASE}/${name}`, {
         cache: 'force-cache',
       });
       if (!response.ok) {
