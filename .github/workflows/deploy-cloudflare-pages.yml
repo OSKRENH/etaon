@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 env:
   CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -24,16 +24,64 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check Cloudflare credentials
+        id: credentials
+        shell: bash
+        run: |
+          missing=""
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || missing="CLOUDFLARE_API_TOKEN"
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            missing="${missing:+$missing, }CLOUDFLARE_ACCOUNT_ID"
+          fi
+          echo "missing=$missing" >> "$GITHUB_OUTPUT"
+          [ -z "$missing" ]
+
       - name: Install Wrangler
+        if: steps.credentials.outcome == 'success'
         run: npm install --global wrangler@latest
 
       - name: Ensure Pages project exists
+        if: steps.credentials.outcome == 'success'
         run: wrangler pages project create "$PROJECT_NAME" --production-branch=main || true
 
       - name: Deploy to Cloudflare Pages
-        run: >-
-          wrangler pages deploy brand-center
-          --project-name="$PROJECT_NAME"
-          --branch=main
-          --commit-hash="$GITHUB_SHA"
-          --commit-message="${{ github.event.head_commit.message || 'Manual deployment' }}"
+        id: deploy
+        if: steps.credentials.outcome == 'success'
+        continue-on-error: true
+        shell: bash
+        run: |
+          wrangler pages deploy brand-center \
+            --project-name="$PROJECT_NAME" \
+            --branch=main \
+            --commit-hash="$GITHUB_SHA" \
+            --commit-message="${{ github.event.head_commit.message || 'Manual deployment' }}" \
+            2>&1 | tee /tmp/cloudflare-deploy.log
+
+      - name: Record deployment result
+        if: always()
+        shell: bash
+        env:
+          MISSING: ${{ steps.credentials.outputs.missing }}
+          DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
+        run: |
+          if [ -n "$MISSING" ]; then
+            STATUS="blocked"
+            DETAILS="Missing GitHub secrets: $MISSING"
+          elif [ "$DEPLOY_OUTCOME" = "success" ]; then
+            STATUS="success"
+            DETAILS="https://etaon.pages.dev"
+          else
+            STATUS="failed"
+            DETAILS="Cloudflare deployment command failed"
+          fi
+          printf 'status=%s\ndetails=%s\ncommit=%s\nrun=%s\n' \
+            "$STATUS" "$DETAILS" "$GITHUB_SHA" "$GITHUB_RUN_ID" > .cloudflare-deploy-status
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .cloudflare-deploy-status
+          git diff --cached --quiet || git commit -m "Update Cloudflare deployment status [skip ci]"
+          git push
+
+      - name: Fail when deployment did not complete
+        if: always() && (steps.credentials.outcome != 'success' || steps.deploy.outcome != 'success')
+        run: exit 1
