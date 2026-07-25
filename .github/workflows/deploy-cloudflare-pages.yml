@@ -37,11 +37,24 @@ jobs:
       - name: Build Gilroy web fonts
         shell: bash
         run: |
-          base64 --decode brand-center/fonts/Gilroy-Regular.ttf.b64 > brand-center/fonts/Gilroy-Regular.ttf
-          base64 --decode brand-center/fonts/Gilroy-Medium.ttf.b64 > brand-center/fonts/Gilroy-Medium.ttf
-          test -s brand-center/fonts/Gilroy-Regular.ttf
-          test -s brand-center/fonts/Gilroy-Medium.ttf
-          rm brand-center/fonts/Gilroy-Regular.ttf.b64 brand-center/fonts/Gilroy-Medium.ttf.b64
+          python - <<'PY'
+          from pathlib import Path
+          import base64
+
+          for stem in ("Gilroy-Regular", "Gilroy-Medium"):
+              source = Path(f"brand-center/fonts/{stem}.ttf.b64")
+              target = Path(f"brand-center/fonts/{stem}.ttf")
+              encoded = "".join(source.read_text(encoding="utf-8").split())
+              encoded += "=" * (-len(encoded) % 4)
+              data = base64.b64decode(encoded, validate=False)
+              if data[:4] not in (b"\x00\x01\x00\x00", b"OTTO", b"ttcf"):
+                  raise SystemExit(f"{stem}: invalid font signature")
+              if len(data) < 50000:
+                  raise SystemExit(f"{stem}: decoded font is unexpectedly small ({len(data)} bytes)")
+              target.write_bytes(data)
+              print(f"{stem}: {len(data)} bytes")
+              source.unlink()
+          PY
 
       - name: Install Wrangler
         run: npm install --global wrangler@latest
