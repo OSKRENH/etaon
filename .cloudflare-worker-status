@@ -1,7 +1,7 @@
 status=success
 url=https://etaon.ivankamaldinov.workers.dev
-commit=dd11d63ea117a04c4bcce3dc43c9cdfe2e7636e8
-run=30179352609
+commit=f052f1baa3e744ad699224dc8025780224b2bc2e
+run=30179391873
 --- wrangler output ---
 
  ⛅️ wrangler 4.114.0
@@ -12,12 +12,12 @@ run=30179352609
 🌀 Found 1 new or modified static asset to upload. Proceeding with upload...
 + /downloads/Etalon_Logos_All_Colors.zip
 Uploaded 1 of 1 asset
-✨ Success! Uploaded 1 file (30 already uploaded) (0.82 sec)
+✨ Success! Uploaded 1 file (30 already uploaded) (0.69 sec)
 
 Total Upload: 0.33 KiB / gzip: 0.23 KiB
-Uploaded etaon (5.28 sec)
-Deployed etaon triggers (0.56 sec)
+Uploaded etaon (3.28 sec)
+Deployed etaon triggers (0.51 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: 22f1633f-f429-4e6a-844b-cebef364d047
+Current Version ID: 3cf2aacd-91a1-44da-85cf-56e2699dc5a3
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
