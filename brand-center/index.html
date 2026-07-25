@@ -15,7 +15,13 @@
   <aside class="sidebar">
     <a class="wordmark" href="#top" aria-label="Группа Эталон"><img src="./assets/group-etalon.svg" alt="Группа Эталон" /></a>
     <nav>
-      <a href="#overview">Обзор</a><a href="#logos">Логотип</a><a href="#colors">Цвета</a><a href="#type">Типографика</a><a href="#rules">Правила</a><a href="#downloads">Материалы</a>
+      <a href="#overview">Обзор</a>
+      <a href="#logos">Логотип</a>
+      <a href="#colors">Цвета</a>
+      <a href="#type">Типографика</a>
+      <a href="#map">Карта регионов</a>
+      <a href="#rules">Правила</a>
+      <a href="#downloads">Материалы</a>
     </nav>
     <p class="version">Центр бренда</p>
   </aside>
@@ -28,6 +34,7 @@
     </header>
 
     <section class="hero" id="overview">
+      <img class="hero-map" src="./assets/regions-map-hero.svg" alt="" aria-hidden="true" />
       <div class="hero-copy">
         <p class="eyebrow">ЦЕНТР БРЕНДА</p>
         <h1>Всё о бренде<br>Группы «Эталон»</h1>
@@ -36,19 +43,34 @@
       </div>
     </section>
 
-    <section class="quick-links">
-      <a href="#logos"><b>01</b><strong>Логотипы</strong><span>Векторные файлы</span></a>
-      <a href="#colors"><b>02</b><strong>Палитра</strong><span>Для экрана и печати</span></a>
-      <a href="#type"><b>03</b><strong>Шрифты</strong><span>Гилрой · два начертания</span></a>
-      <a href="#downloads"><b>04</b><strong>Брендбук</strong><span>Документ</span></a>
+    <section class="stats" aria-label="Группа Эталон в цифрах">
+      <article><strong>39 лет</strong><span>успешной работы</span></article>
+      <article><strong>7 500</strong><span>рабочих мест</span></article>
+      <article><strong>380 000</strong><span>счастливых жильцов</span></article>
+      <article><strong>9,8 млн м²</strong><span>построенной площади</span></article>
     </section>
 
-    <section class="section" id="logos" data-search="логотип знак символ фирменный скачать вектор">
+    <section class="quick-links">
+      <a href="#logos"><b>01</b><strong>Логотипы</strong><span>Все цветовые версии</span></a>
+      <a href="#colors"><b>02</b><strong>Палитра</strong><span>Для экрана и печати</span></a>
+      <a href="#type"><b>03</b><strong>Шрифты</strong><span>Gilroy</span></a>
+      <a href="#map"><b>04</b><strong>Карта регионов</strong><span>Векторный файл</span></a>
+    </section>
+
+    <section class="section" id="logos" data-search="логотип знак символ фирменный скачать вектор синий белый чёрный архив">
       <div class="section-heading"><div><p class="eyebrow">01 · ОСНОВА БРЕНДА</p><h2>Логотип</h2></div><p>Используйте только оригинальные файлы. Не меняйте пропорции, цвет и расстояние между элементами.</p></div>
+      <div class="logo-controls">
+        <div class="logo-tone-switch" role="group" aria-label="Цвет логотипа">
+          <button class="is-active" type="button" data-logo-tone="blue">Синий</button>
+          <button type="button" data-logo-tone="white">Белый</button>
+          <button type="button" data-logo-tone="black">Чёрный</button>
+        </div>
+        <a class="button button-blue" href="./downloads/Etalon_Logos_All_Colors.zip" download>Скачать все версии</a>
+      </div>
       <div class="logo-grid">
-        <article class="logo-card logo-card-wide"><div class="logo-preview"><img src="./assets/group-etalon.svg" alt="Логотип Группы Эталон" /></div><footer><div><b>Группа «Эталон»</b><small>Основная версия</small></div><button data-download="group-etalon.svg">Скачать вектор ↓</button></footer></article>
-        <article class="logo-card"><div class="logo-preview"><img src="./assets/etalon-ru.svg" alt="Логотип Эталон на русском" /></div><footer><div><b>Кириллическая версия</b><small>Основная версия</small></div><button data-download="etalon-ru.svg">Скачать вектор ↓</button></footer></article>
-        <article class="logo-card"><div class="logo-preview symbol-preview"><img src="./assets/symbol-etalon.svg" alt="Фирменный знак Эталон" /></div><footer><div><b>Фирменный знак</b><small>Для компактных форматов</small></div><button data-download="symbol-etalon.svg">Скачать вектор ↓</button></footer></article>
+        <article class="logo-card logo-card-wide" data-logo-key="group"><div class="logo-preview tone-blue"><img src="./assets/logos/group-blue.svg" alt="Логотип Группы Эталон" /></div><footer><div><b>Группа «Эталон»</b><small>Основная версия</small></div><button data-download="logos/group-blue.svg">Скачать текущую версию ↓</button></footer></article>
+        <article class="logo-card" data-logo-key="ru"><div class="logo-preview tone-blue"><img src="./assets/logos/ru-blue.svg" alt="Логотип Эталон на русском" /></div><footer><div><b>Кириллическая версия</b><small>Основная версия</small></div><button data-download="logos/ru-blue.svg">Скачать текущую версию ↓</button></footer></article>
+        <article class="logo-card" data-logo-key="symbol"><div class="logo-preview symbol-preview tone-blue"><img src="./assets/logos/symbol-blue.svg" alt="Фирменный знак Эталон" /></div><footer><div><b>Фирменный знак</b><small>Для компактных форматов</small></div><button data-download="logos/symbol-blue.svg">Скачать текущую версию ↓</button></footer></article>
       </div>
     </section>
 
@@ -62,27 +84,36 @@
       </div>
     </section>
 
-    <section class="section" id="type" data-search="шрифт типографика гилрой обычное среднее начертание скачать">
-      <div class="section-heading"><div><p class="eyebrow">03 · ТИПОГРАФИКА</p><h2>Гилрой</h2></div><p>Среднее начертание используется для заголовков и акцентов, обычное — для основного текста. В качестве замены применяется стандартный системный шрифт.</p></div>
-      <div class="type-demo"><div class="alphabet"><span>Аа</span><p>Аа Бб Вв Гг Дд Ее Ёё Жж Зз Ии Йй Кк Лл Мм Нн Оо Пп Рр Сс Тт Уу Фф Хх Цц Чч Шш Щщ</p></div><div class="type-columns"><div><small>Среднее начертание · 56</small><h3>Создаём<br>пространство<br>для жизни</h3></div><div><small>Обычное начертание · 18</small><p>Группа «Эталон» — одна из крупнейших компаний в сфере девелопмента и строительства в России. Фирменная типографика помогает сохранять ясность и узнаваемость во всех коммуникациях.</p></div></div></div>
+    <section class="section" id="type" data-search="шрифт типографика gilroy regular medium скачать архив">
+      <div class="section-heading"><div><p class="eyebrow">03 · ТИПОГРАФИКА</p><h2>Gilroy</h2></div><p>Gilroy Medium используется для заголовков и акцентов, Gilroy Regular — для основного текста. В качестве замены применяется стандартный системный шрифт.</p></div>
+      <div class="type-demo"><div class="alphabet"><span>Аа</span><p>Аа Бб Вв Гг Дд Ее Ёё Жж Зз Ии Йй Кк Лл Мм Нн Оо Пп Рр Сс Тт Уу Фф Хх Цц Чч Шш Щщ</p></div><div class="type-columns"><div><small>Gilroy Medium · 56</small><h3>Создаём<br>пространство<br>для жизни</h3></div><div><small>Gilroy Regular · 18</small><p>Группа «Эталон» — одна из крупнейших компаний в сфере девелопмента и строительства в России. Фирменная типографика помогает сохранять ясность и узнаваемость во всех коммуникациях.</p></div></div></div>
+      <div class="type-download"><a class="button button-blue" href="./downloads/Gilroy.zip" download>Скачать Gilroy целиком</a><span>Архив со всеми начертаниями</span></div>
+    </section>
+
+    <section class="section map-section" id="map" data-search="карта регионы география присутствия скачать svg вектор">
+      <div class="section-heading"><div><p class="eyebrow">04 · ГЕОГРАФИЯ</p><h2>Карта регионов</h2></div><p>Чистая векторная карта без точек и подписей. Регионы присутствия выделены фирменным синим.</p></div>
+      <div class="map-card">
+        <div class="map-preview"><img src="./assets/regions-map.svg" alt="Карта регионов присутствия Группы Эталон" /></div>
+        <div class="map-card-copy"><b>Карта присутствия</b><p>Подходит для презентаций, отчётов и цифровых материалов.</p><a class="button button-blue" href="./assets/regions-map.svg" download="Карта-регионов-Эталон.svg">Скачать карту в SVG</a></div>
+      </div>
     </section>
 
     <section class="section muted" id="rules" data-search="правила охранное поле ошибки использование нельзя">
-      <div class="section-heading"><div><p class="eyebrow">04 · ИСПОЛЬЗОВАНИЕ</p><h2>Берегите знак</h2></div><p>Минимальное охранное поле равно высоте буквы «О». Логотип должен оставаться контрастным и легко читаемым.</p></div>
+      <div class="section-heading"><div><p class="eyebrow">05 · ИСПОЛЬЗОВАНИЕ</p><h2>Берегите знак</h2></div><p>Минимальное охранное поле равно высоте буквы «О». Логотип должен оставаться контрастным и легко читаемым.</p></div>
       <div class="rules-grid"><div class="safe-area"><img src="./assets/etalon-ru.svg" alt="Логотип Эталон с охранным полем" /><i></i><small>Охранное поле</small></div><div class="dont"><b>Не допускается</b><ul><li>Искажать пропорции</li><li>Менять фирменные цвета</li><li>Добавлять тени и эффекты</li><li>Размещать на сложном фоне</li><li>Поворачивать или наклонять</li></ul></div></div>
     </section>
 
-    <section class="downloads" id="downloads" data-search="скачать материалы брендбук логотипы шрифты гилрой документ вектор архив">
+    <section class="downloads" id="downloads" data-search="скачать материалы брендбук логотипы шрифты gilroy документ вектор архив карта">
       <div><p class="eyebrow">ЦЕНТР ЗАГРУЗОК</p><h2>Материалы бренда</h2><p>Актуальные исходники для сотрудников, подрядчиков и партнёров.</p></div>
       <div class="download-list">
         <a href="https://at.adobe.com/lZLADQ8R3LwRgx5x" download="Руководство-по-фирменному-стилю.pdf"><span>Руководство по фирменному стилю</span><i>Документ</i><b>↓</b></a>
-        <a href="./assets/group-etalon.svg" download><span>Логотип Группы «Эталон»</span><i>Векторный файл</i><b>↓</b></a>
-        <a href="./assets/etalon-ru.svg" download><span>Кириллический логотип</span><i>Векторный файл</i><b>↓</b></a>
-        <a href="./assets/etalon-en.svg" download><span>Международная версия логотипа</span><i>Векторный файл</i><b>↓</b></a>
-        <a href="./assets/symbol-etalon.svg" download><span>Фирменный знак</span><i>Векторный файл</i><b>↓</b></a>
-        <a href="./fonts/Gilroy-Regular.ttf" download><span>Гилрой — обычное начертание</span><i>Файл шрифта</i><b>↓</b></a>
-        <a href="./fonts/Gilroy-Medium.ttf" download><span>Гилрой — среднее начертание</span><i>Файл шрифта</i><b>↓</b></a>
-        <a href="https://at.adobe.com/EKy9OGjKFxxsZmmm" download="Gilroy.zip"><span>Полный архив Гилрой</span><i>Все начертания</i><b>↓</b></a>
+        <a href="./downloads/Etalon_Logos_All_Colors.zip" download><span>Все логотипы во всех цветах</span><i>Архив</i><b>↓</b></a>
+        <a href="./assets/logos/group-blue.svg" download><span>Логотип Группы «Эталон»</span><i>Векторный файл</i><b>↓</b></a>
+        <a href="./assets/logos/ru-blue.svg" download><span>Кириллический логотип</span><i>Векторный файл</i><b>↓</b></a>
+        <a href="./assets/logos/en-blue.svg" download><span>Международная версия логотипа</span><i>Векторный файл</i><b>↓</b></a>
+        <a href="./assets/logos/symbol-blue.svg" download><span>Фирменный знак</span><i>Векторный файл</i><b>↓</b></a>
+        <a href="./assets/regions-map.svg" download="Карта-регионов-Эталон.svg"><span>Карта регионов присутствия</span><i>Векторный файл</i><b>↓</b></a>
+        <a href="./downloads/Gilroy.zip" download><span>Полный архив Gilroy</span><i>Все начертания</i><b>↓</b></a>
       </div>
     </section>
 
