@@ -1,29 +1,56 @@
+const orphanWords = [
+  'а', 'в', 'во', 'и', 'или', 'к', 'ко', 'на', 'над', 'не', 'ни', 'но',
+  'о', 'об', 'обо', 'от', 'по', 'под', 'при', 'про', 'с', 'со', 'у',
+  'за', 'из', 'изо', 'до', 'для', 'без'
+];
+
+function preventOrphans(root) {
+  const escapedWords = orphanWords.map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const pattern = new RegExp(
+    `(^|[\\s(«„"—–-])(${escapedWords.join('|')})[ \\t]+(?=[А-Яа-яЁёA-Za-z0-9«„"])`,
+    'giu'
+  );
+  const skipped = new Set(['SCRIPT', 'STYLE', 'CODE', 'PRE', 'TEXTAREA', 'INPUT', 'OPTION', 'SVG']);
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (!parent || skipped.has(parent.tagName)) return NodeFilter.FILTER_REJECT;
+      return node.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((node) => {
+    node.nodeValue = node.nodeValue.replace(pattern, '$1$2\u00A0');
+  });
+}
+
+preventOrphans(document.body);
+
 const search = document.querySelector('#search');
 const searchable = [...document.querySelectorAll('[data-search]')];
 
 search?.addEventListener('input', (event) => {
   const query = event.target.value.trim().toLowerCase();
   searchable.forEach((section) => {
-    const haystack = `${section.dataset.search} ${section.textContent}`.toLowerCase();
+    const haystack = `${section.dataset.search} ${section.textContent}`
+      .replace(/\u00A0/g, ' ')
+      .toLowerCase();
     section.classList.toggle('is-hidden', Boolean(query) && !haystack.includes(query));
   });
 });
 
-const checkIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>';
-
 document.querySelectorAll('[data-copy]').forEach((button) => {
   button.addEventListener('click', async () => {
     const value = button.dataset.copy;
-    const originalMarkup = button.innerHTML;
     const originalLabel = button.getAttribute('aria-label');
 
     try {
       await navigator.clipboard.writeText(value);
-      button.innerHTML = checkIcon;
       button.classList.add('is-copied');
       button.setAttribute('aria-label', 'Скопировано');
       setTimeout(() => {
-        button.innerHTML = originalMarkup;
         button.classList.remove('is-copied');
         button.setAttribute('aria-label', originalLabel || `Скопировать ${value}`);
       }, 1200);
