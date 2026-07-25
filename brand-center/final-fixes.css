@@ -1,0 +1,138 @@
+/* Финальная полировка мобильной версии */
+
+/* Диагональ — не длиннее высоты заглавной буквы */
+.quick-links a::before{
+  width:38px;
+  left:50px;
+  top:61px;
+}
+
+/* Охранное поле */
+.safe-area-lockup{
+  width:min(76%,520px);
+  aspect-ratio:2.35/1;
+  display:grid;
+  place-items:center;
+  margin:18px auto 10px;
+  border:var(--line) dashed #8fa0d1;
+}
+.safe-logo-core{
+  position:relative;
+  width:58%;
+  aspect-ratio:200/36;
+}
+.safe-area .safe-logo{
+  width:100%;
+  height:100%;
+}
+.safe-area .safe-o{
+  height:100%;
+  opacity:.12;
+}
+.safe-area>small{
+  margin-top:8px;
+}
+
+/* Крестики строго на одной линии с текстом */
+.dont li{
+  display:flex;
+  align-items:baseline;
+  gap:13px;
+}
+.dont li::before{
+  content:none!important;
+}
+.rule-x{
+  flex:0 0 18px;
+  color:#ff4d00;
+  font-size:22px;
+  line-height:1;
+  text-align:center;
+  transform:translateY(1px);
+}
+.rule-text{
+  min-width:0;
+}
+
+/* Карта должна читаться целиком */
+.map-section{
+  background:#eef1f7;
+}
+.map-section::after{
+  background:linear-gradient(90deg,rgba(238,241,247,.98) 0%,rgba(238,241,247,.87) 30%,rgba(238,241,247,.25) 52%,rgba(238,241,247,0) 70%);
+}
+.map-background{
+  width:104%;
+  right:-2%;
+  transform:translateY(-50%);
+  opacity:1;
+  filter:brightness(.93) contrast(1.14) saturate(1.08);
+}
+
+/* В футере остаётся только год справа */
+.page-footer{
+  justify-content:flex-start;
+}
+.page-footer .footer-year{
+  margin-left:auto;
+  color:#818894;
+  white-space:nowrap;
+}
+
+@media(max-width:900px){
+  .quick-links a::before{
+    width:36px;
+    left:42px;
+    top:61px;
+  }
+  .map-section::after{
+    background:linear-gradient(180deg,rgba(238,241,247,1) 0%,rgba(238,241,247,.95) 31%,rgba(238,241,247,.18) 52%,rgba(238,241,247,0) 69%);
+  }
+  .map-background{
+    width:142%;
+    left:-21%;
+    right:auto;
+    top:67%;
+    transform:translateY(-50%);
+  }
+}
+
+@media(max-width:540px){
+  .quick-links a::before{
+    width:32px;
+    left:37px;
+    top:61px;
+  }
+  .safe-area{
+    min-height:390px;
+  }
+  .safe-area-lockup{
+    width:78%;
+    aspect-ratio:2.15/1;
+    margin:12px auto 8px;
+  }
+  .safe-logo-core{
+    width:58%;
+  }
+  .safe-area .safe-o{
+    opacity:.1;
+  }
+  .dont li{
+    gap:12px;
+  }
+  .rule-x{
+    flex-basis:17px;
+    font-size:21px;
+  }
+  .map-section{
+    min-height:660px;
+  }
+  .map-background{
+    width:154%;
+    left:-27%;
+    top:68%;
+  }
+  .page-footer{
+    padding-right:76px;
+  }
+}
