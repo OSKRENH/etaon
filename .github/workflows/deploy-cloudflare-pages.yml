@@ -1,20 +1,20 @@
-name: Deploy Etalon Brand Center
+name: Deploy Etalon Worker
 
 on:
   push:
     branches: [main]
     paths:
       - "brand-center/**"
+      - "wrangler.jsonc"
       - ".github/workflows/deploy-cloudflare-pages.yml"
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 env:
   CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
   CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-  PROJECT_NAME: etaon
 
 jobs:
   deploy:
@@ -33,25 +33,5 @@ jobs:
       - name: Install Wrangler
         run: npm install --global wrangler@latest
 
-      - name: Ensure Pages project exists
-        run: wrangler pages project create "$PROJECT_NAME" --production-branch=main || true
-
-      - name: Deploy to Cloudflare Pages
-        run: >-
-          wrangler pages deploy brand-center
-          --project-name="$PROJECT_NAME"
-          --branch=main
-          --commit-hash="$GITHUB_SHA"
-          --commit-message="${{ github.event.head_commit.message || 'Manual deployment' }}"
-
-      - name: Record successful deployment
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
-          printf 'status=success\ndetails=https://etaon.pages.dev\ncommit=%s\nrun=%s\n' \
-            "$GITHUB_SHA" "$GITHUB_RUN_ID" > .cloudflare-deploy-status
-          git add .cloudflare-deploy-status
-          git commit -m "Record successful Cloudflare deployment [skip ci]"
-          git push origin main
+      - name: Replace existing etaon Worker
+        run: wrangler deploy --config wrangler.jsonc
