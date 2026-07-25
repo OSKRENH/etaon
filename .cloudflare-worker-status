@@ -1,40 +1,6 @@
-status=success
-url=https://etaon.ivankamaldinov.workers.dev
-commit=bd062549ea832ebacc8f161ab1d5e6996632e1c4
-run=30177679538
+status=skipped
+url=
+commit=df7a30a017dd36e6ed273af93664adbe83bc14eb
+run=30177754051
 --- wrangler output ---
 
- ⛅️ wrangler 4.114.0
-────────────────────
-🌀 Building list of assets...
-✨ Read 32 files from the assets directory /home/runner/work/etaon/etaon/brand-center
-🌀 Starting asset upload...
-🌀 Found 16 new or modified static assets to upload. Proceeding with upload...
-+ /assets/logos/symbol-black.svg
-+ /assets/logos/en-black.svg
-+ /assets/logos/ru-black.svg
-+ /assets/logos/group-black.svg
-+ /downloads/Etalon_Logos_All_Colors.zip
-+ /assets/regions-map-hero.svg
-+ /assets/logos/symbol-blue.svg
-+ /assets/logos/en-blue.svg
-+ /assets/logos/ru-blue.svg
-+ /assets/logos/group-blue.svg
-+ /downloads/Gilroy.zip
-+ /assets/logos/symbol-white.svg
-+ /assets/logos/en-white.svg
-+ /assets/logos/ru-white.svg
-+ /assets/logos/group-white.svg
-+ /assets/regions-map.svg
-Uploaded 5 of 16 assets
-Uploaded 10 of 16 assets
-Uploaded 16 of 16 assets
-✨ Success! Uploaded 16 files (12 already uploaded) (1.69 sec)
-
-Total Upload: 0.33 KiB / gzip: 0.23 KiB
-Uploaded etaon (4.25 sec)
-Deployed etaon triggers (0.40 sec)
-  https://etaon.ivankamaldinov.workers.dev
-Current Version ID: cbe1377d-47ed-4706-894b-b5855d9c90b4
-
-Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
