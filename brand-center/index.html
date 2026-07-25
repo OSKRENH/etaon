@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./logo-overrides.css" />
   <link rel="stylesheet" href="./interface-overrides.css" />
+  <link rel="stylesheet" href="./final-fixes.css" />
 </head>
 <body>
   <aside class="sidebar">
@@ -86,15 +87,23 @@
         <div class="rules-grid">
           <div class="safe-area">
             <div class="safe-area-lockup" aria-label="Охранное поле логотипа">
-              <img class="safe-logo" src="./assets/safe-logo.svg" alt="Эталон" />
-              <img class="safe-o safe-o-top" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
-              <img class="safe-o safe-o-right" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
-              <img class="safe-o safe-o-bottom" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
-              <img class="safe-o safe-o-left" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
+              <div class="safe-logo-core">
+                <img class="safe-logo" src="./assets/safe-logo.svg" alt="Эталон" />
+                <img class="safe-o safe-o-top" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
+                <img class="safe-o safe-o-right" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
+                <img class="safe-o safe-o-bottom" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
+                <img class="safe-o safe-o-left" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
+              </div>
             </div>
             <small>Охранное поле равно высоте буквы «О»</small>
           </div>
-          <div class="dont"><b>Не допускается</b><ul><li>Искажать пропорции</li><li>Менять фирменные цвета</li><li>Добавлять тени и эффекты</li><li>Размещать на сложном фоне</li><li>Поворачивать или наклонять</li></ul></div>
+          <div class="dont"><b>Не допускается</b><ul>
+            <li><span class="rule-x" aria-hidden="true">×</span><span class="rule-text">Искажать пропорции</span></li>
+            <li><span class="rule-x" aria-hidden="true">×</span><span class="rule-text">Менять фирменные цвета</span></li>
+            <li><span class="rule-x" aria-hidden="true">×</span><span class="rule-text">Добавлять тени и эффекты</span></li>
+            <li><span class="rule-x" aria-hidden="true">×</span><span class="rule-text">Размещать на сложном фоне</span></li>
+            <li><span class="rule-x" aria-hidden="true">×</span><span class="rule-text">Поворачивать или наклонять</span></li>
+          </ul></div>
         </div>
       </div>
     </section>
@@ -131,7 +140,7 @@
       </div>
     </section>
 
-    <footer class="page-footer"><img class="footer-logo" src="./assets/group-etalon.svg" alt="Группа Эталон" /><span>© Группа «Эталон»</span></footer>
+    <footer class="page-footer"><img class="footer-logo" src="./assets/group-etalon.svg" alt="Группа Эталон" /><span class="footer-year">© 2026</span></footer>
   </main>
 
   <a class="back-to-top" href="#top" aria-label="Наверх" title="Наверх"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l7 7-1.41 1.41L13 8.83V20h-2V8.83l-4.59 4.58L5 12l7-7z"/></svg></a>
