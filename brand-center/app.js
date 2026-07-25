@@ -9,14 +9,24 @@ search?.addEventListener('input', (event) => {
   });
 });
 
+const checkIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>';
+
 document.querySelectorAll('[data-copy]').forEach((button) => {
   button.addEventListener('click', async () => {
     const value = button.dataset.copy;
+    const originalMarkup = button.innerHTML;
+    const originalLabel = button.getAttribute('aria-label');
+
     try {
       await navigator.clipboard.writeText(value);
-      const original = button.textContent;
-      button.textContent = 'Скопировано';
-      setTimeout(() => (button.textContent = original), 1200);
+      button.innerHTML = checkIcon;
+      button.classList.add('is-copied');
+      button.setAttribute('aria-label', 'Скопировано');
+      setTimeout(() => {
+        button.innerHTML = originalMarkup;
+        button.classList.remove('is-copied');
+        button.setAttribute('aria-label', originalLabel || `Скопировать ${value}`);
+      }, 1200);
     } catch {
       window.prompt('Скопируйте значение:', value);
     }
