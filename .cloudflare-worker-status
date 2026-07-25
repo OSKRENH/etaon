@@ -1,25 +1,23 @@
 status=success
 url=https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
-commit=5012224c4c9ba35539a95bfc3716f37fbca5a96a
-run=30175725130
+commit=d11ed0e31c59abd1664e8763a8181558968bf613
+run=30175742167
 --- wrangler output ---
 
  ⛅️ wrangler 4.114.0
 ────────────────────
 🌀 Building list of assets...
-✨ Read 8 files from the assets directory /home/runner/work/etaon/etaon/brand-center
+✨ Read 9 files from the assets directory /home/runner/work/etaon/etaon/brand-center
 🌀 Starting asset upload...
-🌀 Found 2 new or modified static assets to upload. Proceeding with upload...
-+ /assets/symbol-etalon.svg
-+ /assets/etalon-en.svg
-Uploaded 1 of 2 assets
-Uploaded 2 of 2 assets
-✨ Success! Uploaded 2 files (5 already uploaded) (0.80 sec)
+🌀 Found 1 new or modified static asset to upload. Proceeding with upload...
++ /logo-overrides.css
+Uploaded 1 of 1 asset
+✨ Success! Uploaded 1 file (7 already uploaded) (0.74 sec)
 
 Total Upload: 0.33 KiB / gzip: 0.23 KiB
-Uploaded etaon (3.32 sec)
-Deployed etaon triggers (0.78 sec)
+Uploaded etaon (5.17 sec)
+Deployed etaon triggers (1.11 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: c36cb4c8-9c9a-4cbb-9cb4-e9b95c0814b6
+Current Version ID: 0b917d19-096c-45ff-aedd-cd7200afc364
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
