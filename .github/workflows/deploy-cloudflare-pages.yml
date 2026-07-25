@@ -34,6 +34,15 @@ jobs:
           test -n "$CLOUDFLARE_API_TOKEN"
           test -n "$CLOUDFLARE_ACCOUNT_ID"
 
+      - name: Build Gilroy web fonts
+        shell: bash
+        run: |
+          base64 --decode brand-center/fonts/Gilroy-Regular.ttf.b64 > brand-center/fonts/Gilroy-Regular.ttf
+          base64 --decode brand-center/fonts/Gilroy-Medium.ttf.b64 > brand-center/fonts/Gilroy-Medium.ttf
+          test -s brand-center/fonts/Gilroy-Regular.ttf
+          test -s brand-center/fonts/Gilroy-Medium.ttf
+          rm brand-center/fonts/Gilroy-Regular.ttf.b64 brand-center/fonts/Gilroy-Medium.ttf.b64
+
       - name: Install Wrangler
         run: npm install --global wrangler@latest
 
@@ -52,7 +61,7 @@ jobs:
           DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
         run: |
           CLEAN_LOG=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' /tmp/wrangler.log 2>/dev/null || true)
-          URL=$(printf '%s\n' "$CLEAN_LOG" | grep -Eo 'https://[^[:space:]]+' | tail -1 || true)
+          URL=$(printf '%s\n' "$CLEAN_LOG" | grep -Eo 'https://[^[:space:]]+\.workers\.dev' | tail -1 || true)
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
