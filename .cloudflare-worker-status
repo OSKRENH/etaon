@@ -1,7 +1,7 @@
 status=success
 url=https://etaon.ivankamaldinov.workers.dev
-commit=21ee1b91b4d2996105c8ddee294990d85f4ecb28
-run=30178995663
+commit=80bb07aef6492830c05e56ec5c3d190c97eabcad
+run=30179056735
 --- wrangler output ---
 
  ⛅️ wrangler 4.114.0
@@ -15,9 +15,9 @@ Uploaded 1 of 1 asset
 ✨ Success! Uploaded 1 file (29 already uploaded) (0.66 sec)
 
 Total Upload: 0.33 KiB / gzip: 0.23 KiB
-Uploaded etaon (3.04 sec)
-Deployed etaon triggers (0.56 sec)
+Uploaded etaon (3.32 sec)
+Deployed etaon triggers (0.54 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: 059b22dc-018e-42fb-94da-9fabce194cc2
+Current Version ID: 2d50e48d-d59f-451c-8611-74322ff28514
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
