@@ -1,25 +1,6 @@
-status=success
-url=https://etaon.ivankamaldinov.workers.dev
-commit=17735d778a7b0daaeb7993e61297a2d3ddab00a6
-run=30176697291
+status=skipped
+url=
+commit=2fff9280198b79260a766bd5b6a98432621bc340
+run=30176767739
 --- wrangler output ---
 
- ⛅️ wrangler 4.114.0
-────────────────────
-🌀 Building list of assets...
-✨ Read 13 files from the assets directory /home/runner/work/etaon/etaon/brand-center
-🌀 Starting asset upload...
-🌀 Found 2 new or modified static assets to upload. Proceeding with upload...
-+ /fonts/Gilroy-Regular.ttf
-+ /fonts/Gilroy-Medium.ttf
-Uploaded 1 of 2 assets
-Uploaded 2 of 2 assets
-✨ Success! Uploaded 2 files (9 already uploaded) (1.53 sec)
-
-Total Upload: 0.33 KiB / gzip: 0.23 KiB
-Uploaded etaon (9.29 sec)
-Deployed etaon triggers (0.97 sec)
-  https://etaon.ivankamaldinov.workers.dev
-Current Version ID: 93a030ad-af58-40ce-a13f-aedc5f8d963d
-
-Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
