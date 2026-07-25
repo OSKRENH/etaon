@@ -1,7 +1,7 @@
 status=success
 url=https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
-commit=b689e8d4ef5000bd35202fdfa6e37e2b59e6421e
-run=30176536631
+commit=c51926196277a71071643b556eb7178c21727313
+run=30176564699
 --- wrangler output ---
 
  ⛅️ wrangler 4.114.0
@@ -10,14 +10,14 @@ run=30176536631
 ✨ Read 13 files from the assets directory /home/runner/work/etaon/etaon/brand-center
 🌀 Starting asset upload...
 🌀 Found 1 new or modified static asset to upload. Proceeding with upload...
-+ /fonts.css
++ /index.html
 Uploaded 1 of 1 asset
-✨ Success! Uploaded 1 file (10 already uploaded) (0.61 sec)
+✨ Success! Uploaded 1 file (10 already uploaded) (0.66 sec)
 
 Total Upload: 0.33 KiB / gzip: 0.23 KiB
-Uploaded etaon (3.63 sec)
-Deployed etaon triggers (0.75 sec)
+Uploaded etaon (2.88 sec)
+Deployed etaon triggers (0.38 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: c85db67e-66bf-4c34-894a-f0a7430479ab
+Current Version ID: b40785ad-5630-4657-90bb-9ee4339025e7
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
