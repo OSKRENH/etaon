@@ -1,0 +1,4 @@
+status=blocked
+details=Missing GitHub secrets: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
+commit=836dd6464f1c110dd0508f4c1288250b614f0086
+run=30174493816
