@@ -1,0 +1,33 @@
+status=failure
+url=https://dash.cloudflare.com/ad1949aad23cd123dd7497d7bc65fa24/api-tokens
+commit=c11b7eb7f16efde3cfc352e5b556ece37befee77
+run=30175379460
+--- wrangler output ---
+
+ ⛅️ wrangler 4.114.0
+────────────────────
+🌀 Building list of assets...
+✨ Read 8 files from the assets directory /home/runner/work/etaon/etaon/brand-center
+🌀 Starting asset upload...
+
+Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
+
+✘ [ERROR] A request to the Cloudflare API (/accounts/ad1949aad23cd123dd7497d7bc65fa24/workers/scripts/etaon/assets-upload-session) failed.
+
+  Authentication error [code: 10000]
+
+
+📎 It looks like you are authenticating Wrangler via a custom API token set in an environment variable.
+Please ensure it has the correct permissions for this operation.
+
+Getting User settings...
+👋 You are logged in with an Account API Token, associated with the account Ivankamaldinov@gmail.com's Account.
+ℹ️  The API Token is read from the CLOUDFLARE_API_TOKEN environment variable.
+┌────────────────────────────────────┬──────────────────────────────────┐
+│ Account Name                       │ Account ID                       │
+├────────────────────────────────────┼──────────────────────────────────┤
+│ Ivankamaldinov@gmail.com's Account │ ad1949aad23cd123dd7497d7bc65fa24 │
+└────────────────────────────────────┴──────────────────────────────────┘
+🔓 To see token permissions visit https://dash.cloudflare.com/ad1949aad23cd123dd7497d7bc65fa24/api-tokens
+🎢 Unable to get membership roles. Make sure you have permissions to read the account. Are you missing the `User->Memberships->Read` permission?
+🪵  Logs were written to "/home/runner/.config/.wrangler/logs/wrangler-2026-07-25_21-18-44_465.log"
