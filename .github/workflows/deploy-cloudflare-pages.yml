@@ -47,11 +47,11 @@ jobs:
       - name: Record successful deployment
         shell: bash
         run: |
-          printf 'status=success\ndetails=https://etaon.pages.dev\ncommit=%s\nrun=%s\n' \
-            "$GITHUB_SHA" "$GITHUB_RUN_ID" > .cloudflare-deploy-status
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git pull --rebase origin main
+          printf 'status=success\ndetails=https://etaon.pages.dev\ncommit=%s\nrun=%s\n' \
+            "$GITHUB_SHA" "$GITHUB_RUN_ID" > .cloudflare-deploy-status
           git add .cloudflare-deploy-status
           git commit -m "Record successful Cloudflare deployment [skip ci]"
           git push origin main
