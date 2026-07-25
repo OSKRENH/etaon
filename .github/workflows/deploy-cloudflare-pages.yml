@@ -34,27 +34,38 @@ jobs:
           test -n "$CLOUDFLARE_API_TOKEN"
           test -n "$CLOUDFLARE_ACCOUNT_ID"
 
-      - name: Build Gilroy web fonts
+      - name: Prepare Gilroy web fonts
         shell: bash
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import base64
+          if [ ! -s brand-center/fonts/Gilroy-Regular.ttf ] || [ ! -s brand-center/fonts/Gilroy-Medium.ttf ]; then
+            rm -rf /tmp/gilroy /tmp/Gilroy.zip
+            curl --fail --location --retry 3 --retry-delay 2 \
+              "https://at.adobe.com/EKy9OGjKFxxsZmmm" \
+              --output /tmp/Gilroy.zip
+            unzip -t /tmp/Gilroy.zip
+            mkdir -p /tmp/gilroy brand-center/fonts
+            unzip -q /tmp/Gilroy.zip -d /tmp/gilroy
+            REGULAR=$(find /tmp/gilroy -type f -iname 'Gilroy-Regular.ttf' | head -1)
+            MEDIUM=$(find /tmp/gilroy -type f -iname 'Gilroy-Medium.ttf' | head -1)
+            test -n "$REGULAR"
+            test -n "$MEDIUM"
+            cp "$REGULAR" brand-center/fonts/Gilroy-Regular.ttf
+            cp "$MEDIUM" brand-center/fonts/Gilroy-Medium.ttf
+          fi
+          test $(stat -c%s brand-center/fonts/Gilroy-Regular.ttf) -gt 50000
+          test $(stat -c%s brand-center/fonts/Gilroy-Medium.ttf) -gt 50000
+          file brand-center/fonts/Gilroy-Regular.ttf
+          file brand-center/fonts/Gilroy-Medium.ttf
 
-          for stem in ("Gilroy-Regular", "Gilroy-Medium"):
-              source = Path(f"brand-center/fonts/{stem}.ttf.b64")
-              target = Path(f"brand-center/fonts/{stem}.ttf")
-              encoded = "".join(source.read_text(encoding="utf-8").split())
-              encoded += "=" * (-len(encoded) % 4)
-              data = base64.b64decode(encoded, validate=False)
-              if data[:4] not in (b"\x00\x01\x00\x00", b"OTTO", b"ttcf"):
-                  raise SystemExit(f"{stem}: invalid font signature")
-              if len(data) < 50000:
-                  raise SystemExit(f"{stem}: decoded font is unexpectedly small ({len(data)} bytes)")
-              target.write_bytes(data)
-              print(f"{stem}: {len(data)} bytes")
-              source.unlink()
-          PY
+      - name: Store font binaries in repository
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add brand-center/fonts/Gilroy-Regular.ttf brand-center/fonts/Gilroy-Medium.ttf
+          git rm -f --ignore-unmatch brand-center/fonts/Gilroy-Regular.ttf.b64 brand-center/fonts/Gilroy-Medium.ttf.b64
+          git diff --cached --quiet || git commit -m "Store Gilroy web fonts [skip ci]"
+          git push origin main
 
       - name: Install Wrangler
         run: npm install --global wrangler@latest
