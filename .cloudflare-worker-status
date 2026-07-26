@@ -2,12 +2,9 @@ status=failure
 prepare=failure
 deploy=skipped
 url=
-commit=a1f01b595d87dc75c39674b8938868a2b02a9a4a
-run=30185237911
+commit=0ad20225732b8940c1f37333f5580d4c980907ec
+run=30185252249
 --- prepare output ---
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    24  100    24    0     0    286      0 --:--:-- --:--:-- --:--:--   289
 Syntax Warning: May not be a PDF file (continuing anyway)
 Syntax Error: Couldn't find trailer dictionary
 Syntax Error: Couldn't find trailer dictionary
