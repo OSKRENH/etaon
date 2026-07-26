@@ -10,17 +10,10 @@ rm -f brand-center/downloads/Gilroy.zip
 )
 unzip -t brand-center/downloads/Gilroy.zip >/dev/null
 
-# Keep the brand guide on the Etalon domain. Reuse the deployed copy on
-# subsequent builds; the Adobe link is only a one-time migration fallback.
+# The official guide is stored directly in the repository and served from
+# the Etalon site. No Adobe login, redirect or external host is required.
 GUIDE_PATH="brand-center/downloads/Etalon_Brand_Guide_2025.pdf"
-rm -f "$GUIDE_PATH"
-if ! curl --fail --location --retry 2 --retry-delay 2 \
-  "https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Brand_Guide_2025.pdf" \
-  --output "$GUIDE_PATH"; then
-  curl --fail --location --retry 3 --retry-delay 2 \
-    "https://at.adobe.com/lZLADQ8R3LwRgx5x" \
-    --output "$GUIDE_PATH"
-fi
+test -s "$GUIDE_PATH"
 pdfinfo "$GUIDE_PATH" | grep -Eq '^Pages:[[:space:]]+28$'
 
 python3 brand-center/scripts/generate-logo-variants.py
