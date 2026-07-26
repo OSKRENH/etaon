@@ -6,25 +6,18 @@
   const targets = links
     .map((link) => ({ link, section: document.querySelector(link.getAttribute('href')) }))
     .filter(({ section }) => section);
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let activeHref = '';
   let ticking = false;
 
   function setActive(href) {
+    if (href === activeHref) return;
+    activeHref = href;
+
     links.forEach((link) => {
       const active = link.getAttribute('href') === href;
       link.classList.toggle('is-active', active);
       if (active) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
-    });
-
-    if (href === activeHref) return;
-    activeHref = href;
-    const activeLink = links.find((link) => link.getAttribute('href') === href);
-    activeLink?.scrollIntoView({
-      behavior: reducedMotion.matches ? 'auto' : 'smooth',
-      block: 'nearest',
-      inline: 'center'
     });
   }
 
@@ -59,6 +52,5 @@
   window.addEventListener('resize', requestUpdate);
   window.addEventListener('pageshow', update);
   window.addEventListener('hashchange', update);
-  reducedMotion.addEventListener?.('change', update);
   update();
 })();
