@@ -21,15 +21,14 @@ export default {
       response.ok &&
       TRACKED_DOWNLOADS.has(url.pathname) &&
       !request.headers.has("range") &&
-      !isAutomatedRequest(request) &&
-      env.DOWNLOAD_ANALYTICS;
+      !isAutomatedRequest(request);
 
     if (shouldTrack) {
-      const file = url.pathname.split("/").pop() || url.pathname;
-      env.DOWNLOAD_ANALYTICS.writeDataPoint({
-        indexes: ["downloads"],
-        blobs: [file, request.cf?.country || "XX"],
-        doubles: [1, Number(response.headers.get("content-length") || 0)]
+      console.log({
+        event: "brand_download",
+        file: url.pathname.split("/").pop() || url.pathname,
+        country: request.cf?.country || "XX",
+        bytes: Number(response.headers.get("content-length") || 0)
       });
     }
 
