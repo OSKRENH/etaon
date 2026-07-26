@@ -23,7 +23,7 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -47,7 +47,7 @@ jobs:
         run: |
           set -euo pipefail
           sudo apt-get update -qq
-          sudo apt-get install -y -qq poppler-utils zip
+          sudo apt-get install -y -qq poppler-utils zip inkscape
           mkdir -p brand-center/assets/logos brand-center/downloads
 
           # Complete Gilroy archive for one-click download.
@@ -56,10 +56,9 @@ jobs:
             --output brand-center/downloads/Gilroy.zip
           unzip -t brand-center/downloads/Gilroy.zip >/dev/null
 
-          # Build blue, white and black variants from the supplied vector originals.
+          # Build blue, white and black SVG variants from supplied originals.
           python3 <<'PY'
           from pathlib import Path
-          import shutil
 
           root = Path('brand-center')
           out = root / 'assets' / 'logos'
@@ -80,34 +79,7 @@ jobs:
               for tone, color in colors.items():
                   variant = text.replace('#223e90', color).replace('#223E90', color)
                   (out / f'{key}-{tone}.svg').write_text(variant, encoding='utf-8')
-
-          archive = Path('/tmp/Etalon_Logos_All_Colors')
-          if archive.exists():
-              shutil.rmtree(archive)
-          folders = {
-              'group': 'Group_Etalon',
-              'ru': 'Etalon_RU',
-              'en': 'Etalon_EN',
-              'symbol': 'Symbol',
-          }
-          names = {'blue': 'Blue.svg', 'white': 'White.svg', 'black': 'Black.svg'}
-          for key, folder in folders.items():
-              target = archive / folder
-              target.mkdir(parents=True, exist_ok=True)
-              for tone, filename in names.items():
-                  shutil.copy2(out / f'{key}-{tone}.svg', target / filename)
-          (archive / 'README.txt').write_text(
-              'Логотипы Группы «Эталон» в трёх цветовых версиях:\n'
-              'Blue — фирменный синий #223E90\n'
-              'White — белый #FFFFFF\n'
-              'Black — чёрный #1D1D1B\n\n'
-              'Формат: SVG. Не изменяйте пропорции логотипов.\n',
-              encoding='utf-8'
-          )
           PY
-          cd /tmp
-          zip -qr "$GITHUB_WORKSPACE/brand-center/downloads/Etalon_Logos_All_Colors.zip" Etalon_Logos_All_Colors
-          cd "$GITHUB_WORKSPACE"
 
           # Convert the vector map supplied from Mapka, then remove point markers and labels.
           curl --fail --location --retry 3 --retry-delay 2 \
@@ -129,7 +101,6 @@ jobs:
               for child in list(parent):
                   tag = child.tag.rsplit('}', 1)[-1]
                   fill = child.attrib.get('fill', '')
-                  # The PDF contains one white background rectangle and separate white circles.
                   if tag == 'rect' or (tag == 'path' and fill == 'rgb(100%, 100%, 100%)'):
                       parent.remove(child)
                       continue
@@ -159,9 +130,14 @@ jobs:
           hero_tree.write(hero_target, encoding='utf-8', xml_declaration=True)
           PY
 
+          chmod +x brand-center/scripts/build-download-archives.sh
+          brand-center/scripts/build-download-archives.sh brand-center
+
           test $(stat -c%s brand-center/assets/regions-map.svg) -gt 100000
           test $(stat -c%s brand-center/downloads/Gilroy.zip) -gt 500000
-          test $(stat -c%s brand-center/downloads/Etalon_Logos_All_Colors.zip) -gt 5000
+          test $(stat -c%s brand-center/downloads/Etalon_Logos_All_Formats.zip) -gt 50000
+          test $(stat -c%s brand-center/downloads/Etalon_Symbol_All_Formats.zip) -gt 10000
+          test $(stat -c%s brand-center/downloads/Etalon_Map_All_Formats.zip) -gt 100000
 
       - name: Install Wrangler
         run: npm install --global wrangler@latest
