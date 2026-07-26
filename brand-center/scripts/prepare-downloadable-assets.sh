@@ -12,14 +12,16 @@ unzip -t brand-center/downloads/Gilroy.zip >/dev/null
 
 python3 brand-center/scripts/generate-logo-variants.py
 
-# Reuse the clean vector map already served by the Etalon site. This keeps
-# deployment independent from Adobe links and authentication.
+# Restore the clean SVG from the archive already hosted on the Etalon domain.
+# No Adobe link or authentication is involved.
 curl --fail --location --retry 3 --retry-delay 2 \
-  "https://etaon.ivankamaldinov.workers.dev/assets/regions-map.svg" \
-  --output brand-center/assets/regions-map.svg
-curl --fail --location --retry 3 --retry-delay 2 \
-  "https://etaon.ivankamaldinov.workers.dev/assets/regions-map-hero.svg" \
-  --output brand-center/assets/regions-map-hero.svg
+  "https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Map_All_Formats.zip" \
+  --output /tmp/etalon-map-source.zip
+unzip -p /tmp/etalon-map-source.zip \
+  "Etalon_Map_All_Formats/Etalon_Map.svg" \
+  > brand-center/assets/regions-map.svg
+cp brand-center/assets/regions-map.svg brand-center/assets/regions-map-hero.svg
+test -s brand-center/assets/regions-map.svg
 
 chmod +x brand-center/scripts/build-download-archives.sh
 brand-center/scripts/build-download-archives.sh brand-center
@@ -31,7 +33,6 @@ python3 brand-center/scripts/build-brand-guide.py
 test -s "$GUIDE_PATH"
 pdfinfo "$GUIDE_PATH" | grep -Eq '^Pages:[[:space:]]+6$'
 
-test -s brand-center/assets/regions-map.svg
 test -s brand-center/downloads/Gilroy.zip
 test -s brand-center/downloads/Etalon_Logos_All_Formats.zip
 test -s brand-center/downloads/Etalon_Symbol_All_Formats.zip
