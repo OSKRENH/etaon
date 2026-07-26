@@ -11,7 +11,7 @@ import sys
 AUDITOR = Path(__file__).resolve()
 ROOT = AUDITOR.parents[1]
 INDEX = ROOT / "index.html"
-SAME_ORIGIN = "etaon.ivankamaldinov.workers.dev"
+ALLOWED_EXTERNAL_HOSTS = {"etaon.ivankamaldinov.workers.dev", "t.me"}
 
 
 class Element:
@@ -147,7 +147,7 @@ def main() -> int:
 
         parsed = urlparse(value)
         if parsed.scheme in {"http", "https"}:
-            if parsed.netloc and parsed.netloc != SAME_ORIGIN:
+            if parsed.netloc and parsed.netloc not in ALLOWED_EXTERNAL_HOSTS:
                 errors.append(f"Внешняя ссылка в интерфейсе: {value}")
             continue
 
