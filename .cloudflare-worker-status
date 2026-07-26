@@ -1,18 +1,18 @@
-status=success
+status=failure
 prepare=success
 audit=success
 deploy=success
-verify=success
+verify=failure
 url=https://etaon.ivankamaldinov.workers.dev
-commit=ead2a44996c69b1184d24f42a017b29794705622
-run=30195865205
+commit=78acdb38894a842afd86a73617dbeea28206c671
+run=30195964440
 --- prepare output ---
 /home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner  29K Jul 26 09:07 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner 377K Jul 26 09:07 brand-center/downloads/Etalon_Logos_All_Formats.zip
--rw-r--r-- 1 runner runner 205K Jul 26 09:07 brand-center/downloads/Etalon_Map_All_Formats.zip
--rw-r--r-- 1 runner runner  23K Jul 26 09:07 brand-center/downloads/Etalon_Symbol_All_Formats.zip
--rw-r--r-- 1 runner runner  71K Jul 26 09:07 brand-center/downloads/Gilroy.zip
+-rw-r--r-- 1 runner runner  29K Jul 26 09:11 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+-rw-r--r-- 1 runner runner 377K Jul 26 09:11 brand-center/downloads/Etalon_Logos_All_Formats.zip
+-rw-r--r-- 1 runner runner 205K Jul 26 09:11 brand-center/downloads/Etalon_Map_All_Formats.zip
+-rw-r--r-- 1 runner runner  23K Jul 26 09:11 brand-center/downloads/Etalon_Symbol_All_Formats.zip
+-rw-r--r-- 1 runner runner  71K Jul 26 09:10 brand-center/downloads/Gilroy.zip
 --- audit output ---
 Проверено ссылок и ресурсов: 52
 Проверено якорей: 17
@@ -23,29 +23,25 @@ run=30195865205
  ⛅️ wrangler 4.114.0
 ────────────────────
 🌀 Building list of assets...
-✨ Read 55 files from the assets directory /home/runner/work/etaon/etaon/brand-center
+✨ Read 43 files from the assets directory /home/runner/work/etaon/etaon/brand-center
 🌀 Starting asset upload...
-🌀 Found 9 new or modified static assets to upload. Proceeding with upload...
-+ /scripts/__pycache__/generate-logo-variants.cpython-312.pyc
-+ /scripts/__pycache__/audit-site.cpython-312.pyc
-+ /downloads/Gilroy.zip
-+ /scripts/__pycache__/prepare-map.cpython-312.pyc
+🌀 Found 5 new or modified static assets to upload. Proceeding with upload...
 + /downloads/Etalon_Symbol_All_Formats.zip
 + /downloads/Etalon_Map_All_Formats.zip
-+ /scripts/__pycache__/build-brand-guide.cpython-312.pyc
 + /downloads/Etalon_Brand_Guide_2025.pdf
 + /downloads/Etalon_Logos_All_Formats.zip
-Uploaded 3 of 9 assets
-Uploaded 6 of 9 assets
-Uploaded 9 of 9 assets
-✨ Success! Uploaded 9 files (40 already uploaded) (1.03 sec)
++ /downloads/Gilroy.zip
+Uploaded 2 of 5 assets
+Uploaded 3 of 5 assets
+Uploaded 5 of 5 assets
+✨ Success! Uploaded 5 files (34 already uploaded) (1.10 sec)
 
 Total Upload: 0.33 KiB / gzip: 0.23 KiB
-Uploaded etaon (3.43 sec)
-Deployed etaon triggers (0.50 sec)
+Uploaded etaon (3.33 sec)
+Deployed etaon triggers (0.53 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: 8f538724-0d53-448e-9b27-83d9e29150c6
+Current Version ID: 91bd2899-b290-42d5-9319-269b0c9369fa
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
 --- live verification output ---
-Живой сайт и все файлы скачивания проверены.
+curl: (22) The requested URL returned error: 404
