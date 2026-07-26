@@ -1,10 +1,38 @@
-status=skipped
-prepare=skipped
-deploy=skipped
-url=
-commit=8ca5ee557c195d25659a85178dcd741089e15960
-run=30185857406
+status=success
+prepare=success
+deploy=success
+url=https://etaon.ivankamaldinov.workers.dev
+commit=53eb8bc907e1b320c5e249615e0d95e8338a5045
+run=30185872937
 --- prepare output ---
-
+/home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+-rw-r--r-- 1 runner runner  29K Jul 26 03:16 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+-rw-r--r-- 1 runner runner 377K Jul 26 03:16 brand-center/downloads/Etalon_Logos_All_Formats.zip
+-rw-r--r-- 1 runner runner 205K Jul 26 03:16 brand-center/downloads/Etalon_Map_All_Formats.zip
+-rw-r--r-- 1 runner runner  23K Jul 26 03:16 brand-center/downloads/Etalon_Symbol_All_Formats.zip
+-rw-r--r-- 1 runner runner  71K Jul 26 03:16 brand-center/downloads/Gilroy.zip
 --- wrangler output ---
 
+ ⛅️ wrangler 4.114.0
+────────────────────
+🌀 Building list of assets...
+✨ Read 48 files from the assets directory /home/runner/work/etaon/etaon/brand-center
+🌀 Starting asset upload...
+🌀 Found 5 new or modified static assets to upload. Proceeding with upload...
++ /downloads/Etalon_Symbol_All_Formats.zip
++ /downloads/Etalon_Map_All_Formats.zip
++ /downloads/Etalon_Brand_Guide_2025.pdf
++ /downloads/Etalon_Logos_All_Formats.zip
++ /downloads/Gilroy.zip
+Uploaded 2 of 5 assets
+Uploaded 3 of 5 assets
+Uploaded 5 of 5 assets
+✨ Success! Uploaded 5 files (38 already uploaded) (1.25 sec)
+
+Total Upload: 0.33 KiB / gzip: 0.23 KiB
+Uploaded etaon (3.58 sec)
+Deployed etaon triggers (0.50 sec)
+  https://etaon.ivankamaldinov.workers.dev
+Current Version ID: 135b0031-3c8a-4d3b-885d-c0bffb5b70b3
+
+Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
