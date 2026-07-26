@@ -1,22 +1,13 @@
-status=cancelled
-prepare=cancelled
+status=skipped
+prepare=skipped
 audit=skipped
 deploy=skipped
 verify=skipped
 url=https://etaon.ivankamaldinov.workers.dev
-commit=0b7e08af2315a5bd22955ec62d09a812a74bef11
-run=30198320586
+commit=77e5886d59e790d2b2cba15599661c43241abbf3
+run=30198341242
 --- prepare output ---
-Фирменный цвет совпадает во всех мастер-файлах: #223E90
-Производные оттенки: 50% #919FC8, 15% #DEE2EE
-/home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
-Download manifest generated: /home/runner/work/etaon/etaon/brand-center/downloads/downloads-manifest.json
--rw-r--r-- 1 runner runner  29K Jul 26 10:29 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner 376K Jul 26 10:29 brand-center/downloads/Etalon_Logos_All_Formats.zip
--rw-r--r-- 1 runner runner 205K Jul 26 10:29 brand-center/downloads/Etalon_Map_All_Formats.zip
--rw-r--r-- 1 runner runner  23K Jul 26 10:29 brand-center/downloads/Etalon_Symbol_All_Formats.zip
--rw-r--r-- 1 runner runner  71K Jul 26 10:29 brand-center/downloads/Gilroy.zip
--rw-r--r-- 1 runner runner  463 Jul 26 10:29 brand-center/downloads/downloads-manifest.json
+
 --- audit output ---
 
 --- wrangler output ---
