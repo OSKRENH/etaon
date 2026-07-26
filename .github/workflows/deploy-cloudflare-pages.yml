@@ -55,6 +55,26 @@ jobs:
           chmod +x brand-center/scripts/*.sh
           brand-center/scripts/prepare-downloadable-assets.sh 2>&1 | tee /tmp/prepare.log
 
+      - name: Render PDF preview
+        if: steps.prepare.outcome == 'success'
+        shell: bash
+        run: |
+          mkdir -p /tmp/brand-guide-preview
+          pdftoppm -png -r 110 \
+            brand-center/downloads/Etalon_Brand_Guide_2025.pdf \
+            /tmp/brand-guide-preview/page
+          cp brand-center/downloads/Etalon_Brand_Guide_2025.pdf /tmp/brand-guide-preview/
+          test "$(find /tmp/brand-guide-preview -name 'page-*.png' | wc -l)" -eq 6
+
+      - name: Upload PDF preview artifact
+        if: steps.prepare.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: etalon-brand-guide-preview
+          path: /tmp/brand-guide-preview
+          retention-days: 7
+          if-no-files-found: error
+
       - name: Audit code and local links
         if: steps.prepare.outcome == 'success'
         id: audit
