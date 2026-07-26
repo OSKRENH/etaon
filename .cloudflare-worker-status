@@ -1,38 +1,15 @@
-status=success
-prepare=success
-deploy=success
-url=https://etaon.ivankamaldinov.workers.dev
-commit=8b08e6696c7fd494ba75ad4550abef4a370735bb
-run=30195634139
+status=cancelled
+prepare=cancelled
+deploy=skipped
+url=
+commit=4f0c346fa0abb1ad3dd834bf76ac48b3a56792a6
+run=30195683159
 --- prepare output ---
 /home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner  29K Jul 26 09:00 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner 377K Jul 26 09:00 brand-center/downloads/Etalon_Logos_All_Formats.zip
--rw-r--r-- 1 runner runner 205K Jul 26 09:00 brand-center/downloads/Etalon_Map_All_Formats.zip
--rw-r--r-- 1 runner runner  23K Jul 26 09:00 brand-center/downloads/Etalon_Symbol_All_Formats.zip
--rw-r--r-- 1 runner runner  71K Jul 26 09:00 brand-center/downloads/Gilroy.zip
+-rw-r--r-- 1 runner runner  29K Jul 26 09:01 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+-rw-r--r-- 1 runner runner 377K Jul 26 09:01 brand-center/downloads/Etalon_Logos_All_Formats.zip
+-rw-r--r-- 1 runner runner 205K Jul 26 09:01 brand-center/downloads/Etalon_Map_All_Formats.zip
+-rw-r--r-- 1 runner runner  23K Jul 26 09:01 brand-center/downloads/Etalon_Symbol_All_Formats.zip
+-rw-r--r-- 1 runner runner  71K Jul 26 09:01 brand-center/downloads/Gilroy.zip
 --- wrangler output ---
 
- ⛅️ wrangler 4.114.0
-────────────────────
-🌀 Building list of assets...
-✨ Read 49 files from the assets directory /home/runner/work/etaon/etaon/brand-center
-🌀 Starting asset upload...
-🌀 Found 5 new or modified static assets to upload. Proceeding with upload...
-+ /downloads/Etalon_Symbol_All_Formats.zip
-+ /downloads/Etalon_Map_All_Formats.zip
-+ /downloads/Etalon_Brand_Guide_2025.pdf
-+ /downloads/Etalon_Logos_All_Formats.zip
-+ /downloads/Gilroy.zip
-Uploaded 2 of 5 assets
-Uploaded 4 of 5 assets
-Uploaded 5 of 5 assets
-✨ Success! Uploaded 5 files (39 already uploaded) (1.11 sec)
-
-Total Upload: 0.33 KiB / gzip: 0.23 KiB
-Uploaded etaon (4.06 sec)
-Deployed etaon triggers (0.52 sec)
-  https://etaon.ivankamaldinov.workers.dev
-Current Version ID: 1a8e3bd8-eb1e-4782-a617-093d35f490da
-
-Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
