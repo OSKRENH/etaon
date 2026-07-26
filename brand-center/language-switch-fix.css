@@ -157,6 +157,38 @@
     flex-direction:column;
   }
 }
+
+/* Быстрые маркеры используют ту же типографику, что и заголовки разделов */
+.quick-meta{
+  display:grid!important;
+  grid-template-columns:2.45ch 13px;
+  align-items:center!important;
+  column-gap:11px!important;
+  min-height:18px;
+}
+.quick-meta b,
+.section-kicker>span:first-child{
+  width:2.45ch;
+  padding:0!important;
+  margin:0!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  line-height:1!important;
+  letter-spacing:.14em!important;
+  font-variant-numeric:tabular-nums lining-nums;
+  text-align:left;
+}
+.quick-meta i,
+.section-kicker i{
+  width:1px!important;
+  height:13px!important;
+  margin:0!important;
+  align-self:center!important;
+  justify-self:center!important;
+  transform:rotate(38deg)!important;
+  transform-origin:center!important;
+}
+
 @media(prefers-reduced-motion:reduce){
   .language-segment-switch,
   .language-segment-switch::before,
