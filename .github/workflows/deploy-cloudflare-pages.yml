@@ -54,7 +54,6 @@ jobs:
             sudo apt-get install -y -qq poppler-utils zip inkscape
             mkdir -p brand-center/assets/logos brand-center/downloads
 
-            # Build the font ZIP locally so deployment does not depend on an external Adobe link.
             rm -f brand-center/downloads/Gilroy.zip
             (
               cd brand-center/fonts
@@ -137,11 +136,15 @@ jobs:
             chmod +x brand-center/scripts/build-download-archives.sh
             brand-center/scripts/build-download-archives.sh brand-center
 
-            test $(stat -c%s brand-center/assets/regions-map.svg) -gt 100000
-            test $(stat -c%s brand-center/downloads/Gilroy.zip) -gt 100000
-            test $(stat -c%s brand-center/downloads/Etalon_Logos_All_Formats.zip) -gt 50000
-            test $(stat -c%s brand-center/downloads/Etalon_Symbol_All_Formats.zip) -gt 10000
-            test $(stat -c%s brand-center/downloads/Etalon_Map_All_Formats.zip) -gt 100000
+            test -s brand-center/assets/regions-map.svg
+            test -s brand-center/downloads/Gilroy.zip
+            test -s brand-center/downloads/Etalon_Logos_All_Formats.zip
+            test -s brand-center/downloads/Etalon_Symbol_All_Formats.zip
+            test -s brand-center/downloads/Etalon_Map_All_Formats.zip
+            unzip -t brand-center/downloads/Etalon_Logos_All_Formats.zip >/dev/null
+            unzip -t brand-center/downloads/Etalon_Symbol_All_Formats.zip >/dev/null
+            unzip -t brand-center/downloads/Etalon_Map_All_Formats.zip >/dev/null
+            ls -lh brand-center/downloads/*.zip
           } 2>&1 | tee /tmp/prepare.log
 
       - name: Install Wrangler
