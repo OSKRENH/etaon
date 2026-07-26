@@ -7,6 +7,7 @@ on:
       - "brand-center/**"
       - "wrangler.jsonc"
       - ".github/workflows/deploy-cloudflare-pages.yml"
+      - ".github/scripts/**"
   workflow_dispatch:
 
 concurrency:
@@ -95,35 +96,8 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          {
-            TMP_DIR=$(mktemp -d)
-            CACHE_BUST="audit=$GITHUB_SHA"
-
-            curl -fsSL --retry 8 --retry-delay 2 --retry-connrefused \
-              "$SITE_URL/?$CACHE_BUST" -o "$TMP_DIR/index.html"
-            grep -q '<html lang="ru">' "$TMP_DIR/index.html"
-            grep -q './downloads/Etalon_Brand_Guide_2025.pdf' "$TMP_DIR/index.html"
-            grep -q './quality-polish.css' "$TMP_DIR/index.html"
-            ! grep -q 'at.adobe.com' "$TMP_DIR/index.html"
-
-            curl -fsSL --retry 8 --retry-delay 2 --retry-connrefused \
-              "$SITE_URL/downloads/Etalon_Brand_Guide_2025.pdf?$CACHE_BUST" \
-              -o "$TMP_DIR/guide.pdf"
-            pdfinfo "$TMP_DIR/guide.pdf" | grep -Eq '^Pages:[[:space:]]+6$'
-
-            for archive in \
-              Etalon_Logos_All_Formats.zip \
-              Etalon_Symbol_All_Formats.zip \
-              Etalon_Map_All_Formats.zip \
-              Gilroy.zip; do
-              curl -fsSL --retry 8 --retry-delay 2 --retry-connrefused \
-                "$SITE_URL/downloads/$archive?$CACHE_BUST" \
-                -o "$TMP_DIR/$archive"
-              unzip -t "$TMP_DIR/$archive" >/dev/null
-            done
-
-            echo "Живой сайт и все файлы скачивания проверены."
-          } 2>&1 | tee /tmp/verify.log
+          chmod +x .github/scripts/verify-live.sh
+          .github/scripts/verify-live.sh 2>&1 | tee /tmp/verify.log
 
       - name: Record deployment result
         if: always()
