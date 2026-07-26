@@ -1,4 +1,10 @@
 (() => {
+  const brandGuideLink = document.querySelector('a[href*="at.adobe.com/lZLADQ8R3LwRgx5x"]');
+  if (brandGuideLink) {
+    brandGuideLink.href = './downloads/Etalon_Brand_Guide_2025.pdf';
+    brandGuideLink.download = 'Фирменный-стиль-Эталон-2025.pdf';
+  }
+
   const card = document.querySelector('[data-logo-key="ru"]');
   if (!card) return;
 
