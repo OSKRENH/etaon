@@ -76,24 +76,37 @@
   outline-offset:2px;
 }
 
-/* Настоящий плавный кроссфейд между двумя SVG */
+/* Обе языковые версии загружены заранее и меняют только прозрачность */
 .logo-preview{overflow:hidden}
-.logo-preview>img{
-  opacity:1;
-  transition:opacity .52s cubic-bezier(.22,.7,.2,1),transform .75s cubic-bezier(.22,.7,.2,1)!important;
-}
-.logo-preview>img.language-fade-out{opacity:0!important}
-.logo-preview>img.language-fade-layer{
-  position:absolute!important;
-  left:50%;
-  top:50%;
+.language-logo-stack{
+  position:relative;
   z-index:2;
-  opacity:0!important;
-  pointer-events:none;
-  transform:translate(-50%,-50%) scale(1.025)!important;
-  transition:opacity .52s cubic-bezier(.22,.7,.2,1)!important;
+  width:min(72%,420px);
+  height:48%;
+  opacity:1;
+  transform:scale(1);
+  transition:opacity .2s ease,transform .75s cubic-bezier(.22,.7,.2,1);
 }
-.logo-preview>img.language-fade-layer.is-visible{opacity:1!important}
+.logo-card.is-in-view .language-logo-stack{transform:scale(1.035)}
+.language-logo-stack.is-tone-changing{opacity:0}
+.logo-preview .language-logo-stack .language-logo-layer{
+  position:absolute!important;
+  inset:0;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  object-fit:contain;
+  opacity:0;
+  transform:none!important;
+  pointer-events:none;
+  will-change:opacity;
+  transition:opacity .58s cubic-bezier(.22,.7,.2,1)!important;
+}
+.language-logo-stack[data-language="ru"] .language-logo-layer-ru,
+.language-logo-stack[data-language="en"] .language-logo-layer-en{opacity:1}
 
 /* Архив всех логотипов расположен после карточек, как у шрифта */
 .logo-archive-download{margin-top:24px!important}
@@ -124,6 +137,10 @@
     font-size:7px!important;
     line-height:20px!important;
   }
+  .language-logo-stack{
+    width:72%;
+    height:44%;
+  }
   .logo-archive-download{
     align-items:flex-start;
     flex-direction:column;
@@ -133,7 +150,8 @@
   .language-segment-switch,
   .language-segment-switch::before,
   .language-option,
-  .logo-preview>img{
+  .language-logo-stack,
+  .language-logo-layer{
     transition:none!important;
   }
 }
