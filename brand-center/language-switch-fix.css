@@ -36,9 +36,7 @@
   transform:translateX(0);
   transition:transform .34s cubic-bezier(.22,.7,.2,1),background .28s ease;
 }
-.language-segment-switch[data-language="en"]::before{
-  transform:translateX(100%);
-}
+.language-segment-switch[data-language="en"]::before{transform:translateX(100%)}
 .logo-preview .language-segment-switch .language-option{
   position:relative;
   z-index:1;
@@ -78,17 +76,28 @@
   outline-offset:2px;
 }
 
-/* Простая плавная смена русской и английской версий */
-.logo-preview{
-  overflow:hidden;
-}
+/* Настоящий плавный кроссфейд между двумя SVG */
+.logo-preview{overflow:hidden}
 .logo-preview>img{
   opacity:1;
-  transition:opacity .28s ease,transform .75s cubic-bezier(.22,.7,.2,1)!important;
+  transition:opacity .52s cubic-bezier(.22,.7,.2,1),transform .75s cubic-bezier(.22,.7,.2,1)!important;
 }
-.logo-preview>img.language-fading{
+.logo-preview>img.language-fade-out{opacity:0!important}
+.logo-preview>img.language-fade-layer{
+  position:absolute!important;
+  left:50%;
+  top:50%;
+  z-index:2;
   opacity:0!important;
+  pointer-events:none;
+  transform:translate(-50%,-50%) scale(1.025)!important;
+  transition:opacity .52s cubic-bezier(.22,.7,.2,1)!important;
 }
+.logo-preview>img.language-fade-layer.is-visible{opacity:1!important}
+
+/* Архив всех логотипов расположен после карточек, как у шрифта */
+.logo-archive-download{margin-top:24px!important}
+.logo-archive-download span{color:#7a828f}
 
 /* Стрелка стоит на той же правой линии, что и иконки скачивания */
 .back-to-top{
@@ -110,12 +119,14 @@
     min-width:72px!important;
     height:28px!important;
   }
-  .language-segment-switch::before{
-    height:20px;
-  }
+  .language-segment-switch::before{height:20px}
   .logo-preview .language-segment-switch .language-option{
     font-size:7px!important;
     line-height:20px!important;
+  }
+  .logo-archive-download{
+    align-items:flex-start;
+    flex-direction:column;
   }
 }
 @media(prefers-reduced-motion:reduce){
