@@ -54,9 +54,12 @@ jobs:
             sudo apt-get install -y -qq poppler-utils zip inkscape
             mkdir -p brand-center/assets/logos brand-center/downloads
 
-            curl --fail --location --retry 3 --retry-delay 2 \
-              "https://at.adobe.com/EKy9OGjKFxxsZmmm" \
-              --output brand-center/downloads/Gilroy.zip
+            # Build the font ZIP locally so deployment does not depend on an external Adobe link.
+            rm -f brand-center/downloads/Gilroy.zip
+            (
+              cd brand-center/fonts
+              zip -q ../downloads/Gilroy.zip ./*.ttf
+            )
             unzip -t brand-center/downloads/Gilroy.zip >/dev/null
 
             python3 <<'PY'
@@ -135,7 +138,7 @@ jobs:
             brand-center/scripts/build-download-archives.sh brand-center
 
             test $(stat -c%s brand-center/assets/regions-map.svg) -gt 100000
-            test $(stat -c%s brand-center/downloads/Gilroy.zip) -gt 500000
+            test $(stat -c%s brand-center/downloads/Gilroy.zip) -gt 100000
             test $(stat -c%s brand-center/downloads/Etalon_Logos_All_Formats.zip) -gt 50000
             test $(stat -c%s brand-center/downloads/Etalon_Symbol_All_Formats.zip) -gt 10000
             test $(stat -c%s brand-center/downloads/Etalon_Map_All_Formats.zip) -gt 100000
