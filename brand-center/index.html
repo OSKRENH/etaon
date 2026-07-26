@@ -4,7 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#223e90" />
-  <meta name="description" content="Центр бренда Группы Эталон" />
+  <meta name="color-scheme" content="light" />
+  <meta name="description" content="Центр бренда Группы Эталон: логотипы, фирменные цвета, шрифт Gilroy, карта и руководство по стилю." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:title" content="Эталон — центр бренда" />
+  <meta property="og:description" content="Правила фирменного стиля и готовые материалы Группы Эталон." />
+  <meta property="og:url" content="https://etaon.ivankamaldinov.workers.dev/" />
+  <link rel="canonical" href="https://etaon.ivankamaldinov.workers.dev/" />
+  <link rel="icon" href="./assets/symbol-etalon.svg" type="image/svg+xml" />
+  <link rel="preload" href="./fonts/Gilroy-Regular.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="preload" href="./fonts/Gilroy-Medium.ttf" as="font" type="font/ttf" crossorigin />
   <title>Эталон — центр бренда</title>
   <link rel="stylesheet" href="./fonts.css" />
   <link rel="stylesheet" href="./styles.css" />
@@ -14,10 +24,15 @@
   <link rel="stylesheet" href="./visual-refresh.css" />
   <link rel="stylesheet" href="./final-polish.css" />
   <link rel="stylesheet" href="./language-switch-fix.css" />
+  <link rel="stylesheet" href="./quality-polish.css" />
 </head>
 <body>
+  <a class="skip-link" href="#overview">Перейти к содержанию</a>
+  <div class="sr-only" id="ui-status" role="status" aria-live="polite" aria-atomic="true"></div>
+  <noscript><div class="noscript-banner">Для переключения логотипов и копирования цветовых кодов необходимо включить JavaScript.</div></noscript>
+
   <aside class="sidebar">
-    <a class="wordmark" href="#top" aria-label="Группа Эталон"><img src="./assets/group-etalon.svg" alt="Группа Эталон" /></a>
+    <a class="wordmark" href="#top" aria-label="Группа Эталон"><img src="./assets/group-etalon.svg" alt="Группа Эталон" decoding="async" /></a>
     <nav aria-label="Разделы центра бренда">
       <a href="#overview">Обзор</a>
       <a href="#logos">Логотип</a>
@@ -31,7 +46,7 @@
 
   <main id="top">
     <header class="topbar">
-      <div class="mobile-logo"><img src="./assets/etalon-ru.svg" alt="Эталон" /></div>
+      <div class="mobile-logo"><img src="./assets/etalon-ru.svg" alt="Эталон" decoding="async" /></div>
       <a class="button button-small" href="#downloads">Скачать материалы</a>
     </header>
 
@@ -64,15 +79,15 @@
       <div class="section-heading"><div><p class="eyebrow section-kicker"><span>01</span><i aria-hidden="true"></i><span>ОСНОВА БРЕНДА</span></p><h2>Логотип</h2></div><p>Используйте только оригинальные файлы. Не меняйте пропорции, цвет и расстояние между элементами.</p></div>
       <div class="logo-grid">
         <article class="logo-card logo-card-wide" data-logo-key="group">
-          <div class="logo-preview tone-blue"><img src="./assets/logos/group-blue.svg" alt="Логотип Группы Эталон" /></div>
+          <div class="logo-preview tone-blue"><img src="./assets/logos/group-blue.svg" alt="Логотип Группы Эталон" decoding="async" /></div>
           <footer><div><b>Группа «Эталон»</b><small>Полная версия</small></div><button class="logo-download-icon" type="button" data-download="logos/group-blue.svg" aria-label="Скачать логотип Группы Эталон"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3zM5 19h14v2H5z"/></svg></button></footer>
         </article>
         <article class="logo-card" data-logo-key="ru">
-          <div class="logo-preview tone-blue"><img src="./assets/logos/ru-blue.svg" alt="Логотип Эталон на русском" /></div>
-          <footer><div><b>Кириллическая версия</b><small>Основной логотип</small></div><button class="logo-download-icon" type="button" data-download="logos/ru-blue.svg" aria-label="Скачать кириллический логотип"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3zM5 19h14v2H5z"/></svg></button></footer>
+          <div class="logo-preview tone-blue"><img src="./assets/logos/ru-blue.svg" alt="Логотип Эталон на русском" decoding="async" /></div>
+          <footer><div><b aria-live="polite">Кириллическая версия</b><small>Основной логотип</small></div><button class="logo-download-icon" type="button" data-download="logos/ru-blue.svg" aria-label="Скачать кириллический логотип"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3zM5 19h14v2H5z"/></svg></button></footer>
         </article>
         <article class="logo-card" data-logo-key="symbol">
-          <div class="logo-preview symbol-preview tone-blue"><img src="./assets/logos/symbol-blue.svg" alt="Фирменный знак Эталон" /></div>
+          <div class="logo-preview symbol-preview tone-blue"><img src="./assets/logos/symbol-blue.svg" alt="Фирменный знак Эталон" decoding="async" /></div>
           <footer><div><b>Фирменный знак</b><small>Для компактных форматов</small></div><button class="logo-download-icon" type="button" data-download="logos/symbol-blue.svg" aria-label="Скачать фирменный знак"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3zM5 19h14v2H5z"/></svg></button></footer>
         </article>
       </div>
@@ -84,11 +99,11 @@
           <div class="safe-area">
             <div class="safe-area-lockup" aria-label="Охранное поле логотипа">
               <div class="safe-logo-core">
-                <img class="safe-logo" src="./assets/safe-logo.svg" alt="Эталон" />
-                <img class="safe-o safe-o-top" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
-                <img class="safe-o safe-o-right" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
-                <img class="safe-o safe-o-bottom" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
-                <img class="safe-o safe-o-left" src="./assets/logo-o.svg" alt="" aria-hidden="true" />
+                <img class="safe-logo" src="./assets/safe-logo.svg" alt="Эталон" loading="lazy" decoding="async" />
+                <img class="safe-o safe-o-top" src="./assets/logo-o.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <img class="safe-o safe-o-right" src="./assets/logo-o.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <img class="safe-o safe-o-bottom" src="./assets/logo-o.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <img class="safe-o safe-o-left" src="./assets/logo-o.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
               </div>
             </div>
             <small>Охранное поле равно высоте буквы «О»</small>
@@ -115,14 +130,14 @@
     </section>
 
     <section class="section map-section" id="map" data-search="карта география присутствия скачать svg png eps pdf архив">
-      <img class="map-background" src="./assets/regions-map.svg" alt="" aria-hidden="true" />
+      <img class="map-background" src="./assets/regions-map.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
       <div class="map-overlay"><p class="eyebrow section-kicker"><span>04</span><i aria-hidden="true"></i><span>ГЕОГРАФИЯ</span></p><h2>Карта</h2><p>Чистая карта без точек и подписей. Территории присутствия выделены фирменным синим.</p><a class="button button-blue" href="./downloads/Etalon_Map_All_Formats.zip" download>Скачать карту</a></div>
     </section>
 
     <section class="downloads" id="downloads" data-search="скачать материалы фирменный стиль логотип знак карта шрифт gilroy архив">
       <div><p class="eyebrow">ЦЕНТР ЗАГРУЗОК</p><h2>Материалы бренда</h2><p>Основные файлы для работы с брендом.</p></div>
       <div class="download-list compact-downloads">
-        <a href="https://at.adobe.com/lZLADQ8R3LwRgx5x" download="Фирменный-стиль-Эталон.pdf"><span>Фирменный стиль</span><b aria-hidden="true">↓</b></a>
+        <a href="./downloads/Etalon_Brand_Guide_2025.pdf" download="Фирменный-стиль-Эталон.pdf"><span>Фирменный стиль</span><b aria-hidden="true">↓</b></a>
         <a href="./downloads/Etalon_Logos_All_Formats.zip" download><span>Логотип</span><b aria-hidden="true">↓</b></a>
         <a href="./downloads/Etalon_Symbol_All_Formats.zip" download><span>Фирменный знак</span><b aria-hidden="true">↓</b></a>
         <a href="./downloads/Etalon_Map_All_Formats.zip" download><span>Карта</span><b aria-hidden="true">↓</b></a>
@@ -130,7 +145,7 @@
       </div>
     </section>
 
-    <footer class="page-footer"><img class="footer-logo" src="./assets/group-etalon.svg" alt="Группа Эталон" /></footer>
+    <footer class="page-footer"><img class="footer-logo" src="./assets/group-etalon.svg" alt="Группа Эталон" loading="lazy" decoding="async" /></footer>
   </main>
 
   <a class="back-to-top" href="#top" aria-label="Наверх" title="Наверх"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l7 7-1.41 1.41L13 8.83V20h-2V8.83l-4.59 4.58L5 12l7-7z"/></svg></a>
