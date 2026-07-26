@@ -115,14 +115,19 @@ body{
   color:#5f6875;
   font-size:13px;
   line-height:1.55;
+  text-align:left!important;
   animation:footerPanelIn .22s ease both;
 }
-.footer-changelog-body p{margin:0 0 14px}
+.footer-changelog-body p{
+  margin:0 0 14px;
+  text-align:left!important;
+}
 .footer-changelog-body a{
   display:inline-flex;
   margin:0!important;
   color:#223e90;
   font-weight:500;
+  text-align:left!important;
   transition:opacity .24s ease;
 }
 @media(hover:hover){.footer-changelog-body a:hover{opacity:.65}}
@@ -131,35 +136,14 @@ body{
   to{opacity:1;transform:none}
 }
 
-/* Быстрые разделы явно ведут себя как ссылки */
-.quick-links a,
-.quick-links a .quick-meta,
-.quick-links a strong,
-.quick-links a .quick-desc,
-.quick-links a .quick-meta i::before{
-  transition:background-color .28s ease,color .28s ease,border-color .28s ease,opacity .28s ease!important;
+/* У быстрых ссылок подсвечивается только заголовок */
+.quick-links a strong{
+  transition:color .28s ease!important;
 }
 @media(hover:hover){
-  .quick-links a:hover,
-  .quick-links a:focus-visible{
-    background:#223e90!important;
-    color:#fff!important;
-  }
-  .quick-links a:hover .quick-meta,
-  .quick-links a:focus-visible .quick-meta{
-    color:rgba(255,255,255,.74)!important;
-  }
   .quick-links a:hover strong,
   .quick-links a:focus-visible strong{
-    color:#fff!important;
-  }
-  .quick-links a:hover .quick-desc,
-  .quick-links a:focus-visible .quick-desc{
-    color:rgba(255,255,255,.76)!important;
-  }
-  .quick-links a:hover .quick-meta i::before,
-  .quick-links a:focus-visible .quick-meta i::before{
-    background:rgba(255,255,255,.68)!important;
+    color:#223e90!important;
   }
 }
 
@@ -178,6 +162,7 @@ body{
     padding-left:clamp(22px,2vw,34px)!important;
     padding-right:clamp(22px,2vw,34px)!important;
     background:#fff!important;
+    color:inherit!important;
   }
   .quick-links a:first-child{padding-left:0!important}
   .quick-links a:last-child{padding-right:0!important}
