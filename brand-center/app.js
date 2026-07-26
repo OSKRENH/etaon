@@ -13,7 +13,7 @@ if (statItems.length >= 4) {
   statItems[3].innerHTML = '<strong>9,8 млн м²</strong><span class="stat-nowrap">жилой площади</span>';
 }
 
-/* Стабильный диагональный разделитель как часть сетки */
+/* Диагональный разделитель — самостоятельный элемент сетки */
 document.querySelectorAll('.quick-links a').forEach((link) => {
   if (!link.querySelector('.quick-slash')) {
     const slash = document.createElement('i');
@@ -80,7 +80,22 @@ logoCards.forEach((card) => {
   setCardTone(card, 'blue');
 });
 
-/* Палитра из брендбука: основной синий и его производные */
+/* Логотип мягко увеличивается только пока карточка находится в поле зрения */
+if ('IntersectionObserver' in window) {
+  const logoObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle('is-in-view', entry.isIntersecting && entry.intersectionRatio >= 0.32);
+    });
+  }, {
+    threshold: [0, 0.32, 0.7],
+    rootMargin: '-6% 0px -8% 0px'
+  });
+  logoCards.forEach((card) => logoObserver.observe(card));
+} else {
+  logoCards.forEach((card) => card.classList.add('is-in-view'));
+}
+
+/* Палитра из брендбука */
 function colorCard({ name, hex, rgb, cmyk, pantone, ral, className = '' }) {
   const rows = [
     `<div><dt>Для экрана</dt><dd>${rgb}</dd></div>`,
@@ -99,12 +114,20 @@ const colorGrid = document.querySelector('.color-grid');
 if (colorGrid) {
   colorGrid.innerHTML = [
     colorCard({ name: 'Фирменный синий', hex: '#213A8F', rgb: '33, 58, 143', cmyk: '100, 85, 0, 0', pantone: '2728 C', ral: '5005' }),
-    colorCard({ name: 'Синий 50%', hex: '#909CC7', rgb: '144, 156, 199', cmyk: '50, 43, 0, 0', className: 'blue-tint' }),
-    colorCard({ name: 'Синий 25%', hex: '#C8CEE3', rgb: '200, 206, 227', cmyk: '25, 21, 0, 0', className: 'blue-tint' }),
     colorCard({ name: 'Графитовый', hex: '#1E242E', rgb: '30, 36, 46', cmyk: '86, 72, 54, 68', pantone: '7547 C', ral: '7021' }),
-    colorCard({ name: 'Акцентный оранжевый', hex: '#FF4D00', rgb: '255, 77, 0', cmyk: '0, 79, 94, 0', pantone: '1655 C', className: 'orange' })
+    colorCard({ name: 'Синий 50%', hex: '#909CC7', rgb: '144, 156, 199', cmyk: '50, 43, 0, 0', className: 'blue-tint' }),
+    colorCard({ name: 'Синий 15%', hex: '#DEE1EE', rgb: '222, 225, 238', cmyk: '15, 13, 0, 0', className: 'blue-tint' }),
+    colorCard({ name: 'Акцентный оранжевый', hex: '#FF4D00', rgb: '255, 77, 0', cmyk: '0, 79, 94, 0', className: 'orange' })
   ].join('');
 }
+
+/* Убираем запрет про сложный фон */
+document.querySelectorAll('.dont li').forEach((item) => {
+  if (item.textContent.toLowerCase().includes('сложном фоне')) item.remove();
+});
+
+/* В футере остаётся только логотип */
+document.querySelector('.footer-year')?.remove();
 
 /* Копирование кодов */
 document.querySelectorAll('[data-copy]').forEach((button) => {
@@ -179,31 +202,44 @@ search?.addEventListener('input', (event) => {
   });
 });
 
-/* Мягкий параллакс без дёрганий */
+/* Параллакс и контекстная стрелка наверх */
 const hero = document.querySelector('.hero');
 const mapSection = document.querySelector('.map-section');
+const backToTop = document.querySelector('.back-to-top');
+const topbar = document.querySelector('.topbar');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let ticking = false;
 
-function updateParallax() {
+function updateViewportEffects() {
   const viewport = window.innerHeight || 1;
-  if (hero) {
+
+  if (!reduceMotion && hero) {
     const rect = hero.getBoundingClientRect();
     const progress = (viewport / 2 - (rect.top + rect.height / 2)) / viewport;
-    hero.style.setProperty('--hero-parallax', `${Math.max(-42, Math.min(42, progress * 42))}px`);
+    hero.style.setProperty('--hero-parallax', `${Math.max(-34, Math.min(34, progress * 34))}px`);
   }
-  if (mapSection) {
+
+  if (!reduceMotion && mapSection) {
     const rect = mapSection.getBoundingClientRect();
     const progress = (viewport / 2 - (rect.top + rect.height / 2)) / viewport;
-    mapSection.style.setProperty('--map-parallax', `${Math.max(-46, Math.min(46, progress * 46))}px`);
+    mapSection.style.setProperty('--map-parallax', `${Math.max(-36, Math.min(36, progress * 36))}px`);
   }
+
+  if (backToTop && hero) {
+    const topbarHeight = topbar?.getBoundingClientRect().height || 0;
+    const heroHasPassed = hero.getBoundingClientRect().bottom <= topbarHeight + 8;
+    backToTop.classList.toggle('is-visible', heroHasPassed && window.scrollY > 80);
+  }
+
   ticking = false;
 }
 
-function requestParallax() {
+function requestViewportEffects() {
   if (ticking) return;
   ticking = true;
-  requestAnimationFrame(updateParallax);
+  requestAnimationFrame(updateViewportEffects);
 }
-window.addEventListener('scroll', requestParallax, { passive: true });
-window.addEventListener('resize', requestParallax);
-updateParallax();
+
+window.addEventListener('scroll', requestViewportEffects, { passive: true });
+window.addEventListener('resize', requestViewportEffects);
+updateViewportEffects();
