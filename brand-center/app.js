@@ -1,22 +1,58 @@
 const downloadIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3zM5 19h14v2H5z"/></svg>';
 const copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H4a2 2 0 0 0-2 2v12h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg>';
 
-/* Переключатели цвета внутри карточек логотипов */
+/* Переключатели цвета и языка внутри карточек логотипов */
 const logoCards = [...document.querySelectorAll('[data-logo-key]')];
+const logoSwapTimers = new WeakMap();
 const tones = [
   { key: 'blue', label: 'Синий логотип', color: '#223E90' },
   { key: 'white', label: 'Белый логотип', color: '#FFFFFF' },
   { key: 'black', label: 'Черный логотип', color: '#1D1D1B' }
 ];
 
-function setCardTone(card, tone) {
-  const key = card.dataset.logoKey;
+function getCardAssetKey(card) {
+  if (card.dataset.logoKey === 'ru' && card.dataset.logoLanguage === 'en') return 'en';
+  return card.dataset.logoKey;
+}
+
+function getCardAlt(card) {
+  if (card.dataset.logoKey === 'ru' && card.dataset.logoLanguage === 'en') return 'Английский логотип Etalon';
+  if (card.dataset.logoKey === 'ru') return 'Кириллический логотип Эталон';
+  if (card.dataset.logoKey === 'group') return 'Логотип Группы Эталон';
+  return 'Фирменный знак Эталон';
+}
+
+function swapLogoImage(image, src, alt, instant = false) {
+  const previousTimer = logoSwapTimers.get(image);
+  if (previousTimer) window.clearTimeout(previousTimer);
+
+  if (instant) {
+    image.src = src;
+    image.alt = alt;
+    image.classList.remove('is-changing');
+    return;
+  }
+
+  image.classList.add('is-changing');
+  const timer = window.setTimeout(() => {
+    image.src = src;
+    image.alt = alt;
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => image.classList.remove('is-changing'));
+    });
+  }, 110);
+  logoSwapTimers.set(image, timer);
+}
+
+function setCardTone(card, tone, instant = false) {
+  const assetKey = getCardAssetKey(card);
   const preview = card.querySelector('.logo-preview');
   const image = preview?.querySelector('img');
   const downloadButton = card.querySelector('[data-download]');
-  const path = `logos/${key}-${tone}.svg`;
+  const path = `logos/${assetKey}-${tone}.svg`;
 
-  if (image) image.src = `./assets/${path}`;
+  card.dataset.currentTone = tone;
+  if (image) swapLogoImage(image, `./assets/${path}`, getCardAlt(card), instant);
   if (preview) {
     preview.classList.remove('tone-blue', 'tone-white', 'tone-black');
     preview.classList.add(`tone-${tone}`);
@@ -37,7 +73,7 @@ logoCards.forEach((card) => {
   const controls = document.createElement('div');
   controls.className = 'card-tone-switch';
   controls.setAttribute('role', 'group');
-  controls.setAttribute('aria-label', 'Цвет логотипа');
+  controls.setAttribute('aria-label', 'Настройки логотипа');
 
   tones.forEach(({ key, label, color }) => {
     const button = document.createElement('button');
@@ -50,8 +86,42 @@ logoCards.forEach((card) => {
     controls.appendChild(button);
   });
 
+  if (card.dataset.logoKey === 'ru') {
+    card.dataset.logoLanguage = 'ru';
+    const languageSwitch = document.createElement('button');
+    const languageLabel = document.createElement('span');
+    const languageKnob = document.createElement('span');
+
+    languageSwitch.type = 'button';
+    languageSwitch.className = 'logo-language-switch';
+    languageSwitch.setAttribute('aria-label', 'Показать английскую версию');
+    languageSwitch.setAttribute('aria-pressed', 'false');
+    languageSwitch.title = 'Показать английскую версию';
+    languageLabel.className = 'language-label';
+    languageLabel.textContent = 'eng';
+    languageKnob.className = 'language-knob';
+    languageKnob.setAttribute('aria-hidden', 'true');
+    languageSwitch.append(languageLabel, languageKnob);
+
+    languageSwitch.addEventListener('click', () => {
+      const showEnglish = card.dataset.logoLanguage !== 'en';
+      card.dataset.logoLanguage = showEnglish ? 'en' : 'ru';
+      languageSwitch.classList.toggle('is-english', showEnglish);
+      languageSwitch.setAttribute('aria-pressed', String(showEnglish));
+      languageSwitch.setAttribute('aria-label', showEnglish ? 'Показать русскую версию' : 'Показать английскую версию');
+      languageSwitch.title = showEnglish ? 'Показать русскую версию' : 'Показать английскую версию';
+      languageLabel.textContent = showEnglish ? 'рус' : 'eng';
+
+      const caption = card.querySelector('footer b');
+      if (caption) caption.textContent = showEnglish ? 'Английская версия' : 'Кириллическая версия';
+      setCardTone(card, card.dataset.currentTone || 'blue');
+    });
+
+    controls.appendChild(languageSwitch);
+  }
+
   preview.appendChild(controls);
-  setCardTone(card, 'blue');
+  setCardTone(card, 'blue', true);
 });
 
 if ('IntersectionObserver' in window) {
