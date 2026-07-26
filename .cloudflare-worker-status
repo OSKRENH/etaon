@@ -1,11 +1,11 @@
-status=success
-prepare=success
-audit=success
-deploy=success
-verify=success
+status=cancelled
+prepare=cancelled
+audit=skipped
+deploy=skipped
+verify=skipped
 url=https://etaon.ivankamaldinov.workers.dev
-commit=406ec842fe6035cf1f5842c91c54290a0c3fd76a
-run=30210134396
+commit=197437db6c13ceb40167e01f58f2e77c9fd84aa9
+run=30210552345
 --- prepare output ---
 Фирменный цвет совпадает во всех мастер-файлах: #223E90
 Производные оттенки: 50% #919FC8, 15% #DEE2EE
@@ -23,67 +23,15 @@ Cropped symbol-blue.svg: 120.77 × 100.01
 Cropped symbol-white.svg: 120.77 × 100.01
 /home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
 Download manifest generated: /home/runner/work/etaon/etaon/brand-center/downloads/downloads-manifest.json
--rw-r--r-- 1 runner runner  45K Jul 26 16:19 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner 528K Jul 26 16:19 brand-center/downloads/Etalon_Logos_All_Formats.zip
--rw-r--r-- 1 runner runner 205K Jul 26 16:19 brand-center/downloads/Etalon_Map_All_Formats.zip
--rw-r--r-- 1 runner runner  36K Jul 26 16:19 brand-center/downloads/Etalon_Symbol_All_Formats.zip
--rw-r--r-- 1 runner runner  71K Jul 26 16:19 brand-center/downloads/Gilroy.zip
--rw-r--r-- 1 runner runner  463 Jul 26 16:19 brand-center/downloads/downloads-manifest.json
+-rw-r--r-- 1 runner runner  45K Jul 26 16:30 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+-rw-r--r-- 1 runner runner 528K Jul 26 16:30 brand-center/downloads/Etalon_Logos_All_Formats.zip
+-rw-r--r-- 1 runner runner 205K Jul 26 16:30 brand-center/downloads/Etalon_Map_All_Formats.zip
+-rw-r--r-- 1 runner runner  36K Jul 26 16:30 brand-center/downloads/Etalon_Symbol_All_Formats.zip
+-rw-r--r-- 1 runner runner  71K Jul 26 16:30 brand-center/downloads/Gilroy.zip
+-rw-r--r-- 1 runner runner  463 Jul 26 16:30 brand-center/downloads/downloads-manifest.json
 --- audit output ---
-Проверено ссылок и ресурсов: 61
-Проверено якорей: 23
-Проверено CSS-файлов: 10
-Статический аудит пройден без ошибок.
+
 --- wrangler output ---
 
- ⛅️ wrangler 4.114.0
-────────────────────
-🌀 Building list of assets...
-✨ Read 46 files from the assets directory /home/runner/work/etaon/etaon/brand-center
-🌀 Starting asset upload...
-🌀 Found 6 new or modified static assets to upload. Proceeding with upload...
-+ /downloads/downloads-manifest.json
-+ /downloads/Gilroy.zip
-+ /downloads/Etalon_Symbol_All_Formats.zip
-+ /downloads/Etalon_Map_All_Formats.zip
-+ /downloads/Etalon_Brand_Guide_2025.pdf
-+ /downloads/Etalon_Logos_All_Formats.zip
-Uploaded 2 of 6 assets
-Uploaded 4 of 6 assets
-Uploaded 6 of 6 assets
-✨ Success! Uploaded 6 files (36 already uploaded) (2.60 sec)
-
-Total Upload: 1.29 KiB / gzip: 0.66 KiB
-Your Worker has access to the following bindings:
-Binding            Resource      
-env.ASSETS         Assets        
-
-Uploaded etaon (9.64 sec)
-Deployed etaon triggers (0.71 sec)
-  https://etaon.ivankamaldinov.workers.dev
-Current Version ID: a772ccd5-a6a8-456e-8eb6-a4f39a96cbb6
-
-Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
 --- live verification output ---
-Проверяю: https://etaon.ivankamaldinov.workers.dev/
-Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Brand_Guide_2025.pdf
-curl: (22) The requested URL returned error: 404
-Попытка 1 не удалась, повтор через 3 секунды...
-curl: (22) The requested URL returned error: 404
-Попытка 2 не удалась, повтор через 3 секунды...
-curl: (22) The requested URL returned error: 404
-Попытка 3 не удалась, повтор через 3 секунды...
-Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Logos_All_Formats.zip
-curl: (22) The requested URL returned error: 404
-Попытка 1 не удалась, повтор через 3 секунды...
-Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Symbol_All_Formats.zip
-curl: (22) The requested URL returned error: 404
-Попытка 1 не удалась, повтор через 3 секунды...
-Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Map_All_Formats.zip
-curl: (22) The requested URL returned error: 404
-Попытка 1 не удалась, повтор через 3 секунды...
-Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Gilroy.zip
-curl: (22) The requested URL returned error: 404
-Попытка 1 не удалась, повтор через 3 секунды...
-Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/downloads-manifest.json
-Живой сайт, размеры и все файлы скачивания проверены и совпадают со собранными версиями.
+
