@@ -1,1 +1,121 @@
-html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left:16px;top:12px;z-index:1000;padding:11px 16px;border-radius:999px;background:#fff;color:#223e90;font-weight:500;transform:translateY(-160%);transition:transform .22s ease}.skip-link:focus{transform:translateY(0)}.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}.noscript-banner{position:relative;z-index:20;padding:12px 20px;background:#ffede5;color:#1e242e;text-align:center;font-size:14px}a,button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible{outline:2px solid #ff4d00!important;outline-offset:3px!important}.sidebar nav a:focus-visible{border-radius:8px}.quick-links a:focus-visible,.download-list a:focus-visible{outline-offset:-3px!important}.logo-card footer b[aria-live="polite"]{min-width:0}.card-tone-switch button:focus-visible{outline-offset:4px!important}.color-code .copy-icon:focus-visible{opacity:1!important;pointer-events:auto!important;transform:none!important}.back-to-top:focus-visible{opacity:1;visibility:visible;pointer-events:auto}.compact-downloads .download-label{display:flex!important;flex-direction:column;align-items:flex-start!important;justify-content:center;gap:5px;min-width:0}.compact-downloads .download-name{display:block;color:inherit;font:inherit;line-height:1.2}.compact-downloads .download-meta{display:block;color:rgba(255,255,255,.58);font-size:12px;font-weight:400;line-height:1.25;letter-spacing:.015em;text-transform:none;white-space:normal}@supports not (overflow:clip){body{overflow-x:hidden}}@media(max-width:540px){.compact-downloads .download-label{gap:4px}.compact-downloads .download-meta{font-size:11px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.skip-link,.brand-intro,.button,.logo-card img,.language-logo-layer,.language-segment-switch,.language-segment-switch::before,.back-to-top,.sidebar-download,.button-small,.map-background{animation:none!important;transition:none!important}.map-background{transform:translate3d(-50%,-50%,0)!important}}
+html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left:16px;top:12px;z-index:1000;padding:11px 16px;border-radius:999px;background:#fff;color:#223e90;font-weight:500;transform:translateY(-160%);transition:transform .22s ease}.skip-link:focus{transform:translateY(0)}.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}.noscript-banner{position:relative;z-index:20;padding:12px 20px;background:#ffede5;color:#1e242e;text-align:center;font-size:14px}a,button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible{outline:2px solid #223e90!important;outline-offset:3px!important}.dark a:focus-visible,.dark button:focus-visible,.downloads a:focus-visible,.downloads button:focus-visible,.hero a:focus-visible,.hero button:focus-visible{outline-color:#fff!important}.sidebar nav a:focus-visible{border-radius:8px}.quick-links a:focus-visible,.download-list a:focus-visible{outline-offset:-3px!important}.logo-card footer b[aria-live="polite"]{min-width:0}.card-tone-switch button:focus-visible{outline-offset:3px!important}.color-code .copy-icon:focus-visible{opacity:1!important;pointer-events:auto!important;transform:none!important}.back-to-top:focus-visible{opacity:1;visibility:visible;pointer-events:auto}.compact-downloads .download-label{display:flex!important;flex-direction:column;align-items:flex-start!important;justify-content:center;gap:5px;min-width:0}.compact-downloads .download-name{display:block;color:inherit;font:inherit;line-height:1.2}.compact-downloads .download-meta{display:block;color:rgba(255,255,255,.72);font-size:12px;font-weight:400;line-height:1.25;letter-spacing:.015em;text-transform:none;white-space:normal}@supports not (overflow:clip){body{overflow-x:hidden}}
+
+/* Горизонтальная мобильная навигация */
+.mobile-section-nav{display:none}
+@media(max-width:900px){
+  html{scroll-padding-top:128px}
+  [id]{scroll-margin-top:128px}
+  .mobile-section-nav{
+    position:sticky;
+    top:76px;
+    z-index:7;
+    display:flex;
+    align-items:center;
+    gap:4px;
+    width:100%;
+    min-height:50px;
+    padding:6px 14px;
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+    scroll-snap-type:x proximity;
+    scrollbar-width:none;
+    background:rgba(247,248,250,.94);
+    border-bottom:1px solid #e4e7ed;
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+  }
+  .mobile-section-nav::-webkit-scrollbar{display:none}
+  .mobile-section-nav a{
+    position:relative;
+    flex:0 0 auto;
+    scroll-snap-align:center;
+    padding:10px 14px 11px;
+    border-radius:999px;
+    color:#5f6875;
+    font-size:13px;
+    font-weight:500;
+    line-height:1;
+    white-space:nowrap;
+    transition:color .28s ease,background-color .28s ease;
+  }
+  .mobile-section-nav a::after{
+    content:"";
+    position:absolute;
+    left:14px;
+    right:14px;
+    bottom:5px;
+    height:1px;
+    background:#223e90;
+    transform:scaleX(0);
+    transform-origin:center;
+    opacity:0;
+    transition:transform .32s cubic-bezier(.22,.7,.2,1),opacity .24s ease;
+  }
+  .mobile-section-nav a.is-active{
+    color:#223e90;
+    background:rgba(34,62,144,.07);
+  }
+  .mobile-section-nav a.is-active::after{transform:scaleX(1);opacity:1}
+}
+
+/* Контраст и обнаружимость действий */
+.sidebar nav a{color:#5f6875!important}
+.quick-links .quick-desc,
+.logo-card footer small,
+.type-download span,
+.safe-area>small,
+.logo-rules-heading>p,
+.section-heading>p:not(.light){color:#5f6875!important}
+.button:not(.button-blue):not(.button-ghost),
+.sidebar-download.button{color:#1e242e!important}
+.color-grid .orange{color:#1e242e!important}
+.color-grid .orange .copy-icon{background:rgba(30,36,46,.16)!important;color:#1e242e!important}
+.rule-x{color:#1e242e!important}
+
+/* Копирование HEX видно на мыши, таче и гибридных устройствах */
+.color-grid .copy-icon{
+  opacity:.58!important;
+  pointer-events:auto!important;
+  transform:none!important;
+}
+.color-code:hover .copy-icon,
+.color-grid .copy-icon:hover,
+.color-grid .copy-icon:focus-visible,
+.color-grid .copy-icon.is-copied{opacity:1!important}
+
+/* Кружок остается компактным, зона нажатия соответствует WCAG */
+.card-tone-switch [data-card-tone]{
+  position:relative;
+  width:24px!important;
+  height:24px!important;
+  min-width:24px!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.card-tone-switch [data-card-tone]::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:17px;
+  height:17px;
+  border:1px solid rgba(20,28,45,.24);
+  border-radius:50%;
+  background:var(--tone);
+  transform:translate(-50%,-50%);
+  transition:box-shadow .22s ease,transform .22s ease;
+}
+.card-tone-switch [data-card-tone]:hover::after{transform:translate(-50%,-50%) scale(1.06)}
+.card-tone-switch [data-card-tone].is-active::after{box-shadow:0 0 0 4px rgba(34,62,144,.18)}
+.logo-preview .language-segment-switch .language-option{font-size:11px!important}
+.safe-area .safe-o{opacity:.14!important}
+
+@media(max-width:540px){
+  .compact-downloads .download-label{gap:4px}
+  .compact-downloads .download-meta{font-size:11px}
+  .mobile-section-nav{padding-left:10px;padding-right:10px}
+  .mobile-section-nav a{padding-left:12px;padding-right:12px;font-size:12px}
+  .logo-preview .language-segment-switch .language-option{font-size:10px!important}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.skip-link,.brand-intro,.button,.logo-card img,.language-logo-layer,.language-segment-switch,.language-segment-switch::before,.back-to-top,.sidebar-download,.button-small,.map-background,.mobile-section-nav a,.mobile-section-nav a::after{animation:none!important;transition:none!important}.map-background{transform:translate3d(-50%,-50%,0)!important}}
