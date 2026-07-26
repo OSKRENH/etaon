@@ -12,16 +12,9 @@ unzip -t brand-center/downloads/Gilroy.zip >/dev/null
 
 python3 brand-center/scripts/generate-logo-variants.py
 
-# Restore the clean SVG from the archive already hosted on the Etalon domain.
-# No Adobe link or authentication is involved.
-curl --fail --location --retry 3 --retry-delay 2 \
-  "https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Map_All_Formats.zip" \
-  --output /tmp/etalon-map-source.zip
-unzip -p /tmp/etalon-map-source.zip \
-  "Etalon_Map_All_Formats/Etalon_Map.svg" \
-  > brand-center/assets/regions-map.svg
-cp brand-center/assets/regions-map.svg brand-center/assets/regions-map-hero.svg
+# The lightweight vector map is stored directly in the repository.
 test -s brand-center/assets/regions-map.svg
+cp brand-center/assets/regions-map.svg brand-center/assets/regions-map-hero.svg
 
 chmod +x brand-center/scripts/build-download-archives.sh
 brand-center/scripts/build-download-archives.sh brand-center
