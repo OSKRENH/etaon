@@ -24,10 +24,10 @@
   pointer-events:none;
   transform:scale(.985);
   transition:
-    opacity .34s ease,
-    transform .34s cubic-bezier(.22,.7,.2,1),
-    visibility 0s linear .34s,
-    background-color .24s ease!important;
+    opacity .38s ease,
+    transform .38s cubic-bezier(.22,.7,.2,1),
+    visibility 0s linear .38s,
+    background-color .28s ease!important;
 }
 .button-small.is-visible,
 .sidebar-download.is-visible{
@@ -49,7 +49,7 @@
   overflow:hidden;
   box-shadow:none!important;
   filter:none!important;
-  transition:background-color .24s ease,color .24s ease,opacity .24s ease!important;
+  transition:background-color .28s ease,color .28s ease,opacity .28s ease!important;
 }
 .button::before,
 .logo-download-icon::before,
@@ -59,22 +59,23 @@
   content:"";
   position:absolute;
   inset:0;
+  z-index:-1;
   pointer-events:none;
   opacity:0;
-  background:linear-gradient(120deg,rgba(255,255,255,.12),rgba(255,255,255,0) 46%,rgba(255,255,255,.07));
-  transition:opacity .28s ease;
+  background:linear-gradient(115deg,rgba(255,255,255,.2),rgba(255,255,255,.035) 48%,rgba(255,255,255,.12));
+  transition:opacity .32s ease;
 }
 .logo-download-icon::before,
 .back-to-top::before,
 .color-grid .copy-icon::before{
-  background:linear-gradient(120deg,rgba(34,62,144,.09),rgba(34,62,144,0) 48%,rgba(34,62,144,.06));
+  background:linear-gradient(115deg,rgba(34,62,144,.13),rgba(34,62,144,.015) 48%,rgba(34,62,144,.09));
 }
 @media(hover:hover){
   .button:hover,
   .logo-download-icon:hover,
   .copy-icon:hover,
   .back-to-top:hover,
-  .compact-downloads a:hover b{
+  .compact-downloads b:hover{
     transform:none!important;
     box-shadow:none!important;
     filter:none!important;
@@ -83,7 +84,7 @@
   .logo-download-icon:hover::before,
   .copy-icon:hover::before,
   .back-to-top:hover::before,
-  .compact-downloads a:hover b::before{
+  .compact-downloads b:hover::before{
     opacity:1;
   }
 }
@@ -95,6 +96,21 @@
   box-shadow:none!important;
   filter:none!important;
 }
+
+/* У строк загрузок нет общего hover — реагирует только круглая иконка */
+.compact-downloads a,
+.compact-downloads a:hover,
+.compact-downloads a:focus-visible{
+  background:transparent!important;
+  color:inherit!important;
+  transform:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+.compact-downloads a::before{display:none!important}
+.compact-downloads a:hover span{color:inherit!important;opacity:1!important}
+.compact-downloads a:hover b::before{opacity:0!important}
+.compact-downloads b:hover::before{opacity:1!important}
 
 /* В быстрых разделах остается одна маленькая диагональ */
 .quick-links a::before,
@@ -163,6 +179,77 @@
   margin:0!important;
 }
 
+/* Свитч рус/eng рядом с цветами логотипа */
+.card-tone-switch .logo-language-switch{
+  position:relative;
+  width:58px!important;
+  min-width:58px!important;
+  height:26px!important;
+  padding:0 7px 0 27px!important;
+  margin-left:3px;
+  display:flex!important;
+  align-items:center;
+  justify-content:flex-end;
+  border:0!important;
+  border-radius:999px!important;
+  background:#343943!important;
+  color:#fff!important;
+  box-shadow:none!important;
+  font:500 10px/1 Gilroy,Arial,sans-serif;
+  letter-spacing:.04em;
+  text-transform:lowercase;
+  cursor:pointer;
+  transition:background-color .3s ease,color .3s ease,padding .3s ease!important;
+}
+.logo-language-switch .language-knob{
+  position:absolute;
+  left:3px;
+  top:3px;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:#fff;
+  transition:transform .32s cubic-bezier(.22,.7,.2,1)!important;
+}
+.logo-language-switch.is-english{
+  justify-content:flex-start;
+  padding-left:7px!important;
+  padding-right:27px!important;
+  background:#223e90!important;
+}
+.logo-language-switch.is-english .language-knob{transform:translateX(32px)}
+.logo-preview>img{
+  transition:transform .75s cubic-bezier(.22,.7,.2,1),opacity .2s ease!important;
+}
+.logo-preview>img.is-changing{opacity:.18}
+
+/* Стрелка всегда фиксирована справа и не участвует в футере */
+.back-to-top{
+  position:fixed!important;
+  left:auto!important;
+  right:24px!important;
+  top:auto!important;
+  bottom:24px!important;
+  margin:0!important;
+  z-index:100!important;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:scale(.985)!important;
+  transition:
+    opacity .38s ease,
+    transform .38s cubic-bezier(.22,.7,.2,1),
+    visibility 0s linear .38s,
+    background-color .28s ease!important;
+}
+.back-to-top.is-visible{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:none!important;
+  transition-delay:0s!important;
+}
+
 /* Десктопные сетки выровнены по одной текстовой колонке */
 @media(min-width:1101px){
   .stats{
@@ -210,9 +297,25 @@
     grid-template-columns:minmax(0,1fr) var(--icon-button)!important;
     padding-right:0!important;
   }
+  .back-to-top{
+    right:18px!important;
+    bottom:calc(88px + env(safe-area-inset-bottom))!important;
+  }
+}
+
+@media(max-width:540px){
+  .card-tone-switch .logo-language-switch{
+    width:54px!important;
+    min-width:54px!important;
+    height:24px!important;
+    padding-left:25px!important;
+  }
+  .logo-language-switch .language-knob{width:18px;height:18px}
+  .logo-language-switch.is-english{padding-left:6px!important;padding-right:25px!important}
+  .logo-language-switch.is-english .language-knob{transform:translateX(30px)}
 }
 
 @media(prefers-reduced-motion:reduce){
   .brand-intro{animation:none!important}
-  .button-small,.sidebar-download{transition:none!important}
+  .button-small,.sidebar-download,.back-to-top,.logo-language-switch,.logo-language-switch .language-knob,.logo-preview>img{transition:none!important}
 }
