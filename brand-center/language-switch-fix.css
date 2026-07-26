@@ -158,15 +158,24 @@
   }
 }
 
-/* Быстрые маркеры используют ту же типографику, что и заголовки разделов */
+/* Верхние маркеры: диагональ стоит так же близко к цифре, как в заголовках разделов */
 .quick-meta{
-  display:grid!important;
-  grid-template-columns:2.45ch 13px;
+  display:inline-flex!important;
   align-items:center!important;
-  column-gap:11px!important;
+  column-gap:7px!important;
   min-height:18px;
 }
-.quick-meta b,
+.quick-meta b{
+  width:auto!important;
+  padding:0!important;
+  margin:0!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  line-height:1!important;
+  letter-spacing:.14em!important;
+  font-variant-numeric:tabular-nums lining-nums;
+  text-align:left;
+}
 .section-kicker>span:first-child{
   width:2.45ch;
   padding:0!important;
