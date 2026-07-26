@@ -137,13 +137,15 @@ body{
     gap:30px!important;
     padding:42px 24px calc(42px + env(safe-area-inset-bottom))!important;
   }
-  .page-footer .footer-logo{
-    width:128px;
-    margin:0 auto!important;
-  }
   .footer-release-grid{
+    order:1;
     width:100%;
     margin:0;
+  }
+  .page-footer .footer-logo{
+    order:2;
+    width:128px;
+    margin:0 auto!important;
   }
   .footer-release-item,
   .footer-changelog>summary{
