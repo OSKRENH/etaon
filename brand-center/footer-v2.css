@@ -136,6 +136,12 @@ body{
   to{opacity:1;transform:none}
 }
 
+/* Главный заголовок всегда занимает ровно две заданные строки. */
+.hero h1{
+  font-size:clamp(54px,5.2vw,82px)!important;
+  white-space:nowrap;
+}
+
 /* Gilroy Medium использует тот же межбуквенный интервал, что и Regular.
    Быстрые карточки не затрагиваются: у них трекинг уже правильный. */
 .hero h1,
@@ -197,6 +203,9 @@ body{
 }
 
 @media(max-width:900px){
+  .hero h1{
+    font-size:clamp(42px,7.4vw,56px)!important;
+  }
   .page-footer{
     grid-template-columns:1fr!important;
     gap:0!important;
@@ -225,6 +234,12 @@ body{
   .footer-changelog-body{
     right:0;
     width:min(500px,calc(100vw - 48px));
+  }
+}
+
+@media(max-width:540px){
+  .hero h1{
+    font-size:clamp(32px,10vw,42px)!important;
   }
 }
 
