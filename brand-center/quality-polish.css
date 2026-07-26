@@ -62,7 +62,7 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 .sidebar-download.button{color:#1e242e!important}
 .color-grid .orange{color:#1e242e!important}
 .color-grid .orange .copy-icon{background:rgba(30,36,46,.16)!important;color:#1e242e!important}
-.rule-x{color:#1e242e!important}
+.rule-x{color:#ff4d00!important}
 
 /* Копирование HEX видно на мыши, таче и гибридных устройствах */
 .color-grid .copy-icon{
@@ -103,6 +103,40 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 .logo-preview .language-segment-switch .language-option{font-size:11px!important}
 .safe-area .safe-o{opacity:.14!important}
 
+/* Номер и диагональ быстрых разделов выровнены по одной оси */
+.quick-meta{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  min-height:13px!important;
+}
+.quick-meta b{
+  display:flex!important;
+  align-items:center!important;
+  height:13px!important;
+  line-height:13px!important;
+}
+.quick-meta i{
+  position:relative!important;
+  width:13px!important;
+  height:13px!important;
+  flex:0 0 13px!important;
+  align-self:center!important;
+  background:transparent!important;
+  transform:none!important;
+}
+.quick-meta i::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:1px;
+  height:13px;
+  background:#aab3c3;
+  transform:translate(-50%,-50%) rotate(38deg);
+  transform-origin:center;
+}
+
 /* После обрезки артбордов логотипы стали визуально крупнее — слегка уменьшаем превью */
 .logo-card[data-logo-key="group"] .logo-preview>img,
 .logo-card[data-logo-key="ru"] .logo-preview>img,
@@ -111,6 +145,11 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   max-width:420px!important;
 }
 .logo-card[data-logo-key="symbol"] .logo-preview>img{width:min(24%,135px)!important;max-width:135px!important}
+
+@media(max-width:900px){
+  /* Отступ снизу равен одной высоте круглой кнопки */
+  .back-to-top{bottom:calc(var(--icon-button) + env(safe-area-inset-bottom))!important}
+}
 
 @media(max-width:540px){
   .compact-downloads .download-label{gap:4px}
