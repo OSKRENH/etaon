@@ -58,6 +58,7 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 .safe-area>small,
 .logo-rules-heading>p,
 .section-heading>p:not(.light){color:#5f6875!important}
+.section-heading.light>p{color:rgba(255,255,255,.84)!important}
 .button:not(.button-blue):not(.button-ghost),
 .sidebar-download.button{color:#1e242e!important}
 .color-grid .orange{color:#1e242e!important}
