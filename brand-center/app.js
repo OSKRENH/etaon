@@ -1,7 +1,16 @@
 const downloadIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3zM5 19h14v2H5z"/></svg>';
 const copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H4a2 2 0 0 0-2 2v12h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg>';
+const liveRegion = document.querySelector('#ui-status');
 
-/* Переключатели цвета и языка внутри карточек логотипов */
+function announce(message) {
+  if (!liveRegion) return;
+  liveRegion.textContent = '';
+  window.requestAnimationFrame(() => {
+    liveRegion.textContent = message;
+  });
+}
+
+/* Переключатели цвета внутри карточек логотипов */
 const logoCards = [...document.querySelectorAll('[data-logo-key]')];
 const logoSwapTimers = new WeakMap();
 const tones = [
@@ -11,12 +20,10 @@ const tones = [
 ];
 
 function getCardAssetKey(card) {
-  if (card.dataset.logoKey === 'ru' && card.dataset.logoLanguage === 'en') return 'en';
   return card.dataset.logoKey;
 }
 
 function getCardAlt(card) {
-  if (card.dataset.logoKey === 'ru' && card.dataset.logoLanguage === 'en') return 'Английский логотип Etalon';
   if (card.dataset.logoKey === 'ru') return 'Кириллический логотип Эталон';
   if (card.dataset.logoKey === 'group') return 'Логотип Группы Эталон';
   return 'Фирменный знак Эталон';
@@ -47,7 +54,7 @@ function swapLogoImage(image, src, alt, instant = false) {
 function setCardTone(card, tone, instant = false) {
   const assetKey = getCardAssetKey(card);
   const preview = card.querySelector('.logo-preview');
-  const image = preview?.querySelector('img');
+  const image = preview?.querySelector(':scope > img');
   const downloadButton = card.querySelector('[data-download]');
   const path = `logos/${assetKey}-${tone}.svg`;
 
@@ -73,7 +80,7 @@ logoCards.forEach((card) => {
   const controls = document.createElement('div');
   controls.className = 'card-tone-switch';
   controls.setAttribute('role', 'group');
-  controls.setAttribute('aria-label', 'Настройки логотипа');
+  controls.setAttribute('aria-label', 'Цвет логотипа');
 
   tones.forEach(({ key, label, color }) => {
     const button = document.createElement('button');
@@ -85,40 +92,6 @@ logoCards.forEach((card) => {
     button.addEventListener('click', () => setCardTone(card, key));
     controls.appendChild(button);
   });
-
-  if (card.dataset.logoKey === 'ru') {
-    card.dataset.logoLanguage = 'ru';
-    const languageSwitch = document.createElement('button');
-    const languageLabel = document.createElement('span');
-    const languageKnob = document.createElement('span');
-
-    languageSwitch.type = 'button';
-    languageSwitch.className = 'logo-language-switch';
-    languageSwitch.setAttribute('aria-label', 'Показать английскую версию');
-    languageSwitch.setAttribute('aria-pressed', 'false');
-    languageSwitch.title = 'Показать английскую версию';
-    languageLabel.className = 'language-label';
-    languageLabel.textContent = 'eng';
-    languageKnob.className = 'language-knob';
-    languageKnob.setAttribute('aria-hidden', 'true');
-    languageSwitch.append(languageLabel, languageKnob);
-
-    languageSwitch.addEventListener('click', () => {
-      const showEnglish = card.dataset.logoLanguage !== 'en';
-      card.dataset.logoLanguage = showEnglish ? 'en' : 'ru';
-      languageSwitch.classList.toggle('is-english', showEnglish);
-      languageSwitch.setAttribute('aria-pressed', String(showEnglish));
-      languageSwitch.setAttribute('aria-label', showEnglish ? 'Показать русскую версию' : 'Показать английскую версию');
-      languageSwitch.title = showEnglish ? 'Показать русскую версию' : 'Показать английскую версию';
-      languageLabel.textContent = showEnglish ? 'рус' : 'eng';
-
-      const caption = card.querySelector('footer b');
-      if (caption) caption.textContent = showEnglish ? 'Английская версия' : 'Кириллическая версия';
-      setCardTone(card, card.dataset.currentTone || 'blue');
-    });
-
-    controls.appendChild(languageSwitch);
-  }
 
   preview.appendChild(controls);
   setCardTone(card, 'blue', true);
@@ -170,6 +143,7 @@ document.querySelectorAll('[data-copy]').forEach((button) => {
       await navigator.clipboard.writeText(value);
       button.classList.add('is-copied');
       button.setAttribute('aria-label', 'Скопировано');
+      announce(`Цвет ${value} скопирован`);
       setTimeout(() => {
         button.classList.remove('is-copied');
         button.setAttribute('aria-label', originalLabel || `Скопировать ${value}`);
@@ -185,12 +159,14 @@ document.querySelectorAll('[data-download]').forEach((button) => {
   button.innerHTML = downloadIcon;
   button.addEventListener('click', () => {
     const path = button.dataset.download;
+    if (!path) return;
     const anchor = document.createElement('a');
     anchor.href = `./assets/${path}`;
     anchor.download = path.split('/').pop();
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();
+    announce(`Скачивание файла ${anchor.download} началось`);
   });
 });
 
@@ -251,7 +227,7 @@ const mapSection = document.querySelector('.map-section');
 const backToTop = document.querySelector('.back-to-top');
 const topbar = document.querySelector('.topbar');
 const contextualDownloads = [...document.querySelectorAll('.button-small, .sidebar-download')];
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 let ticking = false;
 
 function updateViewportEffects() {
@@ -270,14 +246,16 @@ function updateViewportEffects() {
   sections.forEach(({ link }) => {
     const isActive = link === active?.link;
     link.classList.toggle('is-active', isActive);
-    if (isActive) link.setAttribute('aria-current', 'true');
+    if (isActive) link.setAttribute('aria-current', 'location');
     else link.removeAttribute('aria-current');
   });
 
-  if (!reduceMotion && mapSection) {
+  if (!reducedMotionQuery.matches && mapSection) {
     const rect = mapSection.getBoundingClientRect();
     const progress = (viewport / 2 - (rect.top + rect.height / 2)) / viewport;
     mapSection.style.setProperty('--map-parallax', `${Math.max(-36, Math.min(36, progress * 36))}px`);
+  } else if (mapSection) {
+    mapSection.style.setProperty('--map-parallax', '0px');
   }
 
   if (brandIntro) {
@@ -294,9 +272,12 @@ function updateViewportEffects() {
 function requestViewportEffects() {
   if (ticking) return;
   ticking = true;
-  requestAnimationFrame(updateViewportEffects);
+  window.requestAnimationFrame(updateViewportEffects);
 }
 
 window.addEventListener('scroll', requestViewportEffects, { passive: true });
 window.addEventListener('resize', requestViewportEffects);
+window.addEventListener('pageshow', updateViewportEffects);
+window.addEventListener('hashchange', updateViewportEffects);
+reducedMotionQuery.addEventListener?.('change', updateViewportEffects);
 updateViewportEffects();
