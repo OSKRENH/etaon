@@ -1,39 +1,18 @@
-status=success
-prepare=success
-deploy=success
-url=https://etaon.ivankamaldinov.workers.dev
-commit=f573131c9feb4decf144fe6f5027cdea2758b67d
-run=30184463839
+status=failure
+prepare=failure
+deploy=skipped
+url=
+commit=9b393c63685cd23d36a6935ffea22ff53f3fb748
+run=30184879603
 --- prepare output ---
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-100  888k  100  888k    0     0  2019k      0 --:--:-- --:--:-- --:--:-- 2019k
--rw-r--r-- 1 runner runner 377K Jul 26 02:23 brand-center/downloads/Etalon_Logos_All_Formats.zip
--rw-r--r-- 1 runner runner 2.2M Jul 26 02:23 brand-center/downloads/Etalon_Map_All_Formats.zip
--rw-r--r-- 1 runner runner  23K Jul 26 02:23 brand-center/downloads/Etalon_Symbol_All_Formats.zip
--rw-r--r-- 1 runner runner  71K Jul 26 02:23 brand-center/downloads/Gilroy.zip
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (22) The requested URL returned error: 404
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (22) The requested URL returned error: 403
 --- wrangler output ---
 
- ⛅️ wrangler 4.114.0
-────────────────────
-🌀 Building list of assets...
-✨ Read 46 files from the assets directory /home/runner/work/etaon/etaon/brand-center
-🌀 Starting asset upload...
-🌀 Found 4 new or modified static assets to upload. Proceeding with upload...
-+ /downloads/Etalon_Symbol_All_Formats.zip
-+ /downloads/Etalon_Map_All_Formats.zip
-+ /downloads/Gilroy.zip
-+ /downloads/Etalon_Logos_All_Formats.zip
-Uploaded 1 of 4 assets
-Uploaded 2 of 4 assets
-Uploaded 4 of 4 assets
-✨ Success! Uploaded 4 files (37 already uploaded) (1.83 sec)
-
-Total Upload: 0.33 KiB / gzip: 0.23 KiB
-Uploaded etaon (4.35 sec)
-Deployed etaon triggers (0.58 sec)
-  https://etaon.ivankamaldinov.workers.dev
-Current Version ID: c07d96ac-295d-4244-86e5-4bf937f3d872
-
-Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
