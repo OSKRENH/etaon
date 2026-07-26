@@ -40,8 +40,8 @@ body{margin:0;font-family:Gilroy,Arial,sans-serif;color:#1e242e;background:#f6f7
 .section-title{display:flex;align-items:center;gap:5mm;margin-bottom:8mm}
 .section-title span{font-size:9pt;color:#929aa8}
 .section-title i{display:block;width:9mm;height:.35mm;background:#aeb7c7;transform:rotate(-45deg)}
-h2{font-size:31pt;font-weight:500;line-height:1;margin:0 0 7mm}
-h3{font-size:17pt;font-weight:500;margin:0 0 3mm}
+h2{font-size:31pt;font-weight:500;line-height:1;letter-spacing:normal;margin:0 0 7mm}
+h3{font-size:17pt;font-weight:500;letter-spacing:normal;margin:0 0 3mm}
 .muted{color:#737d8d}
 .body-copy{font-size:14pt;line-height:1.48;color:#596270}
 .footer{position:absolute;right:20mm;bottom:5mm;font-size:7.5pt;color:#99a1af}
@@ -50,7 +50,7 @@ h3{font-size:17pt;font-weight:500;margin:0 0 3mm}
 .download-bar a{display:flex;align-items:center;justify-content:space-between;padding:0 4mm;border:1px solid #d9dee8;border-radius:999px;background:rgba(255,255,255,.88);color:#223e90;text-decoration:none;font-size:8pt;white-space:nowrap}
 .download-bar b{font-size:11pt;font-weight:400;line-height:1}
 .blue .download-bar a,.map-page .download-bar a{border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.9);color:#223e90}
-.cover h1{font-size:44pt;line-height:.96;font-weight:500;margin:40mm 0 9mm;max-width:220mm}
+.cover h1{font-size:44pt;line-height:.96;font-weight:500;letter-spacing:normal;margin:40mm 0 9mm;max-width:220mm}
 .cover>p{font-size:18pt;color:rgba(255,255,255,.76);max-width:175mm}
 .logo-grid{display:grid;grid-template-columns:1fr 1fr;gap:7mm}
 .logo-card{height:59mm;border:1px solid #dfe3eb;border-radius:6mm;background:white;padding:8mm;display:flex;align-items:center;justify-content:center;position:relative}
@@ -69,16 +69,17 @@ h3{font-size:17pt;font-weight:500;margin:0 0 3mm}
 .swatch.light{color:#223e90}.swatch.light dl div{border-color:rgba(34,62,144,.18)}
 .type-demo{display:grid;grid-template-columns:.8fr 1.2fr;gap:14mm}
 .big-aa{font-size:86pt;color:#223e90;line-height:1}
-.slogan{font-size:39pt;line-height:1.02;color:#223e90;margin:7mm 0}
+.slogan{font-size:39pt;line-height:1.02;letter-spacing:normal;color:#223e90;margin:7mm 0}
 .rules{display:grid;grid-template-columns:1.55fr .9fr;gap:8mm}
 .safe{height:126mm;background:white;border:1px solid #dfe3eb;border-radius:6mm;display:flex;align-items:center;justify-content:center;position:relative}
-.safe-diagram{position:relative;width:125mm;height:68mm;display:flex;align-items:center;justify-content:center;border:1.1px dashed #9da6b5}
-.safe-logo{width:80mm;display:block}
-.safe-o{position:absolute;width:14.2mm;height:13mm;opacity:.12}
-.safe-o-top{left:50%;top:0;transform:translate(-50%,-100%)}
-.safe-o-right{right:0;top:50%;transform:translate(100%,-50%)}
-.safe-o-bottom{left:50%;bottom:0;transform:translate(-50%,100%)}
-.safe-o-left{left:0;top:50%;transform:translate(-100%,-50%)}
+.safe-diagram{position:relative;width:125mm;height:49.6mm;border:1px dashed #b8bdc7}
+.safe-logo-core{position:absolute;left:50%;top:50%;width:73.5%;height:33.333%;transform:translate(-50%,-50%)}
+.safe-logo{display:block;width:100%;height:100%;max-width:none;object-fit:contain;position:relative;z-index:2}
+.safe-o{position:absolute;display:block;width:auto;height:100%;max-width:none;z-index:3;opacity:.14}
+.safe-o-top{left:50%;bottom:100%;transform:translateX(-50%)}
+.safe-o-right{left:100%;top:0}
+.safe-o-bottom{left:50%;top:100%;transform:translateX(-50%)}
+.safe-o-left{right:100%;top:0}
 .safe-caption{position:absolute;bottom:8mm;left:0;right:0;text-align:center;color:#737d8d;font-size:9pt}
 .dont{height:126mm;background:white;border:1px solid #dfe3eb;border-radius:6mm;padding:8mm}
 .dont h3{margin-bottom:8mm}
@@ -155,11 +156,13 @@ h3{font-size:17pt;font-weight:500;margin:0 0 3mm}
   <div class="rules">
     <div class="safe">
       <div class="safe-diagram">
-        <img class="safe-logo" src="assets/safe-logo.svg">
-        <img class="safe-o safe-o-top" src="assets/logo-o.svg">
-        <img class="safe-o safe-o-right" src="assets/logo-o.svg">
-        <img class="safe-o safe-o-bottom" src="assets/logo-o.svg">
-        <img class="safe-o safe-o-left" src="assets/logo-o.svg">
+        <div class="safe-logo-core">
+          <img class="safe-logo" src="assets/safe-logo.svg">
+          <img class="safe-o safe-o-top" src="assets/logo-o.svg">
+          <img class="safe-o safe-o-right" src="assets/logo-o.svg">
+          <img class="safe-o safe-o-bottom" src="assets/logo-o.svg">
+          <img class="safe-o safe-o-left" src="assets/logo-o.svg">
+        </div>
       </div>
       <div class="safe-caption">Охранное поле равно высоте буквы «О»</div>
     </div>
