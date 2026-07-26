@@ -136,6 +136,17 @@ body{
   to{opacity:1;transform:none}
 }
 
+/* Gilroy Medium использует тот же межбуквенный интервал, что и Regular.
+   Быстрые карточки не затрагиваются: у них трекинг уже правильный. */
+.hero h1,
+.section-heading h2,
+.logo-rules-heading h3,
+.map-overlay h2,
+.downloads h2,
+.type-columns h3{
+  letter-spacing:normal!important;
+}
+
 /* У быстрых ссылок подсвечивается только заголовок */
 .quick-links a strong{
   transition:color .28s ease!important;
