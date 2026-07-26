@@ -1,0 +1,143 @@
+/* Языковой свитч расположен отдельно от выбора цвета */
+.language-segment-switch{
+  position:absolute;
+  top:16px;
+  right:16px;
+  z-index:5;
+  width:82px;
+  height:30px;
+  padding:3px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  border:1px solid rgba(34,62,144,.14);
+  border-radius:999px;
+  background:rgba(235,239,247,.94);
+  color:#7e8796;
+  cursor:pointer;
+  overflow:hidden;
+  isolation:isolate;
+  box-shadow:none;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  transition:background-color .28s ease,border-color .28s ease!important;
+}
+.language-segment-switch::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:3px;
+  top:3px;
+  width:calc(50% - 3px);
+  height:24px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#223e90,#2c4ca0);
+  transform:translateX(0);
+  transition:transform .36s cubic-bezier(.22,.7,.2,1),background .28s ease;
+}
+.language-segment-switch[data-language="en"]::before{
+  transform:translateX(100%);
+}
+.language-option{
+  position:relative;
+  z-index:1;
+  display:block;
+  text-align:center;
+  font:500 9px/1 Gilroy,Arial,sans-serif;
+  letter-spacing:.035em;
+  text-transform:lowercase;
+  transition:color .3s ease,opacity .3s ease;
+}
+.language-segment-switch[data-language="ru"] .language-option-ru,
+.language-segment-switch[data-language="en"] .language-option-en{
+  color:#fff;
+  opacity:1;
+}
+.language-segment-switch[data-language="ru"] .language-option-en,
+.language-segment-switch[data-language="en"] .language-option-ru{
+  color:#727b8b;
+  opacity:.82;
+}
+@media(hover:hover){
+  .language-segment-switch:hover{
+    background:rgba(226,232,244,.98);
+    border-color:rgba(34,62,144,.23);
+  }
+}
+.language-segment-switch:focus-visible{
+  outline:2px solid rgba(34,62,144,.35);
+  outline-offset:2px;
+}
+
+/* Вертикальная смена русской и английской версий */
+.logo-preview{
+  overflow:hidden;
+}
+.logo-preview>img.language-exit-up,
+.logo-preview>img.language-exit-down,
+.language-transition-image{
+  transition:transform .44s cubic-bezier(.22,.72,.18,1),opacity .34s ease!important;
+  will-change:transform,opacity;
+}
+.language-transition-image{
+  position:absolute!important;
+  z-index:2;
+  object-fit:contain;
+  pointer-events:none;
+  opacity:0;
+}
+.language-transition-image.from-bottom{
+  transform:translateY(34px) scale(1.025)!important;
+}
+.language-transition-image.from-top{
+  transform:translateY(-34px) scale(1.025)!important;
+}
+.language-transition-image.is-switching{
+  transform:translateY(0) scale(1.025)!important;
+  opacity:1;
+}
+.logo-preview>img.language-exit-up.is-switching{
+  transform:translateY(-34px) scale(1.025)!important;
+  opacity:0!important;
+}
+.logo-preview>img.language-exit-down.is-switching{
+  transform:translateY(34px) scale(1.025)!important;
+  opacity:0!important;
+}
+
+/* Стрелка стоит на той же правой линии, что и иконки скачивания */
+.back-to-top{
+  left:auto!important;
+  right:7vw!important;
+  margin:0!important;
+}
+@media(max-width:900px){
+  .back-to-top{
+    right:24px!important;
+    bottom:calc(88px + env(safe-area-inset-bottom))!important;
+  }
+}
+@media(max-width:540px){
+  .language-segment-switch{
+    top:12px;
+    right:12px;
+    width:76px;
+    height:28px;
+  }
+  .language-segment-switch::before{
+    height:22px;
+  }
+  .language-option{
+    font-size:8px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .language-segment-switch,
+  .language-segment-switch::before,
+  .language-option,
+  .logo-preview>img.language-exit-up,
+  .logo-preview>img.language-exit-down,
+  .language-transition-image{
+    transition:none!important;
+  }
+}
