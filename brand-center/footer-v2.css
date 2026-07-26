@@ -1,0 +1,151 @@
+/* Корневой элемент остаётся единственным вертикальным scroll container.
+   Это устраняет неверную длину индикатора прокрутки в мобильном Safari. */
+html{
+  overflow-x:hidden!important;
+  min-height:100%;
+}
+body{
+  overflow-x:visible!important;
+  overflow-y:visible!important;
+  min-height:100%;
+}
+@supports (overflow:clip){
+  html{overflow-x:clip!important}
+}
+
+/* Футер релиза */
+.page-footer{
+  position:relative;
+  contain:layout;
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-content:stretch!important;
+  gap:clamp(34px,6vw,96px)!important;
+  min-height:0!important;
+  padding:38px 7vw!important;
+  overflow:visible!important;
+}
+.page-footer .footer-logo{
+  margin:0!important;
+  width:150px;
+}
+.footer-release-grid{
+  position:relative;
+  width:min(100%,760px);
+  margin-left:auto;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;
+  border-top:1px solid #e4e7ed;
+  border-bottom:1px solid #e4e7ed;
+}
+.footer-release-item,
+.footer-changelog>summary{
+  min-width:0;
+  min-height:78px;
+  padding:17px 20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:7px;
+}
+.footer-release-item+ .footer-release-item,
+.footer-changelog{
+  border-left:1px solid #e4e7ed;
+}
+.footer-release-grid small{
+  display:block;
+  color:#8a929f;
+  font-size:11px;
+  font-weight:400;
+  line-height:1.1;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.footer-release-grid strong{
+  display:block;
+  color:#223e90;
+  font-size:14px;
+  font-weight:500;
+  line-height:1.25;
+}
+.footer-changelog{
+  position:relative;
+  min-width:0;
+  color:#737c8a;
+}
+.footer-changelog>summary{
+  cursor:pointer;
+  list-style:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.footer-changelog>summary::-webkit-details-marker{display:none}
+.footer-changelog>summary strong::after{content:" +"}
+.footer-changelog[open]>summary strong::after{content:" −"}
+.footer-changelog-body{
+  position:absolute;
+  z-index:5;
+  right:0;
+  bottom:calc(100% + 12px);
+  width:min(520px,calc(100vw - 48px));
+  padding:20px;
+  border:1px solid #dfe3eb;
+  border-radius:18px;
+  background:#fff;
+  color:#5f6875;
+  font-size:13px;
+  line-height:1.55;
+  animation:footerPanelIn .22s ease both;
+}
+.footer-changelog-body p{margin:0 0 14px}
+.footer-changelog-body a{
+  display:inline-flex;
+  margin:0!important;
+  color:#223e90;
+  font-weight:500;
+  transition:opacity .24s ease;
+}
+@media(hover:hover){.footer-changelog-body a:hover{opacity:.65}}
+@keyframes footerPanelIn{
+  from{opacity:0;transform:translateY(7px)}
+  to{opacity:1;transform:none}
+}
+
+@media(max-width:900px){
+  .page-footer{
+    grid-template-columns:1fr!important;
+    gap:30px!important;
+    padding:42px 24px calc(42px + env(safe-area-inset-bottom))!important;
+  }
+  .page-footer .footer-logo{
+    width:128px;
+    margin:0 auto!important;
+  }
+  .footer-release-grid{
+    width:100%;
+    margin:0;
+  }
+  .footer-release-item,
+  .footer-changelog>summary{
+    min-height:72px;
+    padding:15px 12px;
+  }
+  .footer-release-grid small{font-size:9px}
+  .footer-release-grid strong{font-size:12px}
+  .footer-changelog-body{
+    right:0;
+    width:min(500px,calc(100vw - 48px));
+  }
+}
+
+@media(max-width:390px){
+  .footer-release-item,
+  .footer-changelog>summary{padding-left:9px;padding-right:9px}
+  .footer-release-grid strong{font-size:11px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .footer-changelog-body{animation:none}
+}
