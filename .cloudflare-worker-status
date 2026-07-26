@@ -4,8 +4,8 @@ audit=skipped
 deploy=skipped
 verify=skipped
 url=https://etaon.ivankamaldinov.workers.dev
-commit=77e5886d59e790d2b2cba15599661c43241abbf3
-run=30198341242
+commit=7b15c12b5a5f289502837a19dc6aa4183ef0d4ca
+run=30198360893
 --- prepare output ---
 
 --- audit output ---
