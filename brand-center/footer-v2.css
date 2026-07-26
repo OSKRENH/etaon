@@ -152,6 +152,9 @@ body{
     min-height:72px;
     padding:15px 12px;
   }
+  .footer-release-grid>.footer-release-item:first-child{
+    padding-left:24px;
+  }
   .footer-release-grid small{font-size:9px}
   .footer-release-grid strong{font-size:12px}
   .footer-changelog-body{
