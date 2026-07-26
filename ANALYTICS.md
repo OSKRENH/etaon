@@ -1,37 +1,28 @@
 # Статистика скачиваний
 
-Центр бренда записывает только агрегированные события успешной выдачи файлов из `/downloads/` в Cloudflare Workers Analytics Engine.
+Центр бренда записывает события успешной выдачи файлов из `/downloads/` во встроенный Cloudflare Workers Observability.
 
 - cookies не используются;
 - сторонние рекламные трекеры не подключены;
-- IP-адреса и пользовательские идентификаторы не сохраняются;
+- IP-адреса и пользовательские идентификаторы в пользовательский лог не записываются;
 - автоматические проверки `curl`, боты и range-запросы не учитываются;
-- набор данных: `etalon_downloads`;
-- хранение данных в Analytics Engine — 3 месяца.
+- событие: `brand_download`;
+- поля: `file`, `country`, `bytes`.
 
-## Популярность файлов за 30 дней
+## Где смотреть
 
-```sql
-SELECT
-  blob1 AS file,
-  SUM(_sample_interval) AS downloads
-FROM etalon_downloads
-WHERE timestamp > NOW() - INTERVAL '30' DAY
-GROUP BY file
-ORDER BY downloads DESC
+Cloudflare Dashboard → Workers & Pages → `etaon` → Observability → Logs.
+
+В Query Builder установите фильтр:
+
+```text
+event = "brand_download"
 ```
 
-## Скачивания по дням
+Для рейтинга файлов создайте визуализацию:
 
-```sql
-SELECT
-  toStartOfDay(timestamp) AS day,
-  blob1 AS file,
-  SUM(_sample_interval) AS downloads
-FROM etalon_downloads
-WHERE timestamp > NOW() - INTERVAL '30' DAY
-GROUP BY day, file
-ORDER BY day DESC, downloads DESC
-```
+- метрика: `Count`;
+- группировка: `file`;
+- фильтр: `event = "brand_download"`.
 
-Для запросов нужен API-токен Cloudflare с разрешением `Account Analytics Read`.
+Данные можно выгрузить из Observability в JSON или CSV. На Workers Free логи хранятся 3 дня, на Workers Paid — 7 дней. Для более длинной истории позже можно одним переключателем включить Analytics Engine и вернуть готовую конфигурацию из истории Git.
