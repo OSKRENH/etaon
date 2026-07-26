@@ -131,11 +131,21 @@ body{
   to{opacity:1;transform:none}
 }
 
-/* Десктоп: быстрые разделы и футер идут по тем же вертикалям, что цифры */
+/* Десктоп: белый фон быстрых разделов идет до краев,
+   а текст сохраняет вертикали блока с цифрами. */
 @media(min-width:1101px){
+  .quick-links{
+    width:100%!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    padding-left:7vw!important;
+    padding-right:7vw!important;
+    background:#fff!important;
+  }
   .quick-links a{
     padding-left:clamp(22px,2vw,34px)!important;
     padding-right:clamp(22px,2vw,34px)!important;
+    background:#fff!important;
   }
   .quick-links a:first-child{padding-left:0!important}
   .quick-links a:last-child{padding-right:0!important}
