@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Generated brand-center downloads
+brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
