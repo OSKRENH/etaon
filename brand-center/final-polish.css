@@ -1,0 +1,164 @@
+:root{
+  --copy-button:32px;
+}
+
+/* Темный фирменный градиент с заметным, но спокойным движением */
+.brand-intro{
+  background:
+    radial-gradient(circle at 12% 18%,rgba(54,82,163,.34),transparent 31%),
+    radial-gradient(circle at 86% 24%,rgba(39,75,162,.38),transparent 35%),
+    radial-gradient(circle at 54% 88%,rgba(67,91,170,.28),transparent 39%),
+    linear-gradient(125deg,#1d347d,#223e90,#29489a,#1f3987,#253f90)!important;
+  background-size:190% 190%,200% 200%,180% 180%,300% 300%!important;
+  animation-duration:18s!important;
+}
+.brand-intro::after{
+  background:linear-gradient(112deg,rgba(255,255,255,.025),transparent 34%,rgba(255,255,255,.035) 65%,transparent)!important;
+}
+
+/* Кнопки появляются после первого экрана */
+.button-small,
+.sidebar-download{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translateY(8px) scale(.96);
+  transition:opacity .28s ease,visibility .28s ease,transform .28s cubic-bezier(.22,.7,.2,1),box-shadow .2s ease,filter .2s ease!important;
+}
+.button-small.is-visible,
+.sidebar-download.is-visible{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:none;
+}
+
+/* Единые живые состояния кнопок */
+.button,
+.logo-download-icon,
+.copy-icon,
+.back-to-top,
+.compact-downloads b{
+  transition:transform .2s cubic-bezier(.22,.7,.2,1),box-shadow .2s ease,filter .2s ease,background .2s ease,color .2s ease!important;
+}
+@media(hover:hover){
+  .button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 24px rgba(16,30,76,.22);
+    filter:brightness(1.055);
+  }
+  .button-ghost:hover{
+    background:rgba(255,255,255,.1)!important;
+    box-shadow:0 10px 24px rgba(9,20,55,.18);
+  }
+  .logo-download-icon:hover,
+  .back-to-top:hover,
+  .compact-downloads a:hover b{
+    transform:translateY(-2px) scale(1.04);
+    box-shadow:0 9px 22px rgba(19,32,74,.18);
+  }
+  .color-grid .copy-icon:hover{
+    transform:translateY(-1px) scale(1.06)!important;
+  }
+}
+.button:active,
+.logo-download-icon:active,
+.copy-icon:active,
+.back-to-top:active{
+  transform:translateY(0) scale(.96)!important;
+}
+
+/* В быстрых разделах остается одна маленькая диагональ */
+.quick-links a::before,
+.quick-links .quick-slash{
+  display:none!important;
+}
+.quick-meta i{
+  width:1px!important;
+  height:13px!important;
+  flex:0 0 1px;
+  transform:rotate(38deg)!important;
+}
+.quick-meta i~i{display:none!important}
+
+/* Номер раздела и диагональная линия */
+.section-kicker{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+.section-kicker i{
+  display:block;
+  width:1px;
+  height:13px;
+  flex:0 0 1px;
+  background:currentColor;
+  opacity:.65;
+  transform:rotate(38deg);
+}
+
+/* Активный раздел в сайдбаре отмечается диагональю */
+.sidebar nav a::before{
+  width:1px!important;
+  height:13px!important;
+  border-radius:0!important;
+  background:#223e90!important;
+  transform:translate(-5px,-50%) rotate(38deg) scaleY(.45)!important;
+  transform-origin:center!important;
+}
+.sidebar nav a.is-active::before{
+  transform:translate(0,-50%) rotate(38deg) scaleY(1)!important;
+}
+
+/* Копирование цвета — компактная кнопка высотой с код */
+.color-grid .copy-icon{
+  width:var(--copy-button)!important;
+  height:var(--copy-button)!important;
+  min-width:var(--copy-button)!important;
+  flex:0 0 var(--copy-button)!important;
+}
+.color-grid .copy-icon svg{width:16px!important;height:16px!important}
+.color-code{width:auto;min-width:0}
+.color-code strong{margin-left:auto}
+
+/* Типографический пример */
+.type-columns h3{color:#223e90}
+
+/* Десктопные цифры выровнены по текстовой колонке и не выходят за экран */
+@media(min-width:1101px){
+  .stats{
+    position:relative;
+    padding-left:7vw!important;
+    padding-right:7vw!important;
+    border-top:0!important;
+  }
+  .stats::before{
+    content:"";
+    position:absolute;
+    left:7vw;
+    right:7vw;
+    top:0;
+    height:1px;
+    background:var(--brand-line);
+  }
+  .stats article{
+    min-width:0;
+    padding-left:0!important;
+    padding-right:clamp(16px,2vw,30px)!important;
+  }
+  .stats strong{
+    font-size:clamp(34px,3.25vw,60px)!important;
+    line-height:.96!important;
+  }
+  .stats article:last-child strong{
+    font-size:clamp(31px,2.85vw,54px)!important;
+  }
+}
+
+@media(max-width:900px){
+  .button-small{margin-left:auto}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .brand-intro{animation:none!important}
+}
