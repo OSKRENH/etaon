@@ -81,8 +81,9 @@
 .language-logo-stack{
   position:relative;
   z-index:2;
-  width:min(72%,420px);
-  height:48%;
+  width:min(46%,460px);
+  height:auto;
+  aspect-ratio:3/2;
   opacity:1;
   transform:scale(1);
   transition:opacity .2s ease,transform .75s cubic-bezier(.22,.7,.2,1);
@@ -107,6 +108,14 @@
 }
 .language-logo-stack[data-language="ru"] .language-logo-layer-ru,
 .language-logo-stack[data-language="en"] .language-logo-layer-en{opacity:1}
+
+/* Текстовые логотипы имеют одну ширину — по эталону логотипа Группы */
+.logo-card[data-logo-key="group"] .logo-preview>img,
+.logo-card[data-logo-key="ru"] .logo-preview>img,
+.logo-card[data-logo-key="ru"] .language-logo-stack{
+  width:min(46%,460px)!important;
+  max-width:460px!important;
+}
 
 /* Архив всех логотипов расположен после карточек, как у шрифта */
 .logo-archive-download{margin-top:24px!important}
@@ -137,9 +146,11 @@
     font-size:7px!important;
     line-height:20px!important;
   }
-  .language-logo-stack{
-    width:72%;
-    height:44%;
+  .logo-card[data-logo-key="group"] .logo-preview>img,
+  .logo-card[data-logo-key="ru"] .logo-preview>img,
+  .logo-card[data-logo-key="ru"] .language-logo-stack{
+    width:72%!important;
+    max-width:none!important;
   }
   .logo-archive-download{
     align-items:flex-start;
