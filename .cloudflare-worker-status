@@ -4,15 +4,15 @@ audit=success
 deploy=success
 verify=failure
 url=https://etaon.ivankamaldinov.workers.dev
-commit=78acdb38894a842afd86a73617dbeea28206c671
-run=30195964440
+commit=1f75314eabea6455111b75fd838b8715e15d010c
+run=30196080623
 --- prepare output ---
 /home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner  29K Jul 26 09:11 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner 377K Jul 26 09:11 brand-center/downloads/Etalon_Logos_All_Formats.zip
--rw-r--r-- 1 runner runner 205K Jul 26 09:11 brand-center/downloads/Etalon_Map_All_Formats.zip
--rw-r--r-- 1 runner runner  23K Jul 26 09:11 brand-center/downloads/Etalon_Symbol_All_Formats.zip
--rw-r--r-- 1 runner runner  71K Jul 26 09:10 brand-center/downloads/Gilroy.zip
+-rw-r--r-- 1 runner runner  29K Jul 26 09:14 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+-rw-r--r-- 1 runner runner 377K Jul 26 09:14 brand-center/downloads/Etalon_Logos_All_Formats.zip
+-rw-r--r-- 1 runner runner 205K Jul 26 09:14 brand-center/downloads/Etalon_Map_All_Formats.zip
+-rw-r--r-- 1 runner runner  23K Jul 26 09:14 brand-center/downloads/Etalon_Symbol_All_Formats.zip
+-rw-r--r-- 1 runner runner  71K Jul 26 09:14 brand-center/downloads/Gilroy.zip
 --- audit output ---
 Проверено ссылок и ресурсов: 52
 Проверено якорей: 17
@@ -31,17 +31,22 @@ run=30195964440
 + /downloads/Etalon_Brand_Guide_2025.pdf
 + /downloads/Etalon_Logos_All_Formats.zip
 + /downloads/Gilroy.zip
-Uploaded 2 of 5 assets
+Uploaded 1 of 5 assets
 Uploaded 3 of 5 assets
 Uploaded 5 of 5 assets
-✨ Success! Uploaded 5 files (34 already uploaded) (1.10 sec)
+✨ Success! Uploaded 5 files (34 already uploaded) (1.06 sec)
 
 Total Upload: 0.33 KiB / gzip: 0.23 KiB
-Uploaded etaon (3.33 sec)
-Deployed etaon triggers (0.53 sec)
+Uploaded etaon (5.83 sec)
+Deployed etaon triggers (1.65 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: 91bd2899-b290-42d5-9319-269b0c9369fa
+Current Version ID: ad68649b-7f75-465f-b9bc-7c8cd43f4220
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
 --- live verification output ---
-curl: (22) The requested URL returned error: 404
+Проверяю: https://etaon.ivankamaldinov.workers.dev/?audit=1f75314eabea6455111b75fd838b8715e15d010c
+Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Brand_Guide_2025.pdf?audit=1f75314eabea6455111b75fd838b8715e15d010c
+Syntax Warning: May not be a PDF file (continuing anyway)
+Syntax Error: Couldn't find trailer dictionary
+Syntax Error: Couldn't find trailer dictionary
+Syntax Error: Couldn't read xref table
