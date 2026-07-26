@@ -2,12 +2,13 @@ status=failure
 prepare=failure
 deploy=skipped
 url=
-commit=c0bbf965fcce56d7efe8883542eff12b07afbc00
-run=30185539692
+commit=aa85b39d3520ad59fc60f92db11cbf0da5498cb6
+run=30185559622
 --- prepare output ---
-Syntax Warning: May not be a PDF file (continuing anyway)
-Syntax Error: Couldn't find trailer dictionary
-Syntax Error: Couldn't find trailer dictionary
-Syntax Error: Couldn't read xref table
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (22) The requested URL returned error: 403
 --- wrangler output ---
 
