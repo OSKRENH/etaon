@@ -36,4 +36,8 @@ unzip -t brand-center/downloads/Etalon_Logos_All_Formats.zip >/dev/null
 unzip -t brand-center/downloads/Etalon_Symbol_All_Formats.zip >/dev/null
 unzip -t brand-center/downloads/Etalon_Map_All_Formats.zip >/dev/null
 
+python3 brand-center/scripts/build-download-manifest.py
+test -s brand-center/downloads/downloads-manifest.json
+python3 -m json.tool brand-center/downloads/downloads-manifest.json >/dev/null
+
 ls -lh brand-center/downloads/*
