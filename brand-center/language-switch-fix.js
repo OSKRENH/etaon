@@ -1,10 +1,4 @@
 (() => {
-  const brandGuideLink = document.querySelector('a[href*="at.adobe.com/lZLADQ8R3LwRgx5x"]');
-  if (brandGuideLink) {
-    brandGuideLink.href = './downloads/Etalon_Brand_Guide_2025.pdf';
-    brandGuideLink.download = 'Фирменный-стиль-Эталон-2025.pdf';
-  }
-
   const card = document.querySelector('[data-logo-key="ru"]');
   if (!card) return;
 
@@ -14,11 +8,20 @@
   const footerSubtitle = card.querySelector('footer small');
   const downloadButton = card.querySelector('[data-download]');
   const originalImage = preview?.querySelector(':scope > img');
+  const liveRegion = document.querySelector('#ui-status');
   if (!preview || !controls || !originalImage) return;
 
-  controls.querySelector('.logo-language-switch')?.remove();
   controls.setAttribute('aria-label', 'Цвет логотипа');
   if (footerSubtitle) footerSubtitle.textContent = 'Основной логотип';
+  if (footerTitle) footerTitle.setAttribute('aria-live', 'polite');
+
+  const announce = (message) => {
+    if (!liveRegion) return;
+    liveRegion.textContent = '';
+    window.requestAnimationFrame(() => {
+      liveRegion.textContent = message;
+    });
+  };
 
   const stack = document.createElement('div');
   stack.className = 'language-logo-stack';
@@ -27,10 +30,12 @@
   const ruImage = document.createElement('img');
   ruImage.className = 'language-logo-layer language-logo-layer-ru';
   ruImage.alt = 'Кириллический логотип Эталон';
+  ruImage.decoding = 'async';
 
   const enImage = document.createElement('img');
   enImage.className = 'language-logo-layer language-logo-layer-en';
   enImage.alt = 'Английский логотип Etalon';
+  enImage.decoding = 'async';
 
   stack.append(ruImage, enImage);
   originalImage.replaceWith(stack);
@@ -57,6 +62,7 @@
     const language = card.dataset.logoLanguage || 'ru';
     const tone = card.dataset.currentTone || 'blue';
     downloadButton.dataset.download = `logos/${language}-${tone}.svg`;
+    downloadButton.setAttribute('aria-label', language === 'en' ? 'Скачать английский логотип' : 'Скачать кириллический логотип');
   }
 
   function setTone(tone, instant = false) {
@@ -79,7 +85,7 @@
       }))).then(() => {
         ruImage.src = nextRu;
         enImage.src = nextEn;
-        requestAnimationFrame(() => stack.classList.remove('is-tone-changing'));
+        window.requestAnimationFrame(() => stack.classList.remove('is-tone-changing'));
       });
     }
 
@@ -91,7 +97,7 @@
     updateDownload();
   }
 
-  function setLanguage(language) {
+  function setLanguage(language, shouldAnnounce = false) {
     const isEnglish = language === 'en';
     card.dataset.logoLanguage = language;
     stack.dataset.language = language;
@@ -100,6 +106,7 @@
     languageSwitch.setAttribute('aria-label', isEnglish ? 'Переключить на русскую версию' : 'Переключить на английскую версию');
     if (footerTitle) footerTitle.textContent = isEnglish ? 'Английская версия' : 'Кириллическая версия';
     updateDownload();
+    if (shouldAnnounce) announce(isEnglish ? 'Показана английская версия логотипа' : 'Показана кириллическая версия логотипа');
   }
 
   toneButtons.forEach((button) => {
@@ -107,7 +114,7 @@
   });
 
   languageSwitch.addEventListener('click', () => {
-    setLanguage(card.dataset.logoLanguage === 'en' ? 'ru' : 'en');
+    setLanguage(card.dataset.logoLanguage === 'en' ? 'ru' : 'en', true);
   });
 
   card.dataset.logoLanguage = 'ru';
