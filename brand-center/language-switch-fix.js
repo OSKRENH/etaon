@@ -42,45 +42,38 @@
   function switchLanguage(nextLanguage) {
     if (isAnimating || card.dataset.logoLanguage === nextLanguage) return;
 
-    const currentImage = [...preview.children].find((node) => node.tagName === 'IMG' && !node.classList.contains('language-transition-image'));
-    if (!currentImage) return;
+    const image = [...preview.children].find((node) => node.tagName === 'IMG');
+    if (!image) return;
 
     isAnimating = true;
-    const movingToEnglish = nextLanguage === 'en';
     const tone = card.dataset.currentTone || 'blue';
-    const incomingImage = new Image();
-    const previewRect = preview.getBoundingClientRect();
-    const imageRect = currentImage.getBoundingClientRect();
+    const nextSrc = assetPath(nextLanguage, tone);
+    const preload = new Image();
 
-    incomingImage.className = `language-transition-image ${movingToEnglish ? 'from-bottom' : 'from-top'}`;
-    incomingImage.src = assetPath(nextLanguage, tone);
-    incomingImage.alt = movingToEnglish ? 'Английский логотип Etalon' : 'Кириллический логотип Эталон';
-    Object.assign(incomingImage.style, {
-      left: `${imageRect.left - previewRect.left}px`,
-      top: `${imageRect.top - previewRect.top}px`,
-      width: `${imageRect.width}px`,
-      height: `${imageRect.height}px`
-    });
+    preload.onload = () => {
+      image.classList.add('language-fading');
 
-    currentImage.classList.remove('language-exit-up', 'language-exit-down', 'is-switching');
-    currentImage.classList.add(movingToEnglish ? 'language-exit-up' : 'language-exit-down');
-    preview.appendChild(incomingImage);
-    updateCardState(nextLanguage);
+      window.setTimeout(() => {
+        image.src = nextSrc;
+        image.alt = nextLanguage === 'en' ? 'Английский логотип Etalon' : 'Кириллический логотип Эталон';
+        updateCardState(nextLanguage);
 
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        currentImage.classList.add('is-switching');
-        incomingImage.classList.add('is-switching');
-      });
-    });
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            image.classList.remove('language-fading');
+            window.setTimeout(() => {
+              isAnimating = false;
+            }, 300);
+          });
+        });
+      }, 220);
+    };
 
-    window.setTimeout(() => {
-      currentImage.src = incomingImage.src;
-      currentImage.alt = incomingImage.alt;
-      currentImage.classList.remove('language-exit-up', 'language-exit-down', 'is-switching');
-      incomingImage.remove();
+    preload.onerror = () => {
       isAnimating = false;
-    }, 460);
+    };
+
+    preload.src = nextSrc;
   }
 
   languageSwitch.addEventListener('click', () => {
