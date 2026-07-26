@@ -6,7 +6,7 @@ const logoCards = [...document.querySelectorAll('[data-logo-key]')];
 const tones = [
   { key: 'blue', label: 'Синий логотип', color: '#223E90' },
   { key: 'white', label: 'Белый логотип', color: '#FFFFFF' },
-  { key: 'black', label: 'Чёрный логотип', color: '#1D1D1B' }
+  { key: 'black', label: 'Черный логотип', color: '#1D1D1B' }
 ];
 
 function setCardTone(card, tone) {
@@ -124,6 +124,24 @@ document.querySelectorAll('[data-download]').forEach((button) => {
   });
 });
 
+/* В интерфейсе используем Е вместо Ё */
+function replaceYo(root) {
+  const skipped = new Set(['SCRIPT', 'STYLE', 'CODE', 'PRE', 'TEXTAREA', 'INPUT', 'OPTION', 'SVG']);
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (!parent || skipped.has(parent.tagName)) return NodeFilter.FILTER_REJECT;
+      return /[Ёё]/.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((node) => {
+    node.nodeValue = node.nodeValue.replaceAll('Ё', 'Е').replaceAll('ё', 'е');
+  });
+}
+replaceYo(document.body);
+
 /* Неразрывные короткие слова */
 const orphanWords = [
   'а', 'в', 'во', 'и', 'или', 'к', 'ко', 'на', 'над', 'не', 'ни', 'но',
@@ -134,7 +152,7 @@ const orphanWords = [
 function preventOrphans(root) {
   const escapedWords = orphanWords.map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   const pattern = new RegExp(
-    `(^|[\\s(«„"—–-])(${escapedWords.join('|')})[ \\t]+(?=[А-Яа-яЁёA-Za-z0-9«„"])`,
+    `(^|[\\s(«„"—–-])(${escapedWords.join('|')})[ \\t]+(?=[А-Яа-яЕеA-Za-z0-9«„"])`,
     'giu'
   );
   const skipped = new Set(['SCRIPT', 'STYLE', 'CODE', 'PRE', 'TEXTAREA', 'INPUT', 'OPTION', 'SVG']);
@@ -153,7 +171,7 @@ function preventOrphans(root) {
 }
 preventOrphans(document.body);
 
-/* Активный раздел в сайдбаре, карта и стрелка наверх */
+/* Активный раздел, карта и контекстные кнопки */
 const sidebarLinks = [...document.querySelectorAll('.sidebar nav a[href^="#"]')];
 const sections = sidebarLinks
   .map((link) => ({ link, section: document.querySelector(link.getAttribute('href')) }))
@@ -162,6 +180,7 @@ const brandIntro = document.querySelector('.brand-intro');
 const mapSection = document.querySelector('.map-section');
 const backToTop = document.querySelector('.back-to-top');
 const topbar = document.querySelector('.topbar');
+const contextualDownloads = [...document.querySelectorAll('.button-small, .sidebar-download')];
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let ticking = false;
 
@@ -191,10 +210,12 @@ function updateViewportEffects() {
     mapSection.style.setProperty('--map-parallax', `${Math.max(-36, Math.min(36, progress * 36))}px`);
   }
 
-  if (backToTop && brandIntro) {
+  if (brandIntro) {
     const topbarHeight = topbar?.getBoundingClientRect().height || 0;
     const introHasPassed = brandIntro.getBoundingClientRect().bottom <= topbarHeight + 8;
-    backToTop.classList.toggle('is-visible', introHasPassed && window.scrollY > 80);
+    const showContextActions = introHasPassed && window.scrollY > 80;
+    backToTop?.classList.toggle('is-visible', showContextActions);
+    contextualDownloads.forEach((button) => button.classList.toggle('is-visible', showContextActions));
   }
 
   ticking = false;
