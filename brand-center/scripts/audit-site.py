@@ -8,7 +8,8 @@ from urllib.parse import unquote, urlparse
 import re
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+AUDITOR = Path(__file__).resolve()
+ROOT = AUDITOR.parents[1]
 INDEX = ROOT / "index.html"
 SAME_ORIGIN = "etaon.ivankamaldinov.workers.dev"
 
@@ -174,6 +175,8 @@ def main() -> int:
         *sorted((ROOT / "scripts").glob("*")),
     ]
     for path in text_files:
+        if path.resolve() == AUDITOR:
+            continue
         if not path.is_file() or path.suffix.lower() in {".pdf", ".zip", ".ttf"}:
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
