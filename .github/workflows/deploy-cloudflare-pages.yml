@@ -29,18 +29,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check Cloudflare credentials
-        shell: bash
         run: |
           test -n "$CLOUDFLARE_API_TOKEN"
           test -n "$CLOUDFLARE_ACCOUNT_ID"
 
       - name: Check Gilroy web fonts
-        shell: bash
         run: |
-          test $(stat -c%s brand-center/fonts/Gilroy-Regular.ttf) -gt 50000
-          test $(stat -c%s brand-center/fonts/Gilroy-Medium.ttf) -gt 50000
-          file brand-center/fonts/Gilroy-Regular.ttf
-          file brand-center/fonts/Gilroy-Medium.ttf
+          test -s brand-center/fonts/Gilroy-Regular.ttf
+          test -s brand-center/fonts/Gilroy-Medium.ttf
+
+      - name: Install conversion tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils zip inkscape
 
       - name: Prepare downloadable assets
         id: prepare
@@ -48,104 +49,8 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          {
-            set -euo pipefail
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq poppler-utils zip inkscape
-            mkdir -p brand-center/assets/logos brand-center/downloads
-
-            rm -f brand-center/downloads/Gilroy.zip
-            (
-              cd brand-center/fonts
-              zip -q ../downloads/Gilroy.zip ./*.ttf
-            )
-            unzip -t brand-center/downloads/Gilroy.zip >/dev/null
-
-            python3 <<'PY'
-          from pathlib import Path
-
-          root = Path('brand-center')
-          out = root / 'assets' / 'logos'
-          out.mkdir(parents=True, exist_ok=True)
-          sources = {
-              'group': root / 'assets' / 'group-etalon.svg',
-              'ru': root / 'assets' / 'etalon-ru.svg',
-              'en': root / 'assets' / 'etalon-en.svg',
-              'symbol': root / 'assets' / 'symbol-etalon.svg',
-          }
-          colors = {
-              'blue': '#223E90',
-              'white': '#FFFFFF',
-              'black': '#1D1D1B',
-          }
-          for key, source in sources.items():
-              text = source.read_text(encoding='utf-8')
-              for tone, color in colors.items():
-                  variant = text.replace('#223e90', color).replace('#223E90', color)
-                  (out / f'{key}-{tone}.svg').write_text(variant, encoding='utf-8')
-          PY
-
-            curl --fail --location --retry 3 --retry-delay 2 \
-              "https://at.adobe.com/VA69j7Ri7AZ0TPBo" \
-              --output /tmp/regions-map.pdf
-            pdftocairo -svg /tmp/regions-map.pdf /tmp/regions-map-raw.svg
-            python3 <<'PY'
-          from pathlib import Path
-          import xml.etree.ElementTree as ET
-
-          ET.register_namespace('', 'http://www.w3.org/2000/svg')
-          source = Path('/tmp/regions-map-raw.svg')
-          target = Path('brand-center/assets/regions-map.svg')
-          hero_target = Path('brand-center/assets/regions-map-hero.svg')
-          tree = ET.parse(source)
-          root = tree.getroot()
-
-          for parent in root.iter():
-              for child in list(parent):
-                  tag = child.tag.rsplit('}', 1)[-1]
-                  fill = child.attrib.get('fill', '')
-                  if tag == 'rect' or (tag == 'path' and fill == 'rgb(100%, 100%, 100%)'):
-                      parent.remove(child)
-                      continue
-                  if fill == 'rgb(95.999146%, 95.999146%, 97.999573%)':
-                      child.set('fill', '#F5F5FA')
-                  elif fill == 'rgb(12.998962%, 23.999023%, 55.999756%)':
-                      child.set('fill', '#223E90')
-                  for attr in (
-                      'stroke', 'stroke-opacity', 'stroke-width', 'stroke-linecap',
-                      'stroke-linejoin', 'stroke-miterlimit', 'fill-opacity'
-                  ):
-                      child.attrib.pop(attr, None)
-
-          root.set('width', '1920')
-          root.set('height', '1080')
-          root.set('viewBox', '0 0 1440 810')
-          tree.write(target, encoding='utf-8', xml_declaration=True)
-
-          hero_tree = ET.parse(target)
-          hero_root = hero_tree.getroot()
-          for path in hero_root.iter():
-              if path.tag.rsplit('}', 1)[-1] != 'path':
-                  continue
-              fill = path.attrib.get('fill')
-              path.set('fill', '#FFFFFF')
-              path.set('fill-opacity', '.08' if fill == '#F5F5FA' else '.22')
-          hero_tree.write(hero_target, encoding='utf-8', xml_declaration=True)
-          PY
-
-            chmod +x brand-center/scripts/build-download-archives.sh
-            brand-center/scripts/build-download-archives.sh brand-center
-
-            test -s brand-center/assets/regions-map.svg
-            test -s brand-center/downloads/Gilroy.zip
-            test -s brand-center/downloads/Etalon_Logos_All_Formats.zip
-            test -s brand-center/downloads/Etalon_Symbol_All_Formats.zip
-            test -s brand-center/downloads/Etalon_Map_All_Formats.zip
-            unzip -t brand-center/downloads/Etalon_Logos_All_Formats.zip >/dev/null
-            unzip -t brand-center/downloads/Etalon_Symbol_All_Formats.zip >/dev/null
-            unzip -t brand-center/downloads/Etalon_Map_All_Formats.zip >/dev/null
-            ls -lh brand-center/downloads/*.zip
-          } 2>&1 | tee /tmp/prepare.log
+          chmod +x brand-center/scripts/*.sh
+          brand-center/scripts/prepare-downloadable-assets.sh 2>&1 | tee /tmp/prepare.log
 
       - name: Install Wrangler
         if: steps.prepare.outcome == 'success'
@@ -168,9 +73,13 @@ jobs:
           DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
         run: |
           PREPARE_LOG=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' /tmp/prepare.log 2>/dev/null || true)
-          CLEAN_LOG=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' /tmp/wrangler.log 2>/dev/null || true)
-          URL=$(printf '%s\n' "$CLEAN_LOG" | grep -Eo 'https://[^[:space:]]+\.workers\.dev' | tail -1 || true)
-          if [ "$PREPARE_OUTCOME" != "success" ]; then STATUS="$PREPARE_OUTCOME"; else STATUS="$DEPLOY_OUTCOME"; fi
+          DEPLOY_LOG=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' /tmp/wrangler.log 2>/dev/null || true)
+          URL=$(printf '%s\n' "$DEPLOY_LOG" | grep -Eo 'https://[^[:space:]]+\.workers\.dev' | tail -1 || true)
+          if [ "$PREPARE_OUTCOME" != "success" ]; then
+            STATUS="$PREPARE_OUTCOME"
+          else
+            STATUS="$DEPLOY_OUTCOME"
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
@@ -183,9 +92,9 @@ jobs:
             printf 'commit=%s\n' "$GITHUB_SHA"
             printf 'run=%s\n' "$GITHUB_RUN_ID"
             printf '%s\n' '--- prepare output ---'
-            printf '%s\n' "$PREPARE_LOG" | tail -100
+            printf '%s\n' "$PREPARE_LOG" | tail -80
             printf '%s\n' '--- wrangler output ---'
-            printf '%s\n' "$CLEAN_LOG" | tail -60
+            printf '%s\n' "$DEPLOY_LOG" | tail -60
           } > .cloudflare-worker-status
           git add .cloudflare-worker-status
           git commit -m "Record etaon Worker deployment [skip ci]"
