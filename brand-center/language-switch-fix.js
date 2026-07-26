@@ -45,31 +45,40 @@
   function switchLanguage(nextLanguage) {
     if (isAnimating || card.dataset.logoLanguage === nextLanguage) return;
 
-    const image = [...preview.children].find((node) => node.tagName === 'IMG');
+    const image = [...preview.children].find((node) => node.tagName === 'IMG' && !node.classList.contains('language-fade-layer'));
     if (!image) return;
 
     isAnimating = true;
     const tone = card.dataset.currentTone || 'blue';
     const nextSrc = assetPath(nextLanguage, tone);
+    const nextAlt = nextLanguage === 'en' ? 'Английский логотип Etalon' : 'Кириллический логотип Эталон';
     const preload = new Image();
 
     preload.onload = () => {
-      image.classList.add('language-fading');
+      const incoming = image.cloneNode(false);
+      incoming.src = nextSrc;
+      incoming.alt = nextAlt;
+      incoming.className = 'language-fade-layer';
+      preview.appendChild(incoming);
+      updateCardState(nextLanguage);
+
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          image.classList.add('language-fade-out');
+          incoming.classList.add('is-visible');
+        });
+      });
 
       window.setTimeout(() => {
+        image.style.transition = 'none';
         image.src = nextSrc;
-        image.alt = nextLanguage === 'en' ? 'Английский логотип Etalon' : 'Кириллический логотип Эталон';
-        updateCardState(nextLanguage);
-
-        window.requestAnimationFrame(() => {
-          window.requestAnimationFrame(() => {
-            image.classList.remove('language-fading');
-            window.setTimeout(() => {
-              isAnimating = false;
-            }, 300);
-          });
-        });
-      }, 220);
+        image.alt = nextAlt;
+        image.classList.remove('language-fade-out');
+        void image.offsetWidth;
+        image.style.transition = '';
+        incoming.remove();
+        isAnimating = false;
+      }, 560);
     };
 
     preload.onerror = () => {
