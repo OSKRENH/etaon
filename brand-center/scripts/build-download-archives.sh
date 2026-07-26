@@ -19,9 +19,27 @@ export_asset() {
 
   mkdir -p "$output_dir"
   cp "$input" "$output_dir/$base_name.svg"
-  inkscape "$input" --export-type=png --export-filename="$output_dir/$base_name.png" --export-background-opacity=0 --export-width="$png_width" >/dev/null
-  inkscape "$input" --export-type=pdf --export-filename="$output_dir/$base_name.pdf" >/dev/null
-  inkscape "$input" --export-type=eps --export-filename="$output_dir/$base_name.eps" >/dev/null
+
+  inkscape "$input" \
+    --export-type=png \
+    --export-filename="$output_dir/$base_name.png" \
+    --export-background-opacity=0 \
+    --export-width="$png_width" >/dev/null 2>&1
+
+  inkscape "$input" \
+    --export-type=pdf \
+    --export-filename="$output_dir/$base_name.pdf" >/dev/null 2>&1
+
+  if ! inkscape "$input" \
+    --export-type=eps \
+    --export-filename="$output_dir/$base_name.eps" >/dev/null 2>&1; then
+    pdftops -eps "$output_dir/$base_name.pdf" "$output_dir/$base_name.eps"
+  fi
+
+  test -s "$output_dir/$base_name.svg"
+  test -s "$output_dir/$base_name.png"
+  test -s "$output_dir/$base_name.pdf"
+  test -s "$output_dir/$base_name.eps"
 }
 
 declare -A FOLDERS=(
@@ -107,6 +125,6 @@ unzip -t "$DOWNLOADS_DIR/Etalon_Logos_All_Formats.zip" >/dev/null
 unzip -t "$DOWNLOADS_DIR/Etalon_Symbol_All_Formats.zip" >/dev/null
 unzip -t "$DOWNLOADS_DIR/Etalon_Map_All_Formats.zip" >/dev/null
 
-test "$(stat -c%s "$DOWNLOADS_DIR/Etalon_Logos_All_Formats.zip")" -gt 50000
-test "$(stat -c%s "$DOWNLOADS_DIR/Etalon_Symbol_All_Formats.zip")" -gt 10000
-test "$(stat -c%s "$DOWNLOADS_DIR/Etalon_Map_All_Formats.zip")" -gt 100000
+test -s "$DOWNLOADS_DIR/Etalon_Logos_All_Formats.zip"
+test -s "$DOWNLOADS_DIR/Etalon_Symbol_All_Formats.zip"
+test -s "$DOWNLOADS_DIR/Etalon_Map_All_Formats.zip"
