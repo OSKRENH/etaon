@@ -1,15 +1,10 @@
-status=cancelled
-prepare=cancelled
+status=skipped
+prepare=skipped
 deploy=skipped
 url=
-commit=4f0c346fa0abb1ad3dd834bf76ac48b3a56792a6
-run=30195683159
+commit=f01dcc9016d1d34db1440cae8fb1636e2ff79ffd
+run=30195705093
 --- prepare output ---
-/home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner  29K Jul 26 09:01 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner 377K Jul 26 09:01 brand-center/downloads/Etalon_Logos_All_Formats.zip
--rw-r--r-- 1 runner runner 205K Jul 26 09:01 brand-center/downloads/Etalon_Map_All_Formats.zip
--rw-r--r-- 1 runner runner  23K Jul 26 09:01 brand-center/downloads/Etalon_Symbol_All_Formats.zip
--rw-r--r-- 1 runner runner  71K Jul 26 09:01 brand-center/downloads/Gilroy.zip
+
 --- wrangler output ---
 
