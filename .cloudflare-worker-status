@@ -2,13 +2,12 @@ status=failure
 prepare=failure
 deploy=skipped
 url=
-commit=aa85b39d3520ad59fc60f92db11cbf0da5498cb6
-run=30185559622
+commit=a53e49ca3adb3a375aec89ab83e6dae21a8ed32b
+run=30185621418
 --- prepare output ---
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-curl: (22) The requested URL returned error: 403
+curl: (22) The requested URL returned error: 404
 --- wrangler output ---
 
