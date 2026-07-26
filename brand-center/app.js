@@ -1,33 +1,7 @@
-const refreshStyles = document.createElement('link');
-refreshStyles.rel = 'stylesheet';
-refreshStyles.href = './visual-refresh.css';
-document.head.appendChild(refreshStyles);
-
 const downloadIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3zM5 19h14v2H5z"/></svg>';
 const copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H4a2 2 0 0 0-2 2v12h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg>';
 
-/* Актуальные цифры */
-const statItems = [...document.querySelectorAll('.stats article')];
-if (statItems.length >= 4) {
-  statItems[0].innerHTML = '<strong>1987</strong><span>год основания</span>';
-  statItems[3].innerHTML = '<strong>9,8 млн м²</strong><span class="stat-nowrap">жилой площади</span>';
-}
-
-/* Диагональный разделитель — самостоятельный элемент сетки */
-document.querySelectorAll('.quick-links a').forEach((link) => {
-  if (!link.querySelector('.quick-slash')) {
-    const slash = document.createElement('i');
-    slash.className = 'quick-slash';
-    slash.setAttribute('aria-hidden', 'true');
-    link.querySelector('b')?.after(slash);
-  }
-});
-
-/* Переключатели цвета внутри каждого окна логотипа */
-document.querySelector('.logo-tone-switch')?.remove();
-const groupCaption = document.querySelector('[data-logo-key="group"] footer small');
-if (groupCaption) groupCaption.textContent = 'Полная версия';
-
+/* Переключатели цвета внутри карточек логотипов */
 const logoCards = [...document.querySelectorAll('[data-logo-key]')];
 const tones = [
   { key: 'blue', label: 'Синий логотип', color: '#223E90' },
@@ -80,32 +54,28 @@ logoCards.forEach((card) => {
   setCardTone(card, 'blue');
 });
 
-/* Логотип мягко увеличивается только пока карточка находится в поле зрения */
 if ('IntersectionObserver' in window) {
   const logoObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       entry.target.classList.toggle('is-in-view', entry.isIntersecting && entry.intersectionRatio >= 0.32);
     });
-  }, {
-    threshold: [0, 0.32, 0.7],
-    rootMargin: '-6% 0px -8% 0px'
-  });
+  }, { threshold: [0, 0.32, 0.7], rootMargin: '-6% 0px -8% 0px' });
   logoCards.forEach((card) => logoObserver.observe(card));
 } else {
   logoCards.forEach((card) => card.classList.add('is-in-view'));
 }
 
-/* Палитра из брендбука */
+/* Палитра */
 function colorCard({ name, hex, rgb, cmyk, pantone, ral, className = '' }) {
   const rows = [
-    `<div><dt>Для экрана</dt><dd>${rgb}</dd></div>`,
-    `<div><dt>Для печати</dt><dd>${cmyk}</dd></div>`,
+    `<div><dt>RGB</dt><dd>${rgb}</dd></div>`,
+    `<div><dt>CMYK</dt><dd>${cmyk}</dd></div>`,
     pantone ? `<div><dt>Pantone</dt><dd>${pantone}</dd></div>` : '',
     ral ? `<div><dt>RAL</dt><dd>${ral}</dd></div>` : ''
   ].join('');
 
   return `<article class="${className}" style="--swatch:${hex}">
-    <header><b>${name}</b><div class="color-code"><strong>${hex}</strong><button class="copy-icon" type="button" data-copy="${hex}" aria-label="Скопировать ${hex}" title="Скопировать код">${copyIcon}</button></div></header>
+    <header><b>${name}</b><div class="color-code"><button class="copy-icon" type="button" data-copy="${hex}" aria-label="Скопировать ${hex}" title="Скопировать код">${copyIcon}</button><strong>${hex}</strong></div></header>
     <dl>${rows}</dl>
   </article>`;
 }
@@ -120,14 +90,6 @@ if (colorGrid) {
     colorCard({ name: 'Акцентный оранжевый', hex: '#FF4D00', rgb: '255, 77, 0', cmyk: '0, 79, 94, 0', className: 'orange' })
   ].join('');
 }
-
-/* Убираем запрет про сложный фон */
-document.querySelectorAll('.dont li').forEach((item) => {
-  if (item.textContent.toLowerCase().includes('сложном фоне')) item.remove();
-});
-
-/* В футере остаётся только логотип */
-document.querySelector('.footer-year')?.remove();
 
 /* Копирование кодов */
 document.querySelectorAll('[data-copy]').forEach((button) => {
@@ -162,7 +124,7 @@ document.querySelectorAll('[data-download]').forEach((button) => {
   });
 });
 
-/* Неразрывные короткие слова без ручных переносов */
+/* Неразрывные короткие слова */
 const orphanWords = [
   'а', 'в', 'во', 'и', 'или', 'к', 'ко', 'на', 'над', 'не', 'ни', 'но',
   'о', 'об', 'обо', 'от', 'по', 'под', 'при', 'про', 'с', 'со', 'у',
@@ -191,19 +153,12 @@ function preventOrphans(root) {
 }
 preventOrphans(document.body);
 
-/* Поиск */
-const search = document.querySelector('#search');
-const searchable = [...document.querySelectorAll('[data-search]')];
-search?.addEventListener('input', (event) => {
-  const query = event.target.value.trim().toLowerCase();
-  searchable.forEach((section) => {
-    const haystack = `${section.dataset.search} ${section.textContent}`.replace(/\u00A0/g, ' ').toLowerCase();
-    section.classList.toggle('is-hidden', Boolean(query) && !haystack.includes(query));
-  });
-});
-
-/* Параллакс и контекстная стрелка наверх */
-const hero = document.querySelector('.hero');
+/* Активный раздел в сайдбаре, карта и стрелка наверх */
+const sidebarLinks = [...document.querySelectorAll('.sidebar nav a[href^="#"]')];
+const sections = sidebarLinks
+  .map((link) => ({ link, section: document.querySelector(link.getAttribute('href')) }))
+  .filter(({ section }) => section);
+const brandIntro = document.querySelector('.brand-intro');
 const mapSection = document.querySelector('.map-section');
 const backToTop = document.querySelector('.back-to-top');
 const topbar = document.querySelector('.topbar');
@@ -212,12 +167,23 @@ let ticking = false;
 
 function updateViewportEffects() {
   const viewport = window.innerHeight || 1;
+  const marker = Math.min(viewport * 0.34, 300);
+  let active = sections[0];
 
-  if (!reduceMotion && hero) {
-    const rect = hero.getBoundingClientRect();
-    const progress = (viewport / 2 - (rect.top + rect.height / 2)) / viewport;
-    hero.style.setProperty('--hero-parallax', `${Math.max(-34, Math.min(34, progress * 34))}px`);
+  sections.forEach((item) => {
+    if (item.section.getBoundingClientRect().top <= marker) active = item;
+  });
+
+  if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8) {
+    active = sections[sections.length - 1];
   }
+
+  sections.forEach(({ link }) => {
+    const isActive = link === active?.link;
+    link.classList.toggle('is-active', isActive);
+    if (isActive) link.setAttribute('aria-current', 'true');
+    else link.removeAttribute('aria-current');
+  });
 
   if (!reduceMotion && mapSection) {
     const rect = mapSection.getBoundingClientRect();
@@ -225,10 +191,10 @@ function updateViewportEffects() {
     mapSection.style.setProperty('--map-parallax', `${Math.max(-36, Math.min(36, progress * 36))}px`);
   }
 
-  if (backToTop && hero) {
+  if (backToTop && brandIntro) {
     const topbarHeight = topbar?.getBoundingClientRect().height || 0;
-    const heroHasPassed = hero.getBoundingClientRect().bottom <= topbarHeight + 8;
-    backToTop.classList.toggle('is-visible', heroHasPassed && window.scrollY > 80);
+    const introHasPassed = brandIntro.getBoundingClientRect().bottom <= topbarHeight + 8;
+    backToTop.classList.toggle('is-visible', introHasPassed && window.scrollY > 80);
   }
 
   ticking = false;
