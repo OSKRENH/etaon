@@ -4,8 +4,8 @@ audit=success
 deploy=success
 verify=success
 url=https://etaon.ivankamaldinov.workers.dev
-commit=96854f55399f2d692533332e0b3258c54a67f3d9
-run=30206763383
+commit=eac849ab28c5d50639b00551de481fe03a1d2040
+run=30207155738
 --- prepare output ---
 Фирменный цвет совпадает во всех мастер-файлах: #223E90
 Производные оттенки: 50% #919FC8, 15% #DEE2EE
@@ -23,12 +23,12 @@ Cropped symbol-blue.svg: 120.77 × 100.01
 Cropped symbol-white.svg: 120.77 × 100.01
 /home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
 Download manifest generated: /home/runner/work/etaon/etaon/brand-center/downloads/downloads-manifest.json
--rw-r--r-- 1 runner runner  45K Jul 26 14:46 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner 528K Jul 26 14:46 brand-center/downloads/Etalon_Logos_All_Formats.zip
--rw-r--r-- 1 runner runner 205K Jul 26 14:46 brand-center/downloads/Etalon_Map_All_Formats.zip
--rw-r--r-- 1 runner runner  36K Jul 26 14:46 brand-center/downloads/Etalon_Symbol_All_Formats.zip
--rw-r--r-- 1 runner runner  71K Jul 26 14:46 brand-center/downloads/Gilroy.zip
--rw-r--r-- 1 runner runner  463 Jul 26 14:46 brand-center/downloads/downloads-manifest.json
+-rw-r--r-- 1 runner runner  45K Jul 26 14:59 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+-rw-r--r-- 1 runner runner 528K Jul 26 14:59 brand-center/downloads/Etalon_Logos_All_Formats.zip
+-rw-r--r-- 1 runner runner 205K Jul 26 14:59 brand-center/downloads/Etalon_Map_All_Formats.zip
+-rw-r--r-- 1 runner runner  36K Jul 26 14:59 brand-center/downloads/Etalon_Symbol_All_Formats.zip
+-rw-r--r-- 1 runner runner  71K Jul 26 14:59 brand-center/downloads/Gilroy.zip
+-rw-r--r-- 1 runner runner  463 Jul 26 14:59 brand-center/downloads/downloads-manifest.json
 --- audit output ---
 Проверено ссылок и ресурсов: 61
 Проверено якорей: 23
@@ -51,26 +51,37 @@ Download manifest generated: /home/runner/work/etaon/etaon/brand-center/download
 Uploaded 2 of 6 assets
 Uploaded 4 of 6 assets
 Uploaded 6 of 6 assets
-✨ Success! Uploaded 6 files (36 already uploaded) (1.23 sec)
+✨ Success! Uploaded 6 files (36 already uploaded) (1.18 sec)
 
 Total Upload: 1.29 KiB / gzip: 0.66 KiB
 Your Worker has access to the following bindings:
 Binding            Resource      
 env.ASSETS         Assets        
 
-Uploaded etaon (4.12 sec)
-Deployed etaon triggers (0.52 sec)
+Uploaded etaon (5.34 sec)
+Deployed etaon triggers (0.76 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: 1093e45a-1597-4b1b-9051-95d774ccb576
+Current Version ID: dcd76332-ffca-4db7-aa6b-2f93e679053d
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
 --- live verification output ---
 Проверяю: https://etaon.ivankamaldinov.workers.dev/
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Brand_Guide_2025.pdf
+curl: (22) The requested URL returned error: 404
+Попытка 1 не удалась, повтор через 3 секунды...
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Logos_All_Formats.zip
+curl: (22) The requested URL returned error: 404
+Попытка 1 не удалась, повтор через 3 секунды...
+curl: (22) The requested URL returned error: 404
+Попытка 2 не удалась, повтор через 3 секунды...
+curl: (22) The requested URL returned error: 404
+Попытка 3 не удалась, повтор через 3 секунды...
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Symbol_All_Formats.zip
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Map_All_Formats.zip
+curl: (22) The requested URL returned error: 404
+Попытка 1 не удалась, повтор через 3 секунды...
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Gilroy.zip
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/downloads-manifest.json
-Попытка 1: CDN пока отдает предыдущую версию, повтор через 3 секунды...
+curl: (22) The requested URL returned error: 404
+Попытка 1 не удалась, повтор через 3 секунды...
 Живой сайт, размеры и все файлы скачивания проверены и совпадают со собранными версиями.
