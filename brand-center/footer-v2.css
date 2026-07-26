@@ -134,8 +134,8 @@ body{
 @media(max-width:900px){
   .page-footer{
     grid-template-columns:1fr!important;
-    gap:30px!important;
-    padding:42px 24px calc(42px + env(safe-area-inset-bottom))!important;
+    gap:0!important;
+    padding:0 0 calc(42px + env(safe-area-inset-bottom))!important;
   }
   .footer-release-grid{
     order:1;
@@ -145,7 +145,7 @@ body{
   .page-footer .footer-logo{
     order:2;
     width:128px;
-    margin:0 auto!important;
+    margin:42px auto 0!important;
   }
   .footer-release-item,
   .footer-changelog>summary{
