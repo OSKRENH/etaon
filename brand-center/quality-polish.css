@@ -11,13 +11,16 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
     z-index:7;
     display:flex;
     align-items:center;
-    gap:4px;
+    gap:5px;
     width:100%;
     min-height:50px;
     padding:6px 14px;
     overflow-x:auto;
-    overscroll-behavior-inline:contain;
-    scroll-snap-type:x proximity;
+    overflow-y:hidden;
+    overscroll-behavior:auto;
+    scroll-snap-type:none;
+    touch-action:pan-x pan-y;
+    -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
     background:rgba(247,248,250,.94);
     border-bottom:1px solid #e4e7ed;
@@ -28,34 +31,23 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   .mobile-section-nav a{
     position:relative;
     flex:0 0 auto;
-    scroll-snap-align:center;
-    padding:10px 14px 11px;
-    border-radius:999px;
+    padding:10px 15px;
+    border-radius:999px!important;
     color:#5f6875;
     font-size:13px;
     font-weight:500;
     line-height:1;
     white-space:nowrap;
+    text-decoration:none!important;
     transition:color .28s ease,background-color .28s ease;
   }
-  .mobile-section-nav a::after{
-    content:"";
-    position:absolute;
-    left:14px;
-    right:14px;
-    bottom:5px;
-    height:1px;
-    background:#223e90;
-    transform:scaleX(0);
-    transform-origin:center;
-    opacity:0;
-    transition:transform .32s cubic-bezier(.22,.7,.2,1),opacity .24s ease;
-  }
+  .mobile-section-nav a::after{display:none!important}
   .mobile-section-nav a.is-active{
     color:#223e90;
-    background:rgba(34,62,144,.07);
+    background:rgba(34,62,144,.09);
+    border-radius:999px!important;
   }
-  .mobile-section-nav a.is-active::after{transform:scaleX(1);opacity:1}
+  @media(hover:hover){.mobile-section-nav a:hover{color:#223e90;background:rgba(34,62,144,.055)}}
 }
 
 /* Контраст и обнаружимость действий */
@@ -111,11 +103,24 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 .logo-preview .language-segment-switch .language-option{font-size:11px!important}
 .safe-area .safe-o{opacity:.14!important}
 
+/* После обрезки артбордов логотипы стали визуально крупнее — слегка уменьшаем превью */
+.logo-card[data-logo-key="group"] .logo-preview>img,
+.logo-card[data-logo-key="ru"] .logo-preview>img,
+.logo-card[data-logo-key="ru"] .language-logo-stack{
+  width:min(42%,420px)!important;
+  max-width:420px!important;
+}
+.logo-card[data-logo-key="symbol"] .logo-preview>img{width:min(24%,135px)!important;max-width:135px!important}
+
 @media(max-width:540px){
   .compact-downloads .download-label{gap:4px}
   .compact-downloads .download-meta{font-size:11px}
   .mobile-section-nav{padding-left:10px;padding-right:10px}
-  .mobile-section-nav a{padding-left:12px;padding-right:12px;font-size:12px}
+  .mobile-section-nav a{padding:10px 14px;font-size:12px}
   .logo-preview .language-segment-switch .language-option{font-size:10px!important}
+  .logo-card[data-logo-key="group"] .logo-preview>img,
+  .logo-card[data-logo-key="ru"] .logo-preview>img,
+  .logo-card[data-logo-key="ru"] .language-logo-stack{width:66%!important;max-width:none!important}
+  .logo-card[data-logo-key="symbol"] .logo-preview>img{width:30%!important;max-width:none!important}
 }
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.skip-link,.brand-intro,.button,.logo-card img,.language-logo-layer,.language-segment-switch,.language-segment-switch::before,.back-to-top,.sidebar-download,.button-small,.map-background,.mobile-section-nav a,.mobile-section-nav a::after{animation:none!important;transition:none!important}.map-background{transform:translate3d(-50%,-50%,0)!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.skip-link,.brand-intro,.button,.logo-card img,.language-logo-layer,.language-segment-switch,.language-segment-switch::before,.back-to-top,.sidebar-download,.button-small,.map-background,.mobile-section-nav a{animation:none!important;transition:none!important}.map-background{transform:translate3d(-50%,-50%,0)!important}}
