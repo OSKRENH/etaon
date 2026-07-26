@@ -10,6 +10,7 @@ rm -f brand-center/downloads/Gilroy.zip
 )
 unzip -t brand-center/downloads/Gilroy.zip >/dev/null
 
+python3 brand-center/scripts/check-brand-color.py
 python3 brand-center/scripts/generate-logo-variants.py
 
 # The lightweight vector map is stored directly in the repository.
