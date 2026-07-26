@@ -126,10 +126,10 @@ function colorCard({ name, hex, rgb, cmyk, pantone, ral, className = '' }) {
 const colorGrid = document.querySelector('.color-grid');
 if (colorGrid) {
   colorGrid.innerHTML = [
-    colorCard({ name: 'Фирменный синий', hex: '#213A8F', rgb: '33, 58, 143', cmyk: '100, 85, 0, 0', pantone: '2728 C', ral: '5005' }),
+    colorCard({ name: 'Фирменный синий', hex: '#223E90', rgb: '34, 62, 144', cmyk: '100, 85, 0, 0', pantone: '2728 C', ral: '5005' }),
     colorCard({ name: 'Графитовый', hex: '#1E242E', rgb: '30, 36, 46', cmyk: '86, 72, 54, 68', pantone: '7547 C', ral: '7021' }),
-    colorCard({ name: 'Синий 50%', hex: '#909CC7', rgb: '144, 156, 199', cmyk: '50, 43, 0, 0', className: 'blue-tint' }),
-    colorCard({ name: 'Синий 15%', hex: '#DEE1EE', rgb: '222, 225, 238', cmyk: '15, 13, 0, 0', className: 'blue-tint' }),
+    colorCard({ name: 'Синий 50%', hex: '#919FC8', rgb: '145, 159, 200', cmyk: '50, 43, 0, 0', className: 'blue-tint' }),
+    colorCard({ name: 'Синий 15%', hex: '#DEE2EE', rgb: '222, 226, 238', cmyk: '15, 13, 0, 0', className: 'blue-tint' }),
     colorCard({ name: 'Акцентный оранжевый', hex: '#FF4D00', rgb: '255, 77, 0', cmyk: '0, 79, 94, 0', className: 'orange' })
   ].join('');
 }
