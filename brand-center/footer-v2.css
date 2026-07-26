@@ -82,8 +82,26 @@ body{
   -webkit-user-select:none;
 }
 .footer-changelog>summary::-webkit-details-marker{display:none}
-.footer-changelog>summary strong::after{content:" +"}
-.footer-changelog[open]>summary strong::after{content:" −"}
+.footer-changelog>summary::after,
+.footer-changelog>summary strong::after{
+  content:none!important;
+  display:none!important;
+}
+.footer-changelog>summary strong{
+  width:max-content;
+  max-width:100%;
+  text-decoration-line:underline;
+  text-decoration-thickness:1px;
+  text-decoration-color:rgba(34,62,144,.28);
+  text-underline-offset:4px;
+  transition:text-decoration-color .24s ease,color .24s ease;
+}
+@media(hover:hover){
+  .footer-changelog>summary:hover strong{
+    color:#29499a;
+    text-decoration-color:rgba(34,62,144,.58);
+  }
+}
 .footer-changelog-body{
   position:absolute;
   z-index:5;
