@@ -1,18 +1,13 @@
-status=cancelled
-prepare=cancelled
+status=skipped
+prepare=skipped
 audit=skipped
 deploy=skipped
 verify=skipped
 url=https://etaon.ivankamaldinov.workers.dev
-commit=0675a680df3aad1635ace3ae75331621cbd8712d
-run=30196588319
+commit=8b1d7b1981858c7d235baf3eb5dbe72bb974f538
+run=30196612950
 --- prepare output ---
-/home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner  29K Jul 26 09:31 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner 377K Jul 26 09:31 brand-center/downloads/Etalon_Logos_All_Formats.zip
--rw-r--r-- 1 runner runner 205K Jul 26 09:31 brand-center/downloads/Etalon_Map_All_Formats.zip
--rw-r--r-- 1 runner runner  23K Jul 26 09:31 brand-center/downloads/Etalon_Symbol_All_Formats.zip
--rw-r--r-- 1 runner runner  71K Jul 26 09:31 brand-center/downloads/Gilroy.zip
+
 --- audit output ---
 
 --- wrangler output ---
