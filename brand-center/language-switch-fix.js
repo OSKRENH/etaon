@@ -9,6 +9,9 @@
   card.querySelector('.logo-language-switch')?.remove();
   colorControls.setAttribute('aria-label', 'Цвет логотипа');
 
+  const subtitle = card.querySelector('footer small');
+  if (subtitle) subtitle.textContent = 'Основной логотип';
+
   const languageSwitch = document.createElement('button');
   languageSwitch.type = 'button';
   languageSwitch.className = 'language-segment-switch';
