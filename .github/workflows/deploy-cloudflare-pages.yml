@@ -19,11 +19,12 @@ permissions:
 env:
   CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
   CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+  SITE_URL: https://etaon.ivankamaldinov.workers.dev
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -53,12 +54,27 @@ jobs:
           chmod +x brand-center/scripts/*.sh
           brand-center/scripts/prepare-downloadable-assets.sh 2>&1 | tee /tmp/prepare.log
 
-      - name: Install Wrangler
+      - name: Audit code and local links
         if: steps.prepare.outcome == 'success'
+        id: audit
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          {
+            python3 brand-center/scripts/audit-site.py
+            node --check brand-center/app.js
+            node --check brand-center/language-switch-fix.js
+            python3 -m compileall -q brand-center/scripts
+            for script in brand-center/scripts/*.sh; do bash -n "$script"; done
+          } 2>&1 | tee /tmp/audit.log
+
+      - name: Install Wrangler
+        if: steps.prepare.outcome == 'success' && steps.audit.outcome == 'success'
         run: npm install --global wrangler@latest
 
       - name: Replace existing etaon Worker
-        if: steps.prepare.outcome == 'success'
+        if: steps.prepare.outcome == 'success' && steps.audit.outcome == 'success'
         id: deploy
         continue-on-error: true
         shell: bash
@@ -66,21 +82,69 @@ jobs:
           set -o pipefail
           wrangler deploy --config wrangler.jsonc 2>&1 | tee /tmp/wrangler.log
 
+      - name: Verify published site and downloads
+        if: steps.deploy.outcome == 'success'
+        id: verify
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          {
+            TMP_DIR=$(mktemp -d)
+            CACHE_BUST="audit=$GITHUB_SHA"
+
+            curl -fsSL --retry 8 --retry-delay 2 --retry-connrefused \
+              "$SITE_URL/?$CACHE_BUST" -o "$TMP_DIR/index.html"
+            grep -q '<html lang="ru">' "$TMP_DIR/index.html"
+            grep -q './downloads/Etalon_Brand_Guide_2025.pdf' "$TMP_DIR/index.html"
+            grep -q './quality-polish.css' "$TMP_DIR/index.html"
+            ! grep -q 'at.adobe.com' "$TMP_DIR/index.html"
+
+            curl -fsSL --retry 8 --retry-delay 2 --retry-connrefused \
+              "$SITE_URL/downloads/Etalon_Brand_Guide_2025.pdf?$CACHE_BUST" \
+              -o "$TMP_DIR/guide.pdf"
+            pdfinfo "$TMP_DIR/guide.pdf" | grep -Eq '^Pages:[[:space:]]+6$'
+
+            for archive in \
+              Etalon_Logos_All_Formats.zip \
+              Etalon_Symbol_All_Formats.zip \
+              Etalon_Map_All_Formats.zip \
+              Gilroy.zip; do
+              curl -fsSL --retry 8 --retry-delay 2 --retry-connrefused \
+                "$SITE_URL/downloads/$archive?$CACHE_BUST" \
+                -o "$TMP_DIR/$archive"
+              unzip -t "$TMP_DIR/$archive" >/dev/null
+            done
+
+            echo "Живой сайт и все файлы скачивания проверены."
+          } 2>&1 | tee /tmp/verify.log
+
       - name: Record deployment result
         if: always()
         shell: bash
         env:
           PREPARE_OUTCOME: ${{ steps.prepare.outcome }}
+          AUDIT_OUTCOME: ${{ steps.audit.outcome }}
           DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
+          VERIFY_OUTCOME: ${{ steps.verify.outcome }}
         run: |
           PREPARE_LOG=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' /tmp/prepare.log 2>/dev/null || true)
+          AUDIT_LOG=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' /tmp/audit.log 2>/dev/null || true)
           DEPLOY_LOG=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' /tmp/wrangler.log 2>/dev/null || true)
+          VERIFY_LOG=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' /tmp/verify.log 2>/dev/null || true)
           URL=$(printf '%s\n' "$DEPLOY_LOG" | grep -Eo 'https://[^[:space:]]+\.workers\.dev' | tail -1 || true)
+          URL=${URL:-$SITE_URL}
+
           if [ "$PREPARE_OUTCOME" != "success" ]; then
             STATUS="$PREPARE_OUTCOME"
-          else
+          elif [ "$AUDIT_OUTCOME" != "success" ]; then
+            STATUS="$AUDIT_OUTCOME"
+          elif [ "$DEPLOY_OUTCOME" != "success" ]; then
             STATUS="$DEPLOY_OUTCOME"
+          else
+            STATUS="$VERIFY_OUTCOME"
           fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
@@ -88,19 +152,25 @@ jobs:
           {
             printf 'status=%s\n' "$STATUS"
             printf 'prepare=%s\n' "$PREPARE_OUTCOME"
+            printf 'audit=%s\n' "$AUDIT_OUTCOME"
             printf 'deploy=%s\n' "$DEPLOY_OUTCOME"
+            printf 'verify=%s\n' "$VERIFY_OUTCOME"
             printf 'url=%s\n' "$URL"
             printf 'commit=%s\n' "$GITHUB_SHA"
             printf 'run=%s\n' "$GITHUB_RUN_ID"
             printf '%s\n' '--- prepare output ---'
-            printf '%s\n' "$PREPARE_LOG" | tail -80
+            printf '%s\n' "$PREPARE_LOG" | tail -45
+            printf '%s\n' '--- audit output ---'
+            printf '%s\n' "$AUDIT_LOG" | tail -45
             printf '%s\n' '--- wrangler output ---'
-            printf '%s\n' "$DEPLOY_LOG" | tail -60
+            printf '%s\n' "$DEPLOY_LOG" | tail -45
+            printf '%s\n' '--- live verification output ---'
+            printf '%s\n' "$VERIFY_LOG" | tail -45
           } > .cloudflare-worker-status
           git add .cloudflare-worker-status
           git commit -m "Record etaon Worker deployment [skip ci]"
           git push origin main
 
-      - name: Fail if preparation or deployment failed
-        if: steps.prepare.outcome != 'success' || steps.deploy.outcome != 'success'
+      - name: Fail if any quality gate failed
+        if: steps.prepare.outcome != 'success' || steps.audit.outcome != 'success' || steps.deploy.outcome != 'success' || steps.verify.outcome != 'success'
         run: exit 1
