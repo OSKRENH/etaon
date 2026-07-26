@@ -131,6 +131,38 @@ body{
   to{opacity:1;transform:none}
 }
 
+/* Быстрые разделы явно ведут себя как ссылки */
+.quick-links a,
+.quick-links a .quick-meta,
+.quick-links a strong,
+.quick-links a .quick-desc,
+.quick-links a .quick-meta i::before{
+  transition:background-color .28s ease,color .28s ease,border-color .28s ease,opacity .28s ease!important;
+}
+@media(hover:hover){
+  .quick-links a:hover,
+  .quick-links a:focus-visible{
+    background:#223e90!important;
+    color:#fff!important;
+  }
+  .quick-links a:hover .quick-meta,
+  .quick-links a:focus-visible .quick-meta{
+    color:rgba(255,255,255,.74)!important;
+  }
+  .quick-links a:hover strong,
+  .quick-links a:focus-visible strong{
+    color:#fff!important;
+  }
+  .quick-links a:hover .quick-desc,
+  .quick-links a:focus-visible .quick-desc{
+    color:rgba(255,255,255,.76)!important;
+  }
+  .quick-links a:hover .quick-meta i::before,
+  .quick-links a:focus-visible .quick-meta i::before{
+    background:rgba(255,255,255,.68)!important;
+  }
+}
+
 /* Десктоп: белый фон быстрых разделов идет до краев,
    а текст сохраняет вертикали блока с цифрами. */
 @media(min-width:1101px){
