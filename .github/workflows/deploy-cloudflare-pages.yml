@@ -43,21 +43,23 @@ jobs:
           file brand-center/fonts/Gilroy-Medium.ttf
 
       - name: Prepare downloadable assets
+        id: prepare
+        continue-on-error: true
         shell: bash
         run: |
-          set -euo pipefail
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq poppler-utils zip inkscape
-          mkdir -p brand-center/assets/logos brand-center/downloads
+          set -o pipefail
+          {
+            set -euo pipefail
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq poppler-utils zip inkscape
+            mkdir -p brand-center/assets/logos brand-center/downloads
 
-          # Complete Gilroy archive for one-click download.
-          curl --fail --location --retry 3 --retry-delay 2 \
-            "https://at.adobe.com/EKy9OGjKFxxsZmmm" \
-            --output brand-center/downloads/Gilroy.zip
-          unzip -t brand-center/downloads/Gilroy.zip >/dev/null
+            curl --fail --location --retry 3 --retry-delay 2 \
+              "https://at.adobe.com/EKy9OGjKFxxsZmmm" \
+              --output brand-center/downloads/Gilroy.zip
+            unzip -t brand-center/downloads/Gilroy.zip >/dev/null
 
-          # Build blue, white and black SVG variants from supplied originals.
-          python3 <<'PY'
+            python3 <<'PY'
           from pathlib import Path
 
           root = Path('brand-center')
@@ -81,12 +83,11 @@ jobs:
                   (out / f'{key}-{tone}.svg').write_text(variant, encoding='utf-8')
           PY
 
-          # Convert the vector map supplied from Mapka, then remove point markers and labels.
-          curl --fail --location --retry 3 --retry-delay 2 \
-            "https://at.adobe.com/VA69j7Ri7AZ0TPBo" \
-            --output /tmp/regions-map.pdf
-          pdftocairo -svg /tmp/regions-map.pdf /tmp/regions-map-raw.svg
-          python3 <<'PY'
+            curl --fail --location --retry 3 --retry-delay 2 \
+              "https://at.adobe.com/VA69j7Ri7AZ0TPBo" \
+              --output /tmp/regions-map.pdf
+            pdftocairo -svg /tmp/regions-map.pdf /tmp/regions-map-raw.svg
+            python3 <<'PY'
           from pathlib import Path
           import xml.etree.ElementTree as ET
 
@@ -130,19 +131,22 @@ jobs:
           hero_tree.write(hero_target, encoding='utf-8', xml_declaration=True)
           PY
 
-          chmod +x brand-center/scripts/build-download-archives.sh
-          brand-center/scripts/build-download-archives.sh brand-center
+            chmod +x brand-center/scripts/build-download-archives.sh
+            brand-center/scripts/build-download-archives.sh brand-center
 
-          test $(stat -c%s brand-center/assets/regions-map.svg) -gt 100000
-          test $(stat -c%s brand-center/downloads/Gilroy.zip) -gt 500000
-          test $(stat -c%s brand-center/downloads/Etalon_Logos_All_Formats.zip) -gt 50000
-          test $(stat -c%s brand-center/downloads/Etalon_Symbol_All_Formats.zip) -gt 10000
-          test $(stat -c%s brand-center/downloads/Etalon_Map_All_Formats.zip) -gt 100000
+            test $(stat -c%s brand-center/assets/regions-map.svg) -gt 100000
+            test $(stat -c%s brand-center/downloads/Gilroy.zip) -gt 500000
+            test $(stat -c%s brand-center/downloads/Etalon_Logos_All_Formats.zip) -gt 50000
+            test $(stat -c%s brand-center/downloads/Etalon_Symbol_All_Formats.zip) -gt 10000
+            test $(stat -c%s brand-center/downloads/Etalon_Map_All_Formats.zip) -gt 100000
+          } 2>&1 | tee /tmp/prepare.log
 
       - name: Install Wrangler
+        if: steps.prepare.outcome == 'success'
         run: npm install --global wrangler@latest
 
       - name: Replace existing etaon Worker
+        if: steps.prepare.outcome == 'success'
         id: deploy
         continue-on-error: true
         shell: bash
@@ -154,19 +158,26 @@ jobs:
         if: always()
         shell: bash
         env:
+          PREPARE_OUTCOME: ${{ steps.prepare.outcome }}
           DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
         run: |
+          PREPARE_LOG=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' /tmp/prepare.log 2>/dev/null || true)
           CLEAN_LOG=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' /tmp/wrangler.log 2>/dev/null || true)
           URL=$(printf '%s\n' "$CLEAN_LOG" | grep -Eo 'https://[^[:space:]]+\.workers\.dev' | tail -1 || true)
+          if [ "$PREPARE_OUTCOME" != "success" ]; then STATUS="$PREPARE_OUTCOME"; else STATUS="$DEPLOY_OUTCOME"; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git reset --hard origin/main
           {
-            printf 'status=%s\n' "$DEPLOY_OUTCOME"
+            printf 'status=%s\n' "$STATUS"
+            printf 'prepare=%s\n' "$PREPARE_OUTCOME"
+            printf 'deploy=%s\n' "$DEPLOY_OUTCOME"
             printf 'url=%s\n' "$URL"
             printf 'commit=%s\n' "$GITHUB_SHA"
             printf 'run=%s\n' "$GITHUB_RUN_ID"
+            printf '%s\n' '--- prepare output ---'
+            printf '%s\n' "$PREPARE_LOG" | tail -100
             printf '%s\n' '--- wrangler output ---'
             printf '%s\n' "$CLEAN_LOG" | tail -60
           } > .cloudflare-worker-status
@@ -174,6 +185,6 @@ jobs:
           git commit -m "Record etaon Worker deployment [skip ci]"
           git push origin main
 
-      - name: Fail if Worker deployment failed
-        if: steps.deploy.outcome != 'success'
+      - name: Fail if preparation or deployment failed
+        if: steps.prepare.outcome != 'success' || steps.deploy.outcome != 'success'
         run: exit 1
