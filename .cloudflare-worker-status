@@ -1,15 +1,27 @@
 status=skipped
-prepare=skipped
-audit=skipped
+prepare=success
+audit=success
 deploy=skipped
 verify=skipped
 url=https://etaon.ivankamaldinov.workers.dev
-commit=c3d4613c270e9dbdc566fa841d2cc43e1afc54c2
-run=30197491291
+commit=cbee1889be2dd3eead4bc999accc7865f8cb2659
+run=30197506491
 --- prepare output ---
-
+Фирменный цвет совпадает во всех мастер-файлах: #223E90
+Производные оттенки: 50% #919FC8, 15% #DEE2EE
+/home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+Download manifest generated: /home/runner/work/etaon/etaon/brand-center/downloads/downloads-manifest.json
+-rw-r--r-- 1 runner runner  29K Jul 26 10:02 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+-rw-r--r-- 1 runner runner 376K Jul 26 10:02 brand-center/downloads/Etalon_Logos_All_Formats.zip
+-rw-r--r-- 1 runner runner 205K Jul 26 10:02 brand-center/downloads/Etalon_Map_All_Formats.zip
+-rw-r--r-- 1 runner runner  23K Jul 26 10:02 brand-center/downloads/Etalon_Symbol_All_Formats.zip
+-rw-r--r-- 1 runner runner  71K Jul 26 10:02 brand-center/downloads/Gilroy.zip
+-rw-r--r-- 1 runner runner  463 Jul 26 10:02 brand-center/downloads/downloads-manifest.json
 --- audit output ---
-
+Проверено ссылок и ресурсов: 52
+Проверено якорей: 17
+Проверено CSS-файлов: 9
+Статический аудит пройден без ошибок.
 --- wrangler output ---
 
 --- live verification output ---
