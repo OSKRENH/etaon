@@ -1,11 +1,11 @@
-status=cancelled
-prepare=cancelled
-audit=skipped
-deploy=skipped
-verify=skipped
+status=success
+prepare=success
+audit=success
+deploy=success
+verify=success
 url=https://etaon.ivankamaldinov.workers.dev
-commit=61892e2c3f3f89f6e2e57bb9118b27ec53dcc11a
-run=30198401773
+commit=35d287969a25272ac1ebee13744ae2555c17ad06
+run=30198431624
 --- prepare output ---
 Фирменный цвет совпадает во всех мастер-файлах: #223E90
 Производные оттенки: 50% #919FC8, 15% #DEE2EE
@@ -23,15 +23,61 @@ Cropped symbol-blue.svg: 120.77 × 100.01
 Cropped symbol-white.svg: 120.77 × 100.01
 /home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
 Download manifest generated: /home/runner/work/etaon/etaon/brand-center/downloads/downloads-manifest.json
--rw-r--r-- 1 runner runner  29K Jul 26 10:32 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner 528K Jul 26 10:32 brand-center/downloads/Etalon_Logos_All_Formats.zip
--rw-r--r-- 1 runner runner 205K Jul 26 10:32 brand-center/downloads/Etalon_Map_All_Formats.zip
--rw-r--r-- 1 runner runner  36K Jul 26 10:32 brand-center/downloads/Etalon_Symbol_All_Formats.zip
--rw-r--r-- 1 runner runner  71K Jul 26 10:31 brand-center/downloads/Gilroy.zip
--rw-r--r-- 1 runner runner  463 Jul 26 10:32 brand-center/downloads/downloads-manifest.json
+-rw-r--r-- 1 runner runner  29K Jul 26 10:33 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+-rw-r--r-- 1 runner runner 528K Jul 26 10:33 brand-center/downloads/Etalon_Logos_All_Formats.zip
+-rw-r--r-- 1 runner runner 205K Jul 26 10:33 brand-center/downloads/Etalon_Map_All_Formats.zip
+-rw-r--r-- 1 runner runner  36K Jul 26 10:33 brand-center/downloads/Etalon_Symbol_All_Formats.zip
+-rw-r--r-- 1 runner runner  71K Jul 26 10:32 brand-center/downloads/Gilroy.zip
+-rw-r--r-- 1 runner runner  463 Jul 26 10:33 brand-center/downloads/downloads-manifest.json
 --- audit output ---
-
+Проверено ссылок и ресурсов: 59
+Проверено якорей: 23
+Проверено CSS-файлов: 9
+Статический аудит пройден без ошибок.
 --- wrangler output ---
 
---- live verification output ---
+ ⛅️ wrangler 4.114.0
+────────────────────
+🌀 Building list of assets...
+✨ Read 45 files from the assets directory /home/runner/work/etaon/etaon/brand-center
+🌀 Starting asset upload...
+🌀 Found 18 new or modified static assets to upload. Proceeding with upload...
++ /assets/logos/symbol-black.svg
++ /downloads/downloads-manifest.json
++ /assets/logos/en-white.svg
++ /assets/logos/ru-white.svg
++ /assets/logos/group-white.svg
++ /downloads/Gilroy.zip
++ /assets/logos/symbol-blue.svg
++ /assets/logos/en-black.svg
++ /assets/logos/ru-black.svg
++ /assets/logos/group-black.svg
++ /downloads/Etalon_Brand_Guide_2025.pdf
++ /downloads/Etalon_Map_All_Formats.zip
++ /assets/logos/symbol-white.svg
++ /assets/logos/en-blue.svg
++ /assets/logos/ru-blue.svg
++ /assets/logos/group-blue.svg
++ /downloads/Etalon_Symbol_All_Formats.zip
++ /downloads/Etalon_Logos_All_Formats.zip
+Uploaded 6 of 18 assets
+Uploaded 12 of 18 assets
+Uploaded 18 of 18 assets
+✨ Success! Uploaded 18 files (23 already uploaded) (1.70 sec)
 
+Total Upload: 0.33 KiB / gzip: 0.23 KiB
+Uploaded etaon (4.46 sec)
+Deployed etaon triggers (0.56 sec)
+  https://etaon.ivankamaldinov.workers.dev
+Current Version ID: 0284a797-3128-4b7d-bdb8-37220cc93aa4
+
+Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
+--- live verification output ---
+Проверяю: https://etaon.ivankamaldinov.workers.dev/
+Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Brand_Guide_2025.pdf
+Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Logos_All_Formats.zip
+Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Symbol_All_Formats.zip
+Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Map_All_Formats.zip
+Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Gilroy.zip
+Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/downloads-manifest.json
+Живой сайт, размеры и все файлы скачивания проверены и совпадают со собранными версиями.
