@@ -66,6 +66,7 @@ jobs:
             python3 brand-center/scripts/audit-site.py
             node --check brand-center/app.js
             node --check brand-center/language-switch-fix.js
+            node --check brand-center/mobile-nav.js
             PYTHONPYCACHEPREFIX=/tmp/etaon-pycache python3 -m compileall -q brand-center/scripts
             for script in brand-center/scripts/*.sh; do bash -n "$script"; done
           } 2>&1 | tee /tmp/audit.log
