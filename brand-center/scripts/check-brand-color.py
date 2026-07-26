@@ -20,7 +20,7 @@ def normalize(hex_color: str) -> str:
 
 def tint(hex_color: str, ratio: float) -> str:
     rgb = [int(hex_color[index:index + 2], 16) for index in (1, 3, 5)]
-    mixed = [round(channel * ratio + 255 * (1 - ratio)) for channel in rgb]
+    mixed = [int(channel * ratio + 255 * (1 - ratio) + 0.5) for channel in rgb]
     return "#" + "".join(f"{channel:02X}" for channel in mixed)
 
 
