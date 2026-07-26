@@ -2,7 +2,6 @@
 set -euo pipefail
 
 SITE_URL="${SITE_URL:?SITE_URL is required}"
-CACHE_BUST="audit=${GITHUB_SHA:-manual}"
 TMP_DIR=$(mktemp -d)
 trap 'rm -rf "$TMP_DIR"' EXIT
 
@@ -24,16 +23,35 @@ fetch_with_retry() {
   return 1
 }
 
-fetch_with_retry "$SITE_URL/?$CACHE_BUST" "$TMP_DIR/index.html"
+assert_same_file() {
+  local local_file="$1"
+  local live_file="$2"
+  local expected actual
+
+  expected=$(sha256sum "$local_file" | awk '{print $1}')
+  actual=$(sha256sum "$live_file" | awk '{print $1}')
+  if [ "$expected" != "$actual" ]; then
+    echo "Контрольная сумма не совпала: $(basename "$local_file")" >&2
+    echo "Ожидалось: $expected" >&2
+    echo "Получено:  $actual" >&2
+    return 1
+  fi
+}
+
+fetch_with_retry "$SITE_URL/" "$TMP_DIR/index.html"
 grep -q '<html lang="ru">' "$TMP_DIR/index.html"
 grep -q './downloads/Etalon_Brand_Guide_2025.pdf' "$TMP_DIR/index.html"
 grep -q './quality-polish.css' "$TMP_DIR/index.html"
 ! grep -q 'at.adobe.com' "$TMP_DIR/index.html"
 
 fetch_with_retry \
-  "$SITE_URL/downloads/Etalon_Brand_Guide_2025.pdf?$CACHE_BUST" \
-  "$TMP_DIR/guide.pdf"
-pdfinfo "$TMP_DIR/guide.pdf" | grep -Eq '^Pages:[[:space:]]+6$'
+  "$SITE_URL/downloads/Etalon_Brand_Guide_2025.pdf" \
+  "$TMP_DIR/Etalon_Brand_Guide_2025.pdf"
+grep -q '^%PDF-' <(head -c 8 "$TMP_DIR/Etalon_Brand_Guide_2025.pdf")
+pdfinfo "$TMP_DIR/Etalon_Brand_Guide_2025.pdf" | grep -Eq '^Pages:[[:space:]]+6$'
+assert_same_file \
+  "brand-center/downloads/Etalon_Brand_Guide_2025.pdf" \
+  "$TMP_DIR/Etalon_Brand_Guide_2025.pdf"
 
 for archive in \
   Etalon_Logos_All_Formats.zip \
@@ -41,9 +59,10 @@ for archive in \
   Etalon_Map_All_Formats.zip \
   Gilroy.zip; do
   fetch_with_retry \
-    "$SITE_URL/downloads/$archive?$CACHE_BUST" \
+    "$SITE_URL/downloads/$archive" \
     "$TMP_DIR/$archive"
   unzip -t "$TMP_DIR/$archive" >/dev/null
+  assert_same_file "brand-center/downloads/$archive" "$TMP_DIR/$archive"
 done
 
-echo "Живой сайт и все файлы скачивания проверены."
+echo "Живой сайт и все файлы скачивания проверены и совпадают с собранными версиями."
