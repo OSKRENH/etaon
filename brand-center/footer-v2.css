@@ -193,6 +193,38 @@ body{
   .quick-links a:first-child{padding-left:0!important}
   .quick-links a:last-child{padding-right:0!important}
 }
+
+/* Широкий десктоп: цифры и быстрые ссылки используют одну сетку.
+   Четыре равные колонки ограничены одинаковыми внешними границами. */
+@media(min-width:1440px){
+  .stats,
+  .quick-links{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    padding-left:clamp(88px,6vw,160px)!important;
+    padding-right:clamp(88px,6vw,160px)!important;
+  }
+  .stats article,
+  .quick-links a{
+    min-width:0;
+    padding-left:clamp(24px,2.1vw,38px)!important;
+    padding-right:clamp(24px,2.1vw,38px)!important;
+  }
+  .stats article:first-child{
+    border-left:1px solid var(--brand-line)!important;
+  }
+  .stats article:last-child{
+    border-right:1px solid var(--brand-line)!important;
+  }
+  .quick-links a:first-child{
+    padding-left:clamp(24px,2.1vw,38px)!important;
+    border-left:1px solid #e8eaf0!important;
+  }
+  .quick-links a:last-child{
+    padding-right:clamp(24px,2.1vw,38px)!important;
+    border-right:1px solid #e8eaf0!important;
+  }
+}
+
 @media(min-width:901px){
   .footer-changelog>summary{
     align-items:flex-start!important;
