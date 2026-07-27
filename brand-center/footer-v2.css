@@ -206,8 +206,13 @@ body{
   .stats article,
   .quick-links a{
     min-width:0;
-    padding-left:clamp(16px,1vw,24px)!important;
     padding-right:clamp(16px,1vw,24px)!important;
+  }
+  .stats article{
+    padding-left:calc(clamp(16px,1vw,24px) + 16px)!important;
+  }
+  .quick-links a{
+    padding-left:clamp(16px,1vw,24px)!important;
   }
   .stats article:first-child{
     border-left:1px solid var(--brand-line)!important;
