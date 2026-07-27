@@ -195,7 +195,7 @@ body{
 }
 
 /* Широкий десктоп: цифры и быстрые ссылки используют одну сетку.
-   Только год основания получает дополнительный отступ для совпадения с заголовком «Логотип». */
+   Только год основания получает небольшой дополнительный отступ для совпадения с заголовком «Логотип». */
 @media(min-width:1440px){
   .stats,
   .quick-links{
@@ -210,7 +210,7 @@ body{
     padding-right:clamp(16px,1vw,24px)!important;
   }
   .stats article:first-child{
-    padding-left:calc(clamp(16px,1vw,24px) + 16px)!important;
+    padding-left:calc(clamp(16px,1vw,24px) + 8px)!important;
     border-left:1px solid var(--brand-line)!important;
   }
   .stats article:last-child{
