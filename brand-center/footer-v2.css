@@ -194,8 +194,7 @@ body{
   .quick-links a:last-child{padding-right:0!important}
 }
 
-/* Широкий десктоп: цифры и быстрые ссылки используют одну сетку.
-   Только год основания получает небольшой дополнительный отступ для совпадения с заголовком «Логотип». */
+/* Широкий десктоп: единая сетка для показателей, ссылок и логотипов. */
 @media(min-width:1440px){
   .stats,
   .quick-links{
@@ -223,6 +222,27 @@ body{
   .quick-links a:last-child{
     padding-right:clamp(16px,1vw,24px)!important;
     border-right:1px solid #e8eaf0!important;
+  }
+
+  .logo-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    align-items:stretch!important;
+  }
+  .logo-grid>.logo-card,
+  .logo-grid>.logo-card-wide{
+    grid-column:auto!important;
+    min-width:0!important;
+    width:auto!important;
+    height:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  .logo-grid .logo-preview{
+    flex:1 1 auto!important;
+    min-height:clamp(280px,21vw,380px)!important;
+  }
+  .logo-grid .logo-card footer{
+    margin-top:auto!important;
   }
 }
 
