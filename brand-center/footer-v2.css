@@ -195,7 +195,7 @@ body{
 }
 
 /* Широкий десктоп: цифры и быстрые ссылки используют одну сетку.
-   Внешние границы стоят левее текста, а первая строка совпадает с шапкой. */
+   Только год основания получает дополнительный отступ для совпадения с заголовком «Логотип». */
 @media(min-width:1440px){
   .stats,
   .quick-links{
@@ -206,15 +206,11 @@ body{
   .stats article,
   .quick-links a{
     min-width:0;
+    padding-left:clamp(16px,1vw,24px)!important;
     padding-right:clamp(16px,1vw,24px)!important;
   }
-  .stats article{
-    padding-left:calc(clamp(16px,1vw,24px) + 16px)!important;
-  }
-  .quick-links a{
-    padding-left:clamp(16px,1vw,24px)!important;
-  }
   .stats article:first-child{
+    padding-left:calc(clamp(16px,1vw,24px) + 16px)!important;
     border-left:1px solid var(--brand-line)!important;
   }
   .stats article:last-child{
