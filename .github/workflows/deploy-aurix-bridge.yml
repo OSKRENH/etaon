@@ -78,3 +78,5 @@ jobs:
       - name: Deploy AURIX to Cloudflare Workers
         working-directory: aurix
         run: npx --yes wrangler@latest deploy --config wrangler.jsonc
+
+# manual deploy trigger: logo variants + color switcher
