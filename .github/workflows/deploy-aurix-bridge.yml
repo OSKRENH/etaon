@@ -40,7 +40,7 @@ jobs:
         run: |
           rm -rf dist-site
           mkdir -p dist-site/assets/logos dist-site/fonts/guild dist-site/fonts/tt-hoves-pro dist-site/downloads
-          cp index.html brandbook.html app.js fonts.css styles.css dist-site/
+          cp index.html brandbook.html app.js fonts.css styles.css mobile-fix.css dist-site/
           cp assets/logos/*.svg dist-site/assets/logos/
 
           cp fonts/guild/GuildA-Display-Regular-Web.woff2 dist-site/fonts/guild/
@@ -62,6 +62,7 @@ jobs:
             assets/logos/symbol-white.svg
 
           test -s dist-site/index.html
+          test -s dist-site/mobile-fix.css
           test -s dist-site/fonts/guild/GuildA-Display-Regular-Web.woff2
           test -s "dist-site/fonts/tt-hoves-pro/TT Hoves Pro Trial Regular.ttf"
           test -s dist-site/downloads/AURIX_Fonts.zip
@@ -79,4 +80,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@latest deploy --config wrangler.jsonc
 
-# manual deploy trigger: logo variants + color switcher
+# manual deploy trigger: mobile spacing refresh
