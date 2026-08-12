@@ -84,4 +84,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: lilac palette intro and large HEX copy controls
+# manual deploy trigger: AURIX-only Guild typography sample
