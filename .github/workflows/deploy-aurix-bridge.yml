@@ -39,33 +39,31 @@ jobs:
         working-directory: aurix
         run: |
           rm -rf dist-site
-          mkdir -p dist-site/fonts/hoves dist-site/downloads
+          mkdir -p dist-site/assets/logos dist-site/fonts/guild dist-site/fonts/tt-hoves-pro dist-site/downloads
           cp index.html brandbook.html app.js fonts.css styles.css dist-site/
-          cp -R assets dist-site/
-          cp downloads/AURIX_Palette.css dist-site/downloads/
+          cp assets/logos/*.svg dist-site/assets/logos/
 
-          cp fonts/hoves/GuildA-Display-Regular-Web.woff2 dist-site/fonts/hoves/
-          cp fonts/hoves/GuildA-Display-Italic-Web.woff2 dist-site/fonts/hoves/
-          cp fonts/hoves/GuildA-Display-Bold-Web.woff2 dist-site/fonts/hoves/
-          cp fonts/hoves/TT_Hoves_Pro_Mono_Trial_Regular.woff2 dist-site/fonts/hoves/
-          cp fonts/hoves/TT_Hoves_Pro_Mono_Trial_Medium.woff2 dist-site/fonts/hoves/
-          cp fonts/hoves/TT_Hoves_Pro_Mono_Trial_DemiBold.woff2 dist-site/fonts/hoves/
-          cp fonts/hoves/TT_Hoves_Pro_Mono_Trial_Bold.woff2 dist-site/fonts/hoves/
+          cp fonts/guild/GuildA-Display-Regular-Web.woff2 dist-site/fonts/guild/
+          cp fonts/guild/GuildA-Display-Italic-Web.woff2 dist-site/fonts/guild/
+          cp fonts/guild/GuildA-Display-Bold-Web.woff2 dist-site/fonts/guild/
+          cp "fonts/tt-hoves-pro/TT Hoves Pro Trial Regular.ttf" dist-site/fonts/tt-hoves-pro/
+          cp "fonts/tt-hoves-pro/TT Hoves Pro Trial Medium.ttf" dist-site/fonts/tt-hoves-pro/
 
-          sed -e 's/#1f0048/#ffffff/g' -e 's/#1F0048/#ffffff/g' assets/logos/lockup-purple.svg > dist-site/assets/logos/lockup-white.svg
+          zip -jq dist-site/downloads/AURIX_Fonts.zip \
+            fonts/guild/* \
+            fonts/tt-hoves-pro/*.ttf
 
-          zip -qr dist-site/downloads/AURIX_Fonts.zip fonts/hoves -x 'fonts/hoves/part-*.b64'
           zip -jq dist-site/downloads/AURIX_Logos.zip \
+            assets/logos/aurix-discover-stars.svg \
+            assets/logos/aurix-discover-stars-white.svg \
             assets/logos/wordmark-purple.svg \
             assets/logos/wordmark-white.svg \
             assets/logos/symbol-purple.svg \
-            assets/logos/symbol-white.svg \
-            assets/logos/lockup-purple.svg \
-            dist-site/assets/logos/lockup-white.svg
+            assets/logos/symbol-white.svg
 
           test -s dist-site/index.html
-          test -s dist-site/fonts/hoves/GuildA-Display-Regular-Web.woff2
-          test -s dist-site/fonts/hoves/TT_Hoves_Pro_Mono_Trial_Regular.woff2
+          test -s dist-site/fonts/guild/GuildA-Display-Regular-Web.woff2
+          test -s "dist-site/fonts/tt-hoves-pro/TT Hoves Pro Trial Regular.ttf"
           test -s dist-site/downloads/AURIX_Fonts.zip
           test -s dist-site/downloads/AURIX_Logos.zip
           test -s worker.js
