@@ -35,17 +35,39 @@ jobs:
           test -n "$CLOUDFLARE_API_TOKEN"
           test -n "$CLOUDFLARE_ACCOUNT_ID"
 
-      - name: Prepare AURIX static assets
+      - name: Prepare AURIX static assets and downloads
         working-directory: aurix
         run: |
           rm -rf dist-site
-          mkdir -p dist-site
-          cp index.html brandbook.html app.js font-loader.js fonts.css styles.css dist-site/
-          cp -R assets downloads fonts dist-site/
+          mkdir -p dist-site/fonts/hoves dist-site/downloads
+          cp index.html brandbook.html app.js fonts.css styles.css dist-site/
+          cp -R assets dist-site/
+          cp downloads/AURIX_Palette.css dist-site/downloads/
+
+          cp fonts/hoves/GuildA-Display-Regular-Web.woff2 dist-site/fonts/hoves/
+          cp fonts/hoves/GuildA-Display-Italic-Web.woff2 dist-site/fonts/hoves/
+          cp fonts/hoves/GuildA-Display-Bold-Web.woff2 dist-site/fonts/hoves/
+          cp fonts/hoves/TT_Hoves_Pro_Mono_Trial_Regular.woff2 dist-site/fonts/hoves/
+          cp fonts/hoves/TT_Hoves_Pro_Mono_Trial_Medium.woff2 dist-site/fonts/hoves/
+          cp fonts/hoves/TT_Hoves_Pro_Mono_Trial_DemiBold.woff2 dist-site/fonts/hoves/
+          cp fonts/hoves/TT_Hoves_Pro_Mono_Trial_Bold.woff2 dist-site/fonts/hoves/
+
+          sed -e 's/#1f0048/#ffffff/g' -e 's/#1F0048/#ffffff/g' assets/logos/lockup-purple.svg > dist-site/assets/logos/lockup-white.svg
+
+          zip -qr dist-site/downloads/AURIX_Fonts.zip fonts/hoves -x 'fonts/hoves/part-*.b64'
+          zip -jq dist-site/downloads/AURIX_Logos.zip \
+            assets/logos/wordmark-purple.svg \
+            assets/logos/wordmark-white.svg \
+            assets/logos/symbol-purple.svg \
+            assets/logos/symbol-white.svg \
+            assets/logos/lockup-purple.svg \
+            dist-site/assets/logos/lockup-white.svg
+
           test -s dist-site/index.html
-          test -s dist-site/font-loader.js
-          test -s dist-site/fonts/guild/part-00.b64
-          test -s dist-site/fonts/hoves/part-00.b64
+          test -s dist-site/fonts/hoves/GuildA-Display-Regular-Web.woff2
+          test -s dist-site/fonts/hoves/TT_Hoves_Pro_Mono_Trial_Regular.woff2
+          test -s dist-site/downloads/AURIX_Fonts.zip
+          test -s dist-site/downloads/AURIX_Logos.zip
           test -s worker.js
           test -s wrangler.jsonc
 
@@ -53,7 +75,6 @@ jobs:
         working-directory: aurix
         run: |
           node --check app.js
-          node --check font-loader.js
           node --check worker.js
 
       - name: Deploy AURIX to Cloudflare Workers
