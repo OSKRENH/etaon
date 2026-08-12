@@ -84,4 +84,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: quieter materials headings
+# manual deploy trigger: materials page-number and divider cleanup
