@@ -46,6 +46,8 @@ jobs:
           test -s dist-site/font-loader.js
           test -s dist-site/fonts/guild/part-00.b64
           test -s dist-site/fonts/hoves/part-00.b64
+          test -s worker.js
+          test -s wrangler.jsonc
 
       - name: Validate JavaScript
         working-directory: aurix
