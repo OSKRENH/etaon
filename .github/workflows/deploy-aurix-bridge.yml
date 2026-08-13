@@ -85,4 +85,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: full mobile symbol as dedicated image
+# manual deploy trigger: visible mobile symbol and restored card borders
