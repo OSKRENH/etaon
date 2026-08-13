@@ -64,4 +64,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: fix dependency install and deploy AURIX maps
+# manual deploy trigger: deploy current AURIX main with repaired packed maps
