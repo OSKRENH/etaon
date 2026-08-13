@@ -80,4 +80,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: hero symbol, Etalon copy controls, regular-only font pack, hover fixes
+# manual deploy trigger: full-height hero symbol, full-width divider, centered footer
