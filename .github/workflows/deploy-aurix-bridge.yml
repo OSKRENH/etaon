@@ -67,8 +67,11 @@ jobs:
           test -s dist-site/downloads/AURIX_Logos_All_Formats.zip
           test -s dist-site/downloads/AURIX_Logos.zip
           test -s dist-site/downloads/AURIX_With_Descriptor_Deep_Purple.zip
+          test -s dist-site/downloads/AURIX_With_Descriptor_White.zip
+          test -s dist-site/downloads/AURIX_Wordmark_Deep_Purple.zip
           test -s dist-site/downloads/AURIX_Wordmark_White.zip
-          test -s dist-site/downloads/AURIX_Symbol_Mist.zip
+          test -s dist-site/downloads/AURIX_Symbol_Deep_Purple.zip
+          test -s dist-site/downloads/AURIX_Symbol_White.zip
           test -s worker.js
           test -s wrangler.jsonc
 
@@ -82,4 +85,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: independent card color switches, per-color archives, glass header, uppercase Guild
+# manual deploy trigger: two logo colors, smaller switches, compact ZIP links, typography polish
