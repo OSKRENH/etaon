@@ -58,8 +58,7 @@ jobs:
             fonts/guild/GuildA-Display-Regular-Desktop.otf \
             "fonts/tt-hoves-pro/TT Hoves Pro Trial Regular.ttf"
 
-          cp downloads/AURIX_Logos_All_Formats.zip dist-site/downloads/
-          cp downloads/AURIX_Logos.zip dist-site/downloads/
+          cp downloads/*.zip dist-site/downloads/
 
           test -s dist-site/index.html
           test -s dist-site/fonts/guild/GuildA-Display-Regular-Desktop.otf
@@ -67,6 +66,9 @@ jobs:
           test -s dist-site/downloads/AURIX_Fonts.zip
           test -s dist-site/downloads/AURIX_Logos_All_Formats.zip
           test -s dist-site/downloads/AURIX_Logos.zip
+          test -s dist-site/downloads/AURIX_With_Descriptor_Deep_Purple.zip
+          test -s dist-site/downloads/AURIX_Wordmark_White.zip
+          test -s dist-site/downloads/AURIX_Symbol_Mist.zip
           test -s worker.js
           test -s wrangler.jsonc
 
@@ -80,4 +82,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: full-height hero symbol, full-width divider, centered footer
+# manual deploy trigger: independent card color switches, per-color archives, glass header, uppercase Guild
