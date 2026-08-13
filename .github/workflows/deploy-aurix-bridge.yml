@@ -37,7 +37,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: aurix
-        run: npm ci --ignore-scripts
+        run: npm install --ignore-scripts --no-audit --no-fund
 
       - name: Build AURIX production site
         working-directory: aurix
@@ -64,4 +64,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: deploy maps from AURIX main
+# manual deploy trigger: fix dependency install and deploy AURIX maps
