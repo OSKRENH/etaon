@@ -85,4 +85,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: refined mobile hero symbol composition
+# manual deploy trigger: mobile symbol fit without crop
