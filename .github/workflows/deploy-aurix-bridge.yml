@@ -84,4 +84,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: disciplined modular layout, unified rhythm and breakpoint grid
+# manual deploy trigger: 88px desktop hero, remove 00 marker, move headline up and note down
