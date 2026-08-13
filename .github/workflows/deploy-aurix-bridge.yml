@@ -51,22 +51,18 @@ jobs:
           cp index.html brandbook.html app.js fonts.css styles.css mobile-fix.css dist-site/
           cp assets/logos/*.svg dist-site/assets/logos/
 
-          cp fonts/guild/GuildA-Display-Regular-Web.woff2 dist-site/fonts/guild/
-          cp fonts/guild/GuildA-Display-Italic-Web.woff2 dist-site/fonts/guild/
-          cp fonts/guild/GuildA-Display-Bold-Web.woff2 dist-site/fonts/guild/
+          cp fonts/guild/GuildA-Display-Regular-Desktop.otf dist-site/fonts/guild/
           cp "fonts/tt-hoves-pro/TT Hoves Pro Trial Regular.ttf" dist-site/fonts/tt-hoves-pro/
-          cp "fonts/tt-hoves-pro/TT Hoves Pro Trial Medium.ttf" dist-site/fonts/tt-hoves-pro/
 
           zip -jq dist-site/downloads/AURIX_Fonts.zip \
-            fonts/guild/* \
-            fonts/tt-hoves-pro/*.ttf
+            fonts/guild/GuildA-Display-Regular-Desktop.otf \
+            "fonts/tt-hoves-pro/TT Hoves Pro Trial Regular.ttf"
 
           cp downloads/AURIX_Logos_All_Formats.zip dist-site/downloads/
           cp downloads/AURIX_Logos.zip dist-site/downloads/
 
           test -s dist-site/index.html
-          test -s dist-site/mobile-fix.css
-          test -s dist-site/fonts/guild/GuildA-Display-Regular-Web.woff2
+          test -s dist-site/fonts/guild/GuildA-Display-Regular-Desktop.otf
           test -s "dist-site/fonts/tt-hoves-pro/TT Hoves Pro Trial Regular.ttf"
           test -s dist-site/downloads/AURIX_Fonts.zip
           test -s dist-site/downloads/AURIX_Logos_All_Formats.zip
@@ -84,4 +80,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: 88px desktop hero, remove 00 marker, move headline up and note down
+# manual deploy trigger: hero symbol, Etalon copy controls, regular-only font pack, hover fixes
