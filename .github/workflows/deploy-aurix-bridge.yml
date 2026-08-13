@@ -85,4 +85,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: restrained motion system with scroll-driven animations and one-shot fallback
+# manual deploy trigger: repair native Workers Builds and publish latest AURIX
