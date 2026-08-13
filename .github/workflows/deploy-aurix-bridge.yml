@@ -85,4 +85,4 @@ jobs:
         working-directory: aurix
         run: npx --yes wrangler@4.121.0 deploy --config wrangler.jsonc
 
-# manual deploy trigger: wider mobile hero pseudo-element canvas
+# manual deploy trigger: tested mobile hero width 140vw height 120 percent right -38vw
