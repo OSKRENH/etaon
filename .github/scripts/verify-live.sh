@@ -76,6 +76,31 @@ for archive in \
   unzip -t "$TMP_DIR/$archive" >/dev/null
 done
 
+# Browser-style download verification for the two files users reported.
+# Chrome may retry/resume ZIP downloads with a Range request.
+BROWSER_UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+for archive in Etalon_Logos_All_Formats.zip Gilroy.zip; do
+  headers="$TMP_DIR/$archive.headers"
+  partial="$TMP_DIR/$archive.partial"
+  expected_partial="$TMP_DIR/$archive.expected-partial"
+
+  echo "Проверяю браузерную загрузку с Range: $archive"
+  curl -fsS \
+    -A "$BROWSER_UA" \
+    -H 'Range: bytes=0-1023' \
+    -D "$headers" \
+    "$SITE_URL/downloads/$archive" \
+    -o "$partial"
+
+  grep -Eq '^HTTP/[^ ]+[[:space:]]+206' "$headers"
+  grep -Eiq '^content-range:[[:space:]]*bytes 0-1023/' "$headers"
+  grep -Eiq '^accept-ranges:[[:space:]]*bytes' "$headers"
+  grep -Eiq '^content-disposition:[[:space:]]*attachment;' "$headers"
+
+  head -c 1024 "brand-center/downloads/$archive" > "$expected_partial"
+  cmp -s "$expected_partial" "$partial"
+done
+
 fetch_matching_file \
   "brand-center/downloads/downloads-manifest.json" \
   "$SITE_URL/downloads/downloads-manifest.json" \
