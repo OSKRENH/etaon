@@ -6,6 +6,7 @@ on:
     paths:
       - "brand-center/**"
       - "wrangler.jsonc"
+      - "worker.js"
       - ".github/workflows/deploy-cloudflare-pages.yml"
       - ".github/scripts/**"
   workflow_dispatch:
