@@ -195,3 +195,54 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 .skip-link{max-width:calc(100vw - 32px)}
 .back-to-top{max-width:calc(100vw - 32px)}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.skip-link,.brand-intro,.button,.logo-card img,.language-logo-layer,.language-segment-switch,.language-segment-switch::before,.back-to-top,.sidebar-download,.button-small,.map-background,.mobile-section-nav a{animation:none!important;transition:none!important}.map-background{transform:translate3d(-50%,-50%,0)!important}}
+
+/* ---------- Движение ---------- */
+
+/* Копирование цвета: иконка плавно сменяется на ✓ (раньше display:none,
+   то есть мгновенная подмена). Обратный путь после 1,2 с идёт теми же
+   свойствами, поэтому симметричен; кривая — та же, что в остальном сайте. */
+.color-grid .copy-icon svg,
+.color-grid .copy-icon::after{
+  transition:opacity .12s cubic-bezier(.22,.7,.2,1),transform .12s cubic-bezier(.22,.7,.2,1);
+}
+.color-grid .copy-icon::after{
+  content:"✓";
+  content:"✓" / "";
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  font-size:20px;
+  font-weight:700;
+  line-height:1;
+  opacity:0;
+  transform:scale(.5);
+  pointer-events:none;
+}
+.color-grid .copy-icon.is-copied svg{display:block;opacity:0;transform:scale(.8)}
+.color-grid .copy-icon.is-copied::after{opacity:1;transform:none;transition-duration:.18s}
+
+/* Охранное поле: маркеры «О» проявляются один раз, когда блок впервые попал
+   в кадр. Класс is-armed ставит app.js только при наличии IntersectionObserver,
+   поэтому без скрипта маркеры просто видны. Используется свойство scale, а не
+   transform: у верхнего и нижнего маркеров transform уже занят центрированием. */
+.safe-area .safe-o{
+  transition:opacity .32s cubic-bezier(.22,.7,.2,1),scale .32s cubic-bezier(.22,.7,.2,1);
+  transition-delay:calc(var(--reveal-i,0) * 60ms);
+}
+.safe-o-top{--reveal-i:0}
+.safe-o-right{--reveal-i:1}
+.safe-o-bottom{--reveal-i:2}
+.safe-o-left{--reveal-i:3}
+.safe-area.is-armed .safe-o{opacity:0!important;scale:.6}
+@media print{.safe-area.is-armed .safe-o{opacity:.14!important;scale:1}}
+
+/* Reduced motion: не «ноль», а мягкая замена — только прозрачность. */
+@media(prefers-reduced-motion:reduce){
+  .color-grid .copy-icon svg,
+  .color-grid .copy-icon::after{transition:opacity .12s linear}
+  .color-grid .copy-icon::after,
+  .color-grid .copy-icon.is-copied svg{transform:none}
+  .safe-area .safe-o{transition:opacity .2s linear;transition-delay:0s}
+  .safe-area.is-armed .safe-o{scale:1}
+}

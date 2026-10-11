@@ -116,7 +116,8 @@ body{
   font-size:13px;
   line-height:1.55;
   text-align:left!important;
-  animation:footerPanelIn .22s ease both;
+  transform-origin:bottom right;
+  animation:footerPanelIn .2s cubic-bezier(.22,.7,.2,1) both;
 }
 .footer-changelog-body p{
   margin:0 0 14px;
@@ -137,8 +138,18 @@ body{
 }
 @media(hover:hover){.footer-changelog-body a:hover{opacity:.65}}
 @keyframes footerPanelIn{
-  from{opacity:0;transform:translateY(7px)}
+  from{opacity:0;transform:translateY(7px) scale(.97)}
   to{opacity:1;transform:none}
+}
+/* Выход быстрее входа и идёт тем же путём назад. [open] снимает
+   footer-changelog.js после animationend, иначе <details> прячет панель сразу. */
+@keyframes footerPanelOut{
+  from{opacity:1;transform:none}
+  to{opacity:0;transform:translateY(7px) scale(.97)}
+}
+.footer-changelog.is-closing .footer-changelog-body{
+  animation:footerPanelOut .14s cubic-bezier(.22,.7,.2,1) both;
+  pointer-events:none;
 }
 
 /* Главный заголовок всегда занимает ровно две заданные строки. */
@@ -312,6 +323,9 @@ body{
   .footer-release-grid strong{font-size:11px}
 }
 
+@keyframes footerPanelFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes footerPanelFadeOut{from{opacity:1}to{opacity:0}}
 @media(prefers-reduced-motion:reduce){
-  .footer-changelog-body{animation:none}
+  .footer-changelog-body{animation:footerPanelFadeIn .12s linear both}
+  .footer-changelog.is-closing .footer-changelog-body{animation:footerPanelFadeOut .1s linear both}
 }
