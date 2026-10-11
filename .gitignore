@@ -13,7 +13,6 @@ dist-ssr
 *.local
 
 # Generated brand-center downloads
-brand-center/downloads/Etalon_Brand_Guide_2025.pdf
 
 # Editor directories and files
 .vscode/*
@@ -25,3 +24,5 @@ brand-center/downloads/Etalon_Brand_Guide_2025.pdf
 *.njsproj
 *.sln
 *.sw?
+brand-center/downloads/
+__pycache__/

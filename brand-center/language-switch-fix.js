@@ -174,11 +174,15 @@
     metadataNodes.set(filename, metaNode);
   });
 
-  fetch('./downloads/downloads-manifest.json', { cache: 'no-store' })
+  // Единственная загрузка манифеста на страницу: footer-changelog.js берет
+  // дату сборки из этого же промиса, а не делает второй запрос.
+  window.etalonDownloadManifest = fetch('./downloads/downloads-manifest.json', { cache: 'no-store' })
     .then((response) => {
       if (!response.ok) throw new Error(`Download manifest returned ${response.status}`);
       return response.json();
-    })
+    });
+
+  window.etalonDownloadManifest
     .then((manifest) => {
       metadataNodes.forEach((node, filename) => {
         const item = manifest?.[filename];

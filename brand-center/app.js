@@ -108,6 +108,19 @@ if ('IntersectionObserver' in window) {
   logoCards.forEach((card) => card.classList.add('is-in-view'));
 }
 
+/* Охранное поле: маркеры «О» проявляются один раз, при первом показе блока.
+   Без IntersectionObserver состояние не взводится, и маркеры просто видны. */
+const safeArea = document.querySelector('.safe-area');
+if (safeArea && 'IntersectionObserver' in window) {
+  safeArea.classList.add('is-armed');
+  const safeObserver = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    safeArea.classList.remove('is-armed');
+    safeObserver.disconnect();
+  }, { threshold: 0.6 });
+  safeObserver.observe(safeArea);
+}
+
 /* Палитра */
 function colorCard({ name, hex, rgb, cmyk, pantone, ral, className = '' }) {
   const rows = [

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import os
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,7 +17,20 @@ FILES = {
     "Gilroy.zip": "ZIP · TTF",
 }
 
-manifest: dict[str, dict[str, int | str]] = {}
+def build_date() -> str:
+    """Дата сборки в ISO (UTC).
+
+    SOURCE_DATE_EPOCH уважается, чтобы сборка оставалась воспроизводимой.
+    """
+    epoch = os.environ.get("SOURCE_DATE_EPOCH")
+    if epoch and epoch.strip().isdigit():
+        moment = datetime.fromtimestamp(int(epoch), tz=timezone.utc)
+    else:
+        moment = datetime.now(tz=timezone.utc)
+    return moment.date().isoformat()
+
+
+manifest: dict[str, object] = {"_builtAt": build_date()}
 for filename, format_label in FILES.items():
     path = DOWNLOADS / filename
     if not path.is_file() or path.stat().st_size <= 0:
