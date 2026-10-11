@@ -124,6 +124,11 @@ body{
 }
 .footer-changelog-body a{
   display:inline-flex;
+  align-items:center;
+  /* Отдельное действие в панели, а не ссылка внутри абзаца:
+     зона нажатия доводится до 24px по WCAG 2.2 (2.5.8). */
+  min-height:24px;
+  padding:2px 0;
   margin:0!important;
   color:#223e90;
   font-weight:500;
