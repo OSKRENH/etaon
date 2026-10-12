@@ -214,6 +214,13 @@ def main() -> int:
                 f"(элементов: {len(page_geometry)} на странице, {len(master_geometry)} в мастере)"
             )
 
+    # Иконка вкладки — отдельный файл с плотной обрезкой и светлой подложкой (на тёмных
+    # вкладках браузера знак без подложки не виден). Знак в ней обязан совпадать с мастером.
+    favicon_svg = (ROOT / "assets" / "favicon.svg").read_text(encoding="utf-8")
+    symbol_match = re.search(r'\sd="([^"]+)"', (ROOT / "assets" / "symbol-etalon.svg").read_text(encoding="utf-8"))
+    if not symbol_match or symbol_match.group(1) not in favicon_svg:
+        errors.append("assets/favicon.svg разошелся с геометрией знака assets/symbol-etalon.svg")
+
     print(f"Проверено ссылок и ресурсов: {len(parser.refs)}")
     print(f"Проверено якорей: {sum(1 for _, _, value, _ in parser.refs if value.startswith('#'))}")
     print(f"Проверено CSS-файлов: {len(parser.stylesheets)}")

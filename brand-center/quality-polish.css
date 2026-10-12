@@ -260,22 +260,28 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 .logo-card.desc-off .lg-move{transform:translateY(-14.85px)}
 .logo-card.desc-off .lg-desc{transform:translateY(32px)}
 
-/* Специфичность `.logo-card .desc-switch` нужна, чтобы явно перебить старое
-   `.logo-card button` из styles.css. Вид тот же, что у круглых кнопок скачивания
-   рядом (фон #eef1fa, синий текст), без новых цветов. */
+/* Блок с кружками цвета и переключатель дескриптора — пара в верхних углах карточки.
+   Высота у них одна и та же, из общей переменной: так они не разъезжаются на
+   разных брейкпоинтах. Специфичность `.logo-card .desc-switch` нужна, чтобы
+   явно перебить старое `.logo-card button` из styles.css. */
+.logo-preview{--card-pill-h:42px}
+.card-tone-switch{box-sizing:border-box;height:var(--card-pill-h)}
 .logo-card .desc-switch{
   position:absolute;
   top:16px;
   right:16px;
   z-index:4;
+  box-sizing:border-box;
   display:inline-flex;
   align-items:center;
-  gap:8px;
-  min-height:34px;
-  padding:10px 13px;
-  border:0;
+  gap:10px;
+  height:var(--card-pill-h);
+  padding:0 10px 0 14px;
+  border:1px solid rgba(34,62,144,.12);
   border-radius:999px;
-  background:#eef1fa;
+  background:rgba(255,255,255,.84);
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
   color:#223e90;
   font:500 11px/1 Gilroy,Arial,sans-serif;
   letter-spacing:.08em;
@@ -283,6 +289,7 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   cursor:pointer;
   transition:transform 300ms cubic-bezier(.2,.7,.3,1);
 }
+.logo-preview.tone-white .desc-switch{background:rgba(255,255,255,.95)}
 /* В styles.css есть старое общее правило `.logo-preview span{font-size:clamp(44px,…)}`
    (для текстовых заглушек логотипов): без этого сброса оно раздувает подпись. */
 .logo-preview .desc-switch span{
@@ -293,32 +300,42 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 }
 .desc-switch::after{content:"";position:absolute;inset:-8px -4px}
 .desc-switch:active{transform:scale(.96);transition-duration:80ms}
+
+/* Тумблер: дорожка той же высоты, что слот кружка цвета (24 px + рамка), а сам
+   «кружок» устроен как кружки цвета: те же 17 px, та же рамка. Включено — как
+   активный синий кружок (с тем же кольцом на дорожке), выключено — как белый. */
 .desc-switch i{
   position:relative;
-  width:26px;
-  height:16px;
-  border:1px solid currentColor;
+  box-sizing:border-box;
+  width:46px;
+  height:26px;
+  border:1px solid rgba(20,28,45,.24);
   border-radius:999px;
-  opacity:.6;
-  transition:opacity 300ms ease;
+  background:transparent;
+  transition:background-color 300ms ease;
 }
 .desc-switch i::after{
   content:"";
   position:absolute;
-  top:2px;
-  left:2px;
-  width:10px;
-  height:10px;
+  box-sizing:content-box;
+  left:2.5px;
+  top:50%;
+  width:17px;
+  height:17px;
+  border:1px solid rgba(20,28,45,.24);
   border-radius:50%;
-  background:currentColor;
-  transition:transform 450ms cubic-bezier(.2,.7,.3,1);
+  background:#fff;
+  transform:translate(0,-50%);
+  transition:transform 450ms cubic-bezier(.2,.7,.3,1),background-color 300ms ease,scale 220ms ease;
 }
-.desc-switch[aria-checked="true"] i{opacity:1}
-.desc-switch[aria-checked="true"] i::after{transform:translateX(10px)}
+.desc-switch[aria-checked="true"] i{background:rgba(34,62,144,.18)}
+.desc-switch[aria-checked="true"] i::after{background:#223e90;transform:translate(20px,-50%)}
+@media(hover:hover){.desc-switch:hover i::after{scale:1.06}}
 
 @media(max-width:540px){
   .lockup-svg{width:66%}
-  .logo-card .desc-switch{top:12px;right:12px;min-height:30px;padding:8px 11px;font-size:10px}
+  .logo-preview{--card-pill-h:40px}
+  .logo-card .desc-switch{top:12px;right:12px;gap:8px;padding:0 8px 0 12px;font-size:10px}
 }
 
 /* Reduced motion: без сдвигов. Слово «Группа» гаснет за 200 мс, название
@@ -330,3 +347,46 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   .logo-card.desc-off .lg-desc{transform:none;opacity:0}
   .desc-switch,.desc-switch i,.desc-switch i::after{transition:none}
 }
+
+/* ---------- Выравнивание по колонке контента ---------- */
+
+/* Блок «Широкий десктоп» в footer-v2.css задавал сеткам статистики и быстрых ссылок
+   отступ clamp(88px,6vw,160px), а колонка контента стоит на 7vw (на 1440 это 88 против
+   100,8 px): обе полосы выступали за заголовки и карточки на ~13 px. */
+/* `main` в селекторе поднимает вес выше блока в footer-v2.css, который подключается
+   позже и тоже с !important. */
+@media(min-width:1440px){
+  main .stats,
+  main .quick-links{
+    padding-left:7vw!important;
+    padding-right:7vw!important;
+  }
+}
+
+/* Мастера логотипов нарисованы на артборде 300×200, а сам знак занимает x 50…250,
+   то есть по 1/6 ширины пустого поля слева и справа. Из-за этого знак стоял на 25 px
+   правее колонки. Поле компенсируется отрицательным отступом ровно в 1/6 ширины
+   (ширина и делитель лежат рядом, чтобы не разъезжались). */
+.sidebar .wordmark img{margin-left:calc(158px / -6)}
+@media(min-width:901px){
+  .page-footer img.footer-logo{margin-left:calc(150px / -6)!important}
+}
+@media(max-width:900px){
+  /* Поля мобильной шапки равны полям контента (24 px), иначе логотип и кнопка
+     стоят не на одной линии с текстом ниже. */
+  .topbar{padding-left:24px!important;padding-right:24px!important}
+  .mobile-logo img{margin-left:calc(118px / -6)}
+}
+@media(max-width:540px){
+  .mobile-logo img{margin-left:calc(100px / -6)}
+  /* Две кнопки первого экрана одной ширины, а не 196 и 174 px. */
+  .hero .actions .button{flex:1 1 100%}
+}
+
+/* Палитра: пятая карточка оставляла пустую клетку справа (2 + 2 + 1). Акцентный
+   оранжевый занимает всю ширину низкой полосой. */
+@media(min-width:901px){
+  .color-grid .orange{grid-column:1 / -1;min-height:240px}
+  .color-grid .orange dl{min-height:0;margin-top:auto}
+}
+
