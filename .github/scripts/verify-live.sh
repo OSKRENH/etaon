@@ -79,26 +79,41 @@ done
 # Browser-style download verification for the two files users reported.
 # Chrome may retry/resume ZIP downloads with a Range request.
 BROWSER_UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
-for archive in Etalon_Logos_All_Formats.zip Gilroy.zip; do
-  headers="$TMP_DIR/$archive.headers"
-  partial="$TMP_DIR/$archive.partial"
-  expected_partial="$TMP_DIR/$archive.expected-partial"
+check_range_download() {
+  local archive="$1"
+  local headers="$TMP_DIR/$archive.headers"
+  local partial="$TMP_DIR/$archive.partial"
+  local expected_partial="$TMP_DIR/$archive.expected-partial"
 
-  echo "Проверяю браузерную загрузку с Range: $archive"
   curl -fsS \
     -A "$BROWSER_UA" \
     -H 'Range: bytes=0-1023' \
     -D "$headers" \
     "$SITE_URL/downloads/$archive" \
-    -o "$partial"
+    -o "$partial" || return 1
 
-  grep -Eq '^HTTP/[^ ]+[[:space:]]+206' "$headers"
-  grep -Eiq '^content-range:[[:space:]]*bytes 0-1023/' "$headers"
-  grep -Eiq '^accept-ranges:[[:space:]]*bytes' "$headers"
-  grep -Eiq '^content-disposition:[[:space:]]*attachment;' "$headers"
+  grep -Eq '^HTTP/[^ ]+[[:space:]]+206' "$headers" || return 1
+  grep -Eiq '^content-range:[[:space:]]*bytes 0-1023/' "$headers" || return 1
+  grep -Eiq '^accept-ranges:[[:space:]]*bytes' "$headers" || return 1
+  grep -Eiq '^content-disposition:[[:space:]]*attachment;' "$headers" || return 1
 
   head -c 1024 "brand-center/downloads/$archive" > "$expected_partial"
   cmp -s "$expected_partial" "$partial"
+}
+
+# Как и остальные проверки, Range-запрос повторяется: сразу после деплоя
+# отдельные точки CDN могут ненадолго вернуть 404.
+for archive in Etalon_Logos_All_Formats.zip Gilroy.zip; do
+  echo "Проверяю браузерную загрузку с Range: $archive"
+  for attempt in $(seq 1 10); do
+    if check_range_download "$archive"; then
+      continue 2
+    fi
+    echo "Range-проверка $archive не прошла (попытка $attempt/10), повтор через 3 с"
+    sleep 3
+  done
+  echo "Range-проверка $archive не прошла после 10 попыток" >&2
+  exit 1
 done
 
 fetch_matching_file \
