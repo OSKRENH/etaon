@@ -538,3 +538,61 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 @media(pointer:coarse){
   .color-grid .value-copy::after{inset:-6px 0}
 }
+
+/* Шкала шрифтов. Раньше на странице было 20–21 разных размеров
+   (13/13.3/14, 16/17, 18/19/20, 21/22/24/25 — по сути одни и те же ступени).
+   Теперь: 6 фиксированных ступеней и 4 плавающих для крупных заголовков.
+   Только font-size: вес, интерлиньяж и цвета не меняются.
+   Селекторы с префиксом `html body` нужны, потому что футер и последние
+   слои грузятся позже и держат свои значения через !important. */
+:root{
+  --fs-caption:12px;
+  --fs-small:14px;
+  --fs-body:16px;
+  --fs-lead:18px;
+  --fs-title:22px;
+  --fs-hex:28px;
+  --fs-stat:clamp(32px,3.25vw,47px);
+  --fs-h3:clamp(38px,4.4vw,60px);
+  --fs-h2:clamp(42px,5vw,72px);
+}
+/* 12: подписи, эйбрау, мета-строки */
+html body .page-footer .footer-release-grid small,
+html body .page-footer .footer-release-grid strong,
+html body .page-footer .footer-release-grid time,
+html body .page-footer .footer-changelog>summary small,
+html body .page-footer .footer-changelog>summary strong,
+html body .logo-card footer small,
+html body .logo-preview .desc-switch span,
+html body .download-meta,
+html body .mobile-section-nav a,
+html body .safe-area>small,
+html body .type-columns small{font-size:var(--fs-caption)!important}
+/* 14: вторичный текст */
+html body .quick-links .quick-desc,
+html body .footer-changelog-body p,
+html body .footer-changelog-body a{font-size:var(--fs-small)!important}
+/* 16: основной текст и элементы управления */
+html body .stats article>span{font-size:var(--fs-body)!important}
+/* 18: лид и абзацы под заголовками */
+html body .hero .lead,
+html body .map-overlay p,
+html body .type-demo .alphabet p,
+html body .compact-downloads a>b{font-size:var(--fs-lead)!important}
+@media(max-width:900px){
+  html body .hero .lead{font-size:var(--fs-body)!important}
+}
+/* 22: подзаголовки карточек и маркеры */
+html body .rules-grid .dont>b,
+html body .rule-x,
+html body .quick-links a>strong{font-size:var(--fs-title)!important}
+/* 28: HEX-коды */
+html body .color-code .hex-text{font-size:var(--fs-hex)!important}
+/* плавающие */
+html body .stats strong,
+html body .stats article:last-child strong{font-size:var(--fs-stat)!important}
+html body .logo-rules-heading h3,
+html body .type-columns h3{font-size:var(--fs-h3)!important}
+html body .section-heading h2,
+html body .map-overlay h2,
+html body .downloads h2{font-size:var(--fs-h2)!important}
