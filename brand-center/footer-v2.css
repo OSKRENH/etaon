@@ -241,11 +241,10 @@ body{
   }
 
   .logo-grid{
-    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
     align-items:stretch!important;
   }
-  .logo-grid>.logo-card,
-  .logo-grid>.logo-card-wide{
+  .logo-grid>.logo-card{
     grid-column:auto!important;
     min-width:0!important;
     width:auto!important;

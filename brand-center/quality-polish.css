@@ -103,7 +103,6 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 }
 .card-tone-switch [data-card-tone]:hover::after{transform:translate(-50%,-50%) scale(1.06)}
 .card-tone-switch [data-card-tone].is-active::after{box-shadow:0 0 0 4px rgba(34,62,144,.18)}
-.logo-preview .language-segment-switch .language-option{font-size:11px!important}
 .safe-area .safe-o{opacity:.14!important}
 
 /* Номер и диагональ быстрых разделов выровнены по одной оси */
@@ -141,12 +140,6 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 }
 
 /* После обрезки артбордов логотипы стали визуально крупнее — слегка уменьшаем превью */
-.logo-card[data-logo-key="group"] .logo-preview>img,
-.logo-card[data-logo-key="ru"] .logo-preview>img,
-.logo-card[data-logo-key="ru"] .language-logo-stack{
-  width:min(42%,420px)!important;
-  max-width:420px!important;
-}
 .logo-card[data-logo-key="symbol"] .logo-preview>img{width:min(24%,135px)!important;max-width:135px!important}
 
 /* Сведения о зафиксированном релизе */
@@ -178,10 +171,6 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   .compact-downloads .download-meta{font-size:11px}
   .mobile-section-nav{padding-left:10px;padding-right:10px}
   .mobile-section-nav a{padding:10px 14px;font-size:12px}
-  .logo-preview .language-segment-switch .language-option{font-size:10px!important}
-  .logo-card[data-logo-key="group"] .logo-preview>img,
-  .logo-card[data-logo-key="ru"] .logo-preview>img,
-  .logo-card[data-logo-key="ru"] .language-logo-stack{width:66%!important;max-width:none!important}
   .logo-card[data-logo-key="symbol"] .logo-preview>img{width:30%!important;max-width:none!important}
 }
 
@@ -194,7 +183,7 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 /* Плавающие элементы остаются внутри вьюпорта при увеличенном шрифте */
 .skip-link{max-width:calc(100vw - 32px)}
 .back-to-top{max-width:calc(100vw - 32px)}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.skip-link,.brand-intro,.button,.logo-card img,.language-logo-layer,.language-segment-switch,.language-segment-switch::before,.back-to-top,.sidebar-download,.button-small,.map-background,.mobile-section-nav a{animation:none!important;transition:none!important}.map-background{transform:translate3d(-50%,-50%,0)!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.skip-link,.brand-intro,.button,.logo-card img,.back-to-top,.sidebar-download,.button-small,.map-background,.mobile-section-nav a{animation:none!important;transition:none!important}.map-background{transform:translate3d(-50%,-50%,0)!important}}
 
 /* ---------- Движение ---------- */
 
@@ -245,4 +234,99 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   .color-grid .copy-icon.is-copied svg{transform:none}
   .safe-area .safe-o{transition:opacity .2s linear;transition-delay:0s}
   .safe-area.is-armed .safe-o{scale:1}
+}
+
+/* ---------- Карточка «Группа Эталон»: переключатель дескриптора ---------- */
+
+/* Групповой логотип — встроенный SVG (название и «ГРУППА» — отдельные группы),
+   цвет приходит из app.js через --logo-color и совпадает с тонами кружков. */
+.lockup-svg{
+  display:block;
+  width:min(46%,400px);
+  height:auto;
+  overflow:visible;
+  fill:var(--logo-color,currentColor);
+  transform:scale(.965);
+  transition:fill .28s ease,transform .75s cubic-bezier(.22,.7,.2,1);
+}
+.logo-card.is-in-view .lockup-svg{transform:scale(1.025)}
+
+/* Движение как у AURIX: 600 мс, одна кривая. Обрезка (clip-path) лежит внутри
+   .lg-move, поэтому её кромка едет вместе со словом: «ГРУППА» выезжает из логотипа
+   вверх и уходит обратно вниз, скрываясь ровно у верхнего края «ЭТАЛОН».
+   Выключенное состояние: слово поднимается на половину высоты дескриптора с
+   зазором (14,85), чтобы остаться по центру карточки. */
+.lg-move,.lg-desc{transition:transform 600ms cubic-bezier(.2,.7,.3,1)}
+.logo-card.desc-off .lg-move{transform:translateY(-14.85px)}
+.logo-card.desc-off .lg-desc{transform:translateY(32px)}
+
+/* Специфичность `.logo-card .desc-switch` нужна, чтобы явно перебить старое
+   `.logo-card button` из styles.css. Вид тот же, что у круглых кнопок скачивания
+   рядом (фон #eef1fa, синий текст), без новых цветов. */
+.logo-card .desc-switch{
+  position:absolute;
+  top:16px;
+  right:16px;
+  z-index:4;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:34px;
+  padding:10px 13px;
+  border:0;
+  border-radius:999px;
+  background:#eef1fa;
+  color:#223e90;
+  font:500 11px/1 Gilroy,Arial,sans-serif;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:transform 300ms cubic-bezier(.2,.7,.3,1);
+}
+/* В styles.css есть старое общее правило `.logo-preview span{font-size:clamp(44px,…)}`
+   (для текстовых заглушек логотипов): без этого сброса оно раздувает подпись. */
+.logo-preview .desc-switch span{
+  font:inherit;
+  letter-spacing:inherit;
+  text-transform:inherit;
+  color:inherit;
+}
+.desc-switch::after{content:"";position:absolute;inset:-8px -4px}
+.desc-switch:active{transform:scale(.96);transition-duration:80ms}
+.desc-switch i{
+  position:relative;
+  width:26px;
+  height:16px;
+  border:1px solid currentColor;
+  border-radius:999px;
+  opacity:.6;
+  transition:opacity 300ms ease;
+}
+.desc-switch i::after{
+  content:"";
+  position:absolute;
+  top:2px;
+  left:2px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:currentColor;
+  transition:transform 450ms cubic-bezier(.2,.7,.3,1);
+}
+.desc-switch[aria-checked="true"] i{opacity:1}
+.desc-switch[aria-checked="true"] i::after{transform:translateX(10px)}
+
+@media(max-width:540px){
+  .lockup-svg{width:66%}
+  .logo-card .desc-switch{top:12px;right:12px;min-height:30px;padding:8px 11px;font-size:10px}
+}
+
+/* Reduced motion: без сдвигов. Слово «Группа» гаснет за 200 мс, название
+   занимает новое место сразу. */
+@media(prefers-reduced-motion:reduce){
+  .lockup-svg{transition:fill .2s linear}
+  .lg-move{transition:none}
+  .lg-desc{transition:opacity .2s linear}
+  .logo-card.desc-off .lg-desc{transform:none;opacity:0}
+  .desc-switch,.desc-switch i,.desc-switch i::after{transition:none}
 }
