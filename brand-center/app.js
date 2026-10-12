@@ -146,15 +146,20 @@ if (safeArea && 'IntersectionObserver' in window) {
 
 /* Палитра */
 function colorCard({ name, hex, rgb, cmyk, pantone, ral, className = '' }) {
+  /* Значение копируется ровно так, как показано: «34, 62, 144», «2728 C», «5005».
+     Элемент с role="button", а не <button>: на кнопки в .color-grid действуют старые
+     общие правила (рамка, отступы, белое кольцо фокуса), а так оформление своё. */
+  const valueRow = (label, value) =>
+    `<div><dt>${label}</dt><dd><span class="value-copy" role="button" tabindex="0" data-copy="${value}" data-copy-label="${label}" aria-label="Скопировать ${label} ${value}" title="Скопировать значение">${value}</span></dd></div>`;
   const rows = [
-    `<div><dt>RGB</dt><dd>${rgb}</dd></div>`,
-    `<div><dt>CMYK</dt><dd>${cmyk}</dd></div>`,
-    pantone ? `<div><dt>Pantone</dt><dd>${pantone}</dd></div>` : '',
-    ral ? `<div><dt>RAL</dt><dd>${ral}</dd></div>` : ''
+    valueRow('RGB', rgb),
+    valueRow('CMYK', cmyk),
+    pantone ? valueRow('Pantone', pantone) : '',
+    ral ? valueRow('RAL', ral) : ''
   ].join('');
 
   return `<article class="${className}" style="--swatch:${hex}">
-    <header><b>${name}</b><div class="color-code"><button class="copy-icon" type="button" data-copy="${hex}" tabindex="-1" aria-hidden="true" title="Скопировать код">${copyIcon}</button><strong role="button" tabindex="0" data-copy="${hex}" aria-label="Скопировать ${hex}" title="Скопировать код"><span class="hex-text">${hex}</span></strong></div></header>
+    <header><b>${name}</b><div class="color-code"><button class="copy-icon" type="button" data-copy="${hex}" data-copy-label="HEX" tabindex="-1" aria-hidden="true" title="Скопировать код">${copyIcon}</button><strong role="button" tabindex="0" data-copy="${hex}" data-copy-label="HEX" aria-label="Скопировать ${hex}" title="Скопировать код"><span class="hex-text">${hex}</span></strong></div></header>
     <dl>${rows}</dl>
   </article>`;
 }
@@ -170,19 +175,21 @@ if (colorGrid) {
   ].join('');
 }
 
-/* Копирование кодов: по клику на сам код цвета или на кнопку рядом с ним.
+/* Копирование: по клику на код цвета (или кнопку рядом с ним) и на любое значение
+   в таблице: RGB, CMYK, Pantone, RAL.
    Состояние «скопировано» ставится и на кнопку, и на код: клик пришёл туда, где
    смотрит пользователь, и подтверждение должно появиться там же, а не в углу карточки. */
 const copyTimers = new WeakMap();
 document.querySelectorAll('[data-copy]').forEach((control) => {
   async function copyValue() {
     const value = control.dataset.copy;
+    const label = control.dataset.copyLabel;
     const group = control.closest('.color-code') ?? control;
     try {
       await navigator.clipboard.writeText(value);
-      const targets = [...group.querySelectorAll('[data-copy]')];
+      const targets = group === control ? [control] : [...group.querySelectorAll('[data-copy]')];
       targets.forEach((target) => target.classList.add('is-copied'));
-      announce(`Цвет ${value} скопирован`);
+      announce(`Скопировано: ${label ? `${label} ` : ''}${value}`);
       window.clearTimeout(copyTimers.get(group));
       copyTimers.set(group, window.setTimeout(() => {
         targets.forEach((target) => target.classList.remove('is-copied'));

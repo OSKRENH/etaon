@@ -275,6 +275,55 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   outline-offset:4px;
 }
 
+/* Значения в таблице (RGB, CMYK, Pantone, RAL) копируются по клику. Подтверждение —
+   та же векторная галочка, что у кнопки в углу, слева от значения: надпись
+   «Скопировано» здесь не годится, она шире значения и при крупном шрифте наезжала бы на
+   название строки. Раскладка таблицы не меняется: зона нажатия расширена невидимым
+   ::after (по 4 px сверху и снизу: итого 28 px при строке 20 px), а не высотой самого
+   элемента. Между текстом соседних строк 9 px, поэтому запас 4 + 4 зоны не перекрывает. */
+.color-grid .value-copy{
+  position:relative;
+  display:inline-block;
+  padding:0 4px;
+  margin:0 -4px;
+  border-radius:6px;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.color-grid .value-copy::after{
+  content:"";
+  position:absolute;
+  inset:-4px 0;
+}
+.color-grid .value-copy::before{
+  content:"";
+  position:absolute;
+  right:100%;
+  top:50%;
+  width:14px;
+  height:14px;
+  margin:-7px 6px 0 0;
+  background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") center/contain no-repeat;
+  opacity:0;
+  transform:scale(.5);
+  pointer-events:none;
+  transition:opacity .12s cubic-bezier(.22,.7,.2,1),transform .12s cubic-bezier(.22,.7,.2,1);
+}
+.color-grid .value-copy.is-copied::before{opacity:1;transform:none;transition-duration:.18s}
+@media(hover:hover){
+  .color-grid .value-copy:hover{
+    text-decoration:underline dotted;
+    text-decoration-thickness:1px;
+    text-underline-offset:5px;
+  }
+}
+.color-grid .value-copy:focus-visible{
+  outline:2px solid currentColor;
+  outline-offset:2px;
+}
+
 /* Карточки цвета без обводки: цвет читается заливкой. */
 .color-grid article{border:0!important}
 
@@ -304,6 +353,9 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   .color-grid .color-code strong::after,
   .color-grid .color-code strong.is-copied::after{transform:translateY(-50%)}
   .color-grid .color-code strong.is-copied .hex-text{transform:none}
+  .color-grid .value-copy::before{transition:opacity .12s linear}
+  .color-grid .value-copy::before,
+  .color-grid .value-copy.is-copied::before{transform:none}
   .safe-area .safe-o{transition:opacity .2s linear;transition-delay:0s}
   .safe-area.is-armed .safe-o{scale:1}
 }
