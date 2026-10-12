@@ -383,10 +383,22 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   .hero .actions .button{flex:1 1 100%}
 }
 
-/* Палитра: пятая карточка оставляла пустую клетку справа (2 + 2 + 1). Акцентный
-   оранжевый занимает всю ширину низкой полосой. */
-@media(min-width:901px){
-  .color-grid .orange{grid-column:1 / -1;min-height:240px}
+/* Палитра: пятая карточка оставляла пустую клетку справа (2 + 2 + 1).
+   Широкий десктоп: раскладка «2 + 3». Сверху главный синий (две трети ширины) и
+   графитовый, ниже три равные карточки: оттенки и акцент. Акцент занимает треть
+   ряда, а не всю ширину: он «применяется только как акцент». */
+@media(min-width:1101px){
+  .color-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .color-grid article{grid-column:span 2;min-height:300px}
+  .color-grid .swatch-main{grid-column:span 4}
+  .color-grid .swatch-main,
+  .color-grid .swatch-dark{min-height:360px}
+  .color-grid dl{min-height:0;margin-top:24px}
+}
+/* Планшет: три карточки в ряд были бы тесными (~200 px), поэтому две колонки,
+   а акцент идёт низкой полосой на всю ширину. */
+@media(min-width:901px) and (max-width:1100px){
+  .color-grid .orange{grid-column:1 / -1;min-height:200px}
   .color-grid .orange dl{min-height:0;margin-top:auto}
 }
 
