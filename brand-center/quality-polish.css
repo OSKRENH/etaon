@@ -459,7 +459,7 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 @media(max-width:540px){
   .lockup-svg{width:66%}
   .logo-preview{--card-pill-h:40px}
-  .logo-card .desc-switch{top:12px;right:12px;gap:8px;padding:0 8px 0 12px;font-size:10px}
+  .logo-card .desc-switch{top:12px;right:12px;gap:8px;padding:0 8px 0 12px;font-size:11px}
 }
 
 /* Reduced motion: без сдвигов. Слово «Группа» гаснет за 200 мс, название
@@ -528,3 +528,13 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   .color-grid .orange dl{min-height:0;margin-top:auto}
 }
 
+
+/* HIG (accessibility.md › Typography/Mobility): подписи не мельче 11 pt,
+   а на сенсорных экранах зона нажатия значения не меньше 28 pt.
+   Ряды таблицы идут с шагом 35px, поэтому зоны не перекрываются. */
+@media(max-width:900px){
+  .page-footer .footer-release-grid small{font-size:11px;letter-spacing:.02em}
+}
+@media(pointer:coarse){
+  .color-grid .value-copy::after{inset:-6px 0}
+}
