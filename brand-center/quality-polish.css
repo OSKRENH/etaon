@@ -174,11 +174,29 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   .logo-card[data-logo-key="symbol"] .logo-preview>img{width:30%!important;max-width:none!important}
 }
 
-/* Перенос текста (WCAG 1.4.10): при крупном системном шрифте имя цвета и HEX
-   переносятся на разные строки, а не выдавливают карточку за вьюпорт. */
-.color-grid header{flex-wrap:wrap;row-gap:10px}
-.color-grid header>b{min-width:0;overflow-wrap:anywhere}
-.color-code{flex:0 0 auto}
+/* Заголовок карточки цвета: название и кнопка копирования в первой строке, крупный
+   код всегда под названием, слева. Раньше код стоял справа в одной строке с названием
+   и при сужении окна (карточка уже ~315 px) случайно переносился на вторую строку,
+   прижатый вправо. Теперь раскладка одна и та же у всех карточек на любой ширине,
+   а перенос при крупном шрифте (WCAG 1.4.10) получается сам собой. */
+.color-grid header{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  grid-template-areas:"name copy" "hex hex"!important;
+  align-items:start!important;
+  row-gap:8px!important;
+  column-gap:12px!important;
+}
+.color-grid header>b{grid-area:name;align-self:center;min-width:0;overflow-wrap:anywhere}
+.color-grid .color-code{display:contents!important}
+.color-grid .color-code .copy-icon{grid-area:copy;justify-self:end}
+.color-grid .color-code strong{
+  grid-area:hex;
+  justify-self:start;
+  margin:0!important;
+  order:0!important;
+  text-align:left!important;
+}
 
 /* Плавающие элементы остаются внутри вьюпорта при увеличенном шрифте */
 .skip-link{max-width:calc(100vw - 32px)}
