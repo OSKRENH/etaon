@@ -44,6 +44,7 @@ export_asset() {
 
 declare -A FOLDERS=(
   [group]="Group_Etalon"
+  [group-nodesc]="Group_Etalon_No_Descriptor"
   [ru]="Etalon_RU"
   [en]="Etalon_EN"
   [symbol]="Symbol"
@@ -51,6 +52,7 @@ declare -A FOLDERS=(
 
 declare -A LABELS=(
   [group]="Etalon_Group"
+  [group-nodesc]="Etalon_Group_No_Descriptor"
   [ru]="Etalon_RU"
   [en]="Etalon_EN"
   [symbol]="Etalon_Symbol"
@@ -62,7 +64,7 @@ declare -A TONE_LABELS=(
   [black]="Black"
 )
 
-for key in group ru en symbol; do
+for key in group group-nodesc ru en symbol; do
   for tone in blue white black; do
     input="$LOGOS_DIR/$key-$tone.svg"
     test -s "$input"
@@ -91,6 +93,9 @@ PDF — универсальный векторный формат
 Blue — фирменный синий
 White — белый
 Black — черный
+
+Group_Etalon — полная версия с дескриптором «Группа».
+Group_Etalon_No_Descriptor — то же слово «Эталон» без дескриптора.
 
 Не изменяйте пропорции логотипов.
 EOF

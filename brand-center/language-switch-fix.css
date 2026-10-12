@@ -1,121 +1,6 @@
-/* Языковой свитч расположен отдельно от выбора цвета */
-.language-segment-switch{
-  position:absolute;
-  top:16px;
-  right:16px;
-  z-index:5;
-  width:76px!important;
-  height:30px!important;
-  min-width:76px!important;
-  padding:3px!important;
-  display:grid!important;
-  grid-template-columns:1fr 1fr;
-  align-items:center;
-  border:1px solid rgba(20,28,45,.22)!important;
-  border-radius:999px!important;
-  background:rgba(255,255,255,.88)!important;
-  color:#727b8b!important;
-  cursor:pointer;
-  overflow:hidden;
-  isolation:isolate;
-  box-shadow:none!important;
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  transition:background-color .28s ease,border-color .28s ease!important;
-}
-.language-segment-switch::before{
-  content:"";
-  position:absolute;
-  z-index:0;
-  left:3px;
-  top:3px;
-  width:calc(50% - 3px);
-  height:22px;
-  border-radius:999px;
-  background:linear-gradient(135deg,#223e90,#2c4ca0);
-  transform:translateX(0);
-  transition:transform .34s cubic-bezier(.22,.7,.2,1),background .28s ease;
-}
-.language-segment-switch[data-language="en"]::before{transform:translateX(100%)}
-.logo-preview .language-segment-switch .language-option{
-  position:relative;
-  z-index:1;
-  display:block;
-  width:100%;
-  margin:0!important;
-  padding:0!important;
-  color:#727b8b!important;
-  font-family:Gilroy,Arial,sans-serif!important;
-  font-size:8px!important;
-  font-weight:500!important;
-  line-height:22px!important;
-  letter-spacing:0!important;
-  text-align:center;
-  text-transform:lowercase;
-  white-space:nowrap;
-  transition:color .28s ease,opacity .28s ease!important;
-}
-.language-segment-switch[data-language="ru"] .language-option-ru,
-.language-segment-switch[data-language="en"] .language-option-en{
-  color:#fff!important;
-  opacity:1;
-}
-.language-segment-switch[data-language="ru"] .language-option-en,
-.language-segment-switch[data-language="en"] .language-option-ru{
-  color:#727b8b!important;
-  opacity:.78;
-}
-@media(hover:hover){
-  .language-segment-switch:hover{
-    background:rgba(248,249,252,.98)!important;
-    border-color:rgba(34,62,144,.34)!important;
-  }
-}
-.language-segment-switch:focus-visible{
-  outline:2px solid rgba(34,62,144,.3);
-  outline-offset:2px;
-}
-
-/* Обе языковые версии загружены заранее и меняют только прозрачность */
+/* Карточки логотипов: общие правила раздела. Переключатель рус/eng и
+   стопка RU/EN удалены вместе с карточкой «Кириллическая версия». */
 .logo-preview{overflow:hidden}
-.language-logo-stack{
-  position:relative;
-  z-index:2;
-  width:min(46%,460px);
-  height:auto;
-  aspect-ratio:3/2;
-  opacity:1;
-  transform:scale(1);
-  transition:opacity .2s ease,transform .75s cubic-bezier(.22,.7,.2,1);
-}
-.logo-card.is-in-view .language-logo-stack{transform:scale(1.035)}
-.language-logo-stack.is-tone-changing{opacity:0}
-.logo-preview .language-logo-stack .language-logo-layer{
-  position:absolute!important;
-  inset:0;
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  max-width:none!important;
-  max-height:none!important;
-  margin:0!important;
-  object-fit:contain;
-  opacity:0;
-  transform:none!important;
-  pointer-events:none;
-  will-change:opacity;
-  transition:opacity .58s cubic-bezier(.22,.7,.2,1)!important;
-}
-.language-logo-stack[data-language="ru"] .language-logo-layer-ru,
-.language-logo-stack[data-language="en"] .language-logo-layer-en{opacity:1}
-
-/* Текстовые логотипы имеют одну ширину — по эталону логотипа Группы */
-.logo-card[data-logo-key="group"] .logo-preview>img,
-.logo-card[data-logo-key="ru"] .logo-preview>img,
-.logo-card[data-logo-key="ru"] .language-logo-stack{
-  width:min(46%,460px)!important;
-  max-width:460px!important;
-}
 
 /* Архив всех логотипов расположен после карточек, как у шрифта */
 .logo-archive-download{margin-top:24px!important}
@@ -134,24 +19,6 @@
   }
 }
 @media(max-width:540px){
-  .language-segment-switch{
-    top:12px;
-    right:12px;
-    width:72px!important;
-    min-width:72px!important;
-    height:28px!important;
-  }
-  .language-segment-switch::before{height:20px}
-  .logo-preview .language-segment-switch .language-option{
-    font-size:7px!important;
-    line-height:20px!important;
-  }
-  .logo-card[data-logo-key="group"] .logo-preview>img,
-  .logo-card[data-logo-key="ru"] .logo-preview>img,
-  .logo-card[data-logo-key="ru"] .language-logo-stack{
-    width:72%!important;
-    max-width:none!important;
-  }
   .logo-archive-download{
     align-items:flex-start;
     flex-direction:column;
@@ -196,14 +63,4 @@
   justify-self:center!important;
   transform:rotate(38deg)!important;
   transform-origin:center!important;
-}
-
-@media(prefers-reduced-motion:reduce){
-  .language-segment-switch,
-  .language-segment-switch::before,
-  .language-option,
-  .language-logo-stack,
-  .language-logo-layer{
-    transition:none!important;
-  }
 }

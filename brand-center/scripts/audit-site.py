@@ -197,6 +197,23 @@ def main() -> int:
         if not path.is_file() or path.stat().st_size == 0:
             errors.append(f"Не собран файл для скачивания: downloads/{filename}")
 
+    # Групповой логотип встроен в страницу отдельными группами (название и дескриптор
+    # анимируются независимо). Геометрия должна совпадать с мастером, иначе правка
+    # assets/group-etalon.svg молча не дойдет до сайта.
+    lockup = re.search(r'<svg class="lockup-svg".*?</svg>', html, re.S)
+    if not lockup:
+        errors.append("В index.html нет встроенного логотипа .lockup-svg")
+    else:
+        geometry = re.compile(r'\s(?:d|points)="([^"]+)"')
+        master_geometry = geometry.findall((ROOT / "assets" / "group-etalon.svg").read_text(encoding="utf-8"))
+        # clipPath в локапе содержит только rect, поэтому d/points относятся к буквам
+        page_geometry = geometry.findall(lockup.group(0))
+        if master_geometry != page_geometry:
+            errors.append(
+                "Встроенный логотип .lockup-svg разошелся с assets/group-etalon.svg "
+                f"(элементов: {len(page_geometry)} на странице, {len(master_geometry)} в мастере)"
+            )
+
     print(f"Проверено ссылок и ресурсов: {len(parser.refs)}")
     print(f"Проверено якорей: {sum(1 for _, _, value, _ in parser.refs if value.startswith('#'))}")
     print(f"Проверено CSS-файлов: {len(parser.stylesheets)}")

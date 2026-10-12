@@ -20,11 +20,11 @@ const tones = [
 ];
 
 function getCardAssetKey(card) {
+  if (card.dataset.logoKey === 'group' && card.classList.contains('desc-off')) return 'group-nodesc';
   return card.dataset.logoKey;
 }
 
 function getCardAlt(card) {
-  if (card.dataset.logoKey === 'ru') return 'Кириллический логотип Эталон';
   if (card.dataset.logoKey === 'group') return 'Логотип Группы Эталон';
   return 'Фирменный знак Эталон';
 }
@@ -63,6 +63,8 @@ function setCardTone(card, tone, instant = false) {
   if (preview) {
     preview.classList.remove('tone-blue', 'tone-white', 'tone-black');
     preview.classList.add(`tone-${tone}`);
+    const toneColor = tones.find((item) => item.key === tone)?.color;
+    if (toneColor) preview.style.setProperty('--logo-color', toneColor);
   }
   if (downloadButton) downloadButton.dataset.download = path;
 
@@ -95,6 +97,27 @@ logoCards.forEach((card) => {
 
   preview.appendChild(controls);
   setCardTone(card, 'blue', true);
+
+  /* Дескриптор «Группа»: выезжает из логотипа вверх и уходит вниз. Движение
+     целиком в CSS (.desc-off), здесь только состояние, подписи и файл для
+     скачивания, который совпадает с тем, что показано на экране. */
+  const descSwitch = preview.querySelector('.desc-switch');
+  if (descSwitch) {
+    const label = card.querySelector('[data-desc-label]');
+    const lockup = preview.querySelector('.lockup-svg');
+    const downloadButton = card.querySelector('[data-download]');
+
+    descSwitch.addEventListener('click', () => {
+      const on = descSwitch.getAttribute('aria-checked') !== 'true';
+      descSwitch.setAttribute('aria-checked', String(on));
+      card.classList.toggle('desc-off', !on);
+      if (label) label.textContent = on ? 'Полная версия' : 'Без дескриптора';
+      lockup?.setAttribute('aria-label', on ? 'Логотип Группы Эталон' : 'Логотип Эталон');
+      downloadButton?.setAttribute('aria-label', on ? 'Скачать логотип Группы Эталон' : 'Скачать логотип Эталон без дескриптора');
+      setCardTone(card, card.dataset.currentTone || 'blue', true);
+      announce(on ? 'Дескриптор «Группа» показан' : 'Дескриптор «Группа» скрыт');
+    });
+  }
 });
 
 if ('IntersectionObserver' in window) {
