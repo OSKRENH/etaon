@@ -11,6 +11,7 @@ SOURCE_FILES = [
     ROOT / "assets" / "etalon-ru.svg",
     ROOT / "assets" / "etalon-en.svg",
     ROOT / "assets" / "symbol-etalon.svg",
+    ROOT / "assets" / "favicon.svg",
 ]
 
 
