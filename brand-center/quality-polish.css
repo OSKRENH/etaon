@@ -205,29 +205,78 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
 
 /* ---------- Движение ---------- */
 
-/* Копирование цвета: иконка плавно сменяется на ✓ (раньше display:none,
-   то есть мгновенная подмена). Обратный путь после 1,2 с идёт теми же
-   свойствами, поэтому симметричен; кривая — та же, что в остальном сайте. */
+/* Копирование цвета: иконка плавно сменяется на галочку (раньше display:none, то есть
+   мгновенная подмена). Обратный путь после 1,2 с идёт теми же свойствами, поэтому
+   симметричен; кривая — та же, что в остальном сайте.
+   Галочка — векторная маска (Material «check», того же семейства, что иконки копирования
+   и скачивания), а не символ ✓ из шрифта: он рисовался запасным шрифтом с «рукописным»
+   наклонным штрихом и жирностью, не совпадающей с остальными иконками. Цвет — currentColor. */
 .color-grid .copy-icon svg,
 .color-grid .copy-icon::after{
   transition:opacity .12s cubic-bezier(.22,.7,.2,1),transform .12s cubic-bezier(.22,.7,.2,1);
 }
-.color-grid .copy-icon::after{
-  content:"✓";
-  content:"✓" / "";
+.color-grid .copy-icon::after,
+.color-grid .copy-icon.is-copied::after{
+  content:"";
   position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  font-size:20px;
-  font-weight:700;
-  line-height:1;
+  left:50%;
+  top:50%;
+  width:16px;
+  height:16px;
+  margin:-8px 0 0 -8px;
+  background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") center/contain no-repeat;
   opacity:0;
   transform:scale(.5);
   pointer-events:none;
 }
 .color-grid .copy-icon.is-copied svg{display:block;opacity:0;transform:scale(.8)}
 .color-grid .copy-icon.is-copied::after{opacity:1;transform:none;transition-duration:.18s}
+
+/* Сам код цвета тоже копирует по клику. Подтверждение появляется прямо на коде
+   (он на месте «Скопировано», тем же кроссфейдом), а не только в углу карточки. */
+.color-grid .color-code strong[role="button"]{
+  position:relative;
+  cursor:pointer;
+  border-radius:6px;
+  -webkit-tap-highlight-color:transparent;
+}
+.color-grid .color-code strong .hex-text{
+  display:inline-block;
+  transition:opacity .12s cubic-bezier(.22,.7,.2,1),transform .12s cubic-bezier(.22,.7,.2,1);
+}
+.color-grid .color-code strong::after{
+  content:"Скопировано";
+  position:absolute;
+  left:0;
+  top:50%;
+  font:500 16px/1 Gilroy,Arial,sans-serif;
+  letter-spacing:0;
+  white-space:nowrap;
+  opacity:0;
+  transform:translateY(-35%);
+  pointer-events:none;
+  transition:opacity .12s cubic-bezier(.22,.7,.2,1),transform .12s cubic-bezier(.22,.7,.2,1);
+}
+.color-grid .color-code strong.is-copied .hex-text{opacity:0;transform:translateY(-6px)}
+.color-grid .color-code strong.is-copied::after{opacity:1;transform:translateY(-50%);transition-duration:.18s}
+@media(hover:hover){
+  .color-grid .color-code strong[role="button"]:hover .hex-text{
+    text-decoration:underline dotted;
+    text-decoration-thickness:1px;
+    text-underline-offset:6px;
+  }
+}
+/* Кольцо фокуса берёт цвет текста карточки: он выбран под её фон и контрастен везде
+   (белый кружок на светлой карточке был бы невидим). */
+.color-grid .color-code strong[role="button"]:focus-visible{
+  outline:2px solid currentColor;
+  outline-offset:4px;
+}
+
+/* Карточки цвета без обводки: цвет читается заливкой. */
+.color-grid article{border:0!important}
 
 /* Охранное поле: маркеры «О» проявляются один раз, когда блок впервые попал
    в кадр. Класс is-armed ставит app.js только при наличии IntersectionObserver,
@@ -250,6 +299,11 @@ html{scroll-padding-top:88px}body{overflow-x:clip}.skip-link{position:fixed;left
   .color-grid .copy-icon::after{transition:opacity .12s linear}
   .color-grid .copy-icon::after,
   .color-grid .copy-icon.is-copied svg{transform:none}
+  .color-grid .color-code strong .hex-text,
+  .color-grid .color-code strong::after{transition:opacity .12s linear}
+  .color-grid .color-code strong::after,
+  .color-grid .color-code strong.is-copied::after{transform:translateY(-50%)}
+  .color-grid .color-code strong.is-copied .hex-text{transform:none}
   .safe-area .safe-o{transition:opacity .2s linear;transition-delay:0s}
   .safe-area.is-armed .safe-o{scale:1}
 }

@@ -154,7 +154,7 @@ function colorCard({ name, hex, rgb, cmyk, pantone, ral, className = '' }) {
   ].join('');
 
   return `<article class="${className}" style="--swatch:${hex}">
-    <header><b>${name}</b><div class="color-code"><button class="copy-icon" type="button" data-copy="${hex}" aria-label="Скопировать ${hex}" title="Скопировать код">${copyIcon}</button><strong>${hex}</strong></div></header>
+    <header><b>${name}</b><div class="color-code"><button class="copy-icon" type="button" data-copy="${hex}" tabindex="-1" aria-hidden="true" title="Скопировать код">${copyIcon}</button><strong role="button" tabindex="0" data-copy="${hex}" aria-label="Скопировать ${hex}" title="Скопировать код"><span class="hex-text">${hex}</span></strong></div></header>
     <dl>${rows}</dl>
   </article>`;
 }
@@ -170,24 +170,36 @@ if (colorGrid) {
   ].join('');
 }
 
-/* Копирование кодов */
-document.querySelectorAll('[data-copy]').forEach((button) => {
-  button.addEventListener('click', async () => {
-    const value = button.dataset.copy;
-    const originalLabel = button.getAttribute('aria-label');
+/* Копирование кодов: по клику на сам код цвета или на кнопку рядом с ним.
+   Состояние «скопировано» ставится и на кнопку, и на код: клик пришёл туда, где
+   смотрит пользователь, и подтверждение должно появиться там же, а не в углу карточки. */
+const copyTimers = new WeakMap();
+document.querySelectorAll('[data-copy]').forEach((control) => {
+  async function copyValue() {
+    const value = control.dataset.copy;
+    const group = control.closest('.color-code') ?? control;
     try {
       await navigator.clipboard.writeText(value);
-      button.classList.add('is-copied');
-      button.setAttribute('aria-label', 'Скопировано');
+      const targets = [...group.querySelectorAll('[data-copy]')];
+      targets.forEach((target) => target.classList.add('is-copied'));
       announce(`Цвет ${value} скопирован`);
-      setTimeout(() => {
-        button.classList.remove('is-copied');
-        button.setAttribute('aria-label', originalLabel || `Скопировать ${value}`);
-      }, 1200);
+      window.clearTimeout(copyTimers.get(group));
+      copyTimers.set(group, window.setTimeout(() => {
+        targets.forEach((target) => target.classList.remove('is-copied'));
+      }, 1200));
     } catch {
       window.prompt('Скопируйте значение:', value);
     }
-  });
+  }
+
+  control.addEventListener('click', copyValue);
+  if (control.tagName !== 'BUTTON') {
+    control.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      copyValue();
+    });
+  }
 });
 
 /* Скачивание текущей цветовой версии */
