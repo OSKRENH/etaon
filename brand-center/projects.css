@@ -63,7 +63,14 @@ html body .brand-intro .quick-links .quick-desc{color:rgba(255,255,255,.72)!impo
 
 .projects-section .project-grid{position:relative;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding-bottom:2px}
 .projects-section .project-grid::-webkit-scrollbar{display:none}
-.projects-section .project-card{flex:0 0 clamp(220px,17.5%,264px);scroll-snap-align:start}
+.projects-section .project-grid{--cols:7}
+.projects-section .project-card{flex:0 0 calc((100% - (var(--cols) - 1) * 12px) / var(--cols));scroll-snap-align:start}
+.projects-section{container-type:inline-size}
+@container (max-width:1680px){.projects-section .project-grid{--cols:6}}
+@container (max-width:1440px){.projects-section .project-grid{--cols:5}}
+@container (max-width:1200px){.projects-section .project-grid{--cols:4}}
+@container (max-width:960px){.projects-section .project-grid{--cols:3}}
+@container (max-width:720px){.projects-section .project-grid{--cols:2}}
 .projects-section .project-nav{display:flex;gap:8px;margin:0 0 12px auto;width:max-content}
 .projects-section .project-nav button{display:grid;place-items:center;width:36px;height:36px;border:1px solid #d6dbe6;border-radius:50%;background:#fff;color:#223e90;font:inherit;font-size:16px;cursor:pointer;transition:border-color .2s,opacity .2s}
 .projects-section .project-nav button:hover:not(:disabled){border-color:#7185ca}
