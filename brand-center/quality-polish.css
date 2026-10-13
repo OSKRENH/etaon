@@ -597,29 +597,27 @@ html body .section-heading h2,
 html body .map-overlay h2,
 html body .downloads h2{font-size:var(--fs-h2)!important}
 
-/* Карта: в кадре видны все выделенные регионы.
-   Текст стоит сверху, карта прижата к низу секции, так что синие регионы
-   (в кадре они занимают нижнюю половину) не уходят под заголовок и
-   градиент. Раньше карта увеличивалась, а западные регионы закрывал текст.
-   Высота карты считается от ширины секции: --map-w это ширина без боковой
-   панели, --map-h — высота кадра при пропорции 2.35:1. Синие регионы
-   начинаются на ~34% высоты кадра, поэтому нижний отступ секции
-   равен 66% кадра плюс воздух под кнопкой.
+/* Карта целиком в кадре.
+   Кадр regions-map.svg охватывает всю страну (ratio ≈1.6), поэтому высота
+   карты считается от ширины секции: --map-w это ширина без боковой панели.
+   Вокруг карты оставлено по 36px свободного места сверху и снизу, чтобы
+   параллакс (±36px из app.js) двигал её без обрезки.
+   Узкий экран: текст сверху, карта под ним. От 1280px высоты карты хватает,
+   чтобы текст лёг на пустой северо-запад, а синие регионы (они ниже 60%
+   высоты кадра) остались чистыми.
    Полная карта для скачивания лежит отдельно: assets/regions-map-full.svg. */
 html body .map-section{
   --map-w:calc(100vw - 240px);
-  --map-h:calc(var(--map-w) / 2.35);
+  --map-h:calc(var(--map-w) / 1.6);
   background:#fff!important;
   display:block!important;
   min-height:0!important;
   padding-top:72px!important;
-  padding-bottom:calc(var(--map-h) * .66 + 28px)!important;
+  padding-bottom:calc(var(--map-h) + 72px)!important;
 }
 html body .map-section::after{
-  /* Стопы идут строго по возрастанию: верх секции полностью белый,
-     затем плавно открывается карта (раньше стоп 40% стоял ниже конца
-     градиента и давал жёсткую горизонтальную кромку). */
-  background:linear-gradient(180deg,#fff calc(100% - var(--map-h) * .9),rgba(255,255,255,0) calc(100% - var(--map-h) * .62))!important;
+  /* лёгкая подложка под текстом; на синие регионы не заходит */
+  background:linear-gradient(150deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,.2) 22%,rgba(255,255,255,0) 40%)!important;
 }
 html body .map-section .map-background{
   display:block!important;
@@ -627,20 +625,29 @@ html body .map-section .map-background{
   left:0!important;
   right:auto!important;
   top:auto!important;
-  bottom:-12px!important;
+  bottom:0!important;
   width:100%!important;
-  height:auto!important;
-  aspect-ratio:2.35/1;
-  object-fit:cover;
-  object-position:50% 100%;
-  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 22%);
-  mask-image:linear-gradient(180deg,transparent 0,#000 22%);
+  height:calc(var(--map-h) + 72px)!important;
+  max-width:none!important;
+  object-fit:contain;
+  object-position:50% 50%;
   opacity:1!important;
   filter:none!important;
-  transform:translate3d(0,calc(var(--map-parallax,0px) * .33),0)!important;
+  transform:translate3d(0,var(--map-parallax,0px),0)!important;
 }
 html body .map-overlay{width:min(560px,100%)!important}
 @media(max-width:900px){
   html body .map-section{--map-w:100vw;padding-top:58px!important}
   html body .map-overlay{width:100%!important}
+}
+@media(min-width:1280px){
+  html body .map-section{
+    min-height:calc(var(--map-h) + 72px)!important;
+    padding-bottom:0!important;
+  }
+  html body .map-section .map-background{
+    top:0!important;
+    bottom:auto!important;
+    height:100%!important;
+  }
 }
