@@ -88,7 +88,7 @@ h3{font-size:17pt;font-weight:500;letter-spacing:normal;margin:0 0 3mm}
 .dont li::before{content:'×';color:#ff4d00;font-size:15pt;line-height:1;flex:0 0 auto}
 .map-page{padding:0;background:white}
 .map-visual{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.map-visual img{width:332mm;height:210mm;max-width:none;object-fit:contain;transform:scale(1.08)}
+.map-visual img{width:297mm;height:auto;max-width:none;object-fit:contain;transform:translateY(8mm)}
 .map-copy{position:absolute;z-index:3;left:20mm;top:16mm;width:114mm;padding:9mm 10mm 8mm;border:1px solid rgba(218,223,232,.9);border-radius:6mm;background:rgba(255,255,255,.92)}
 .map-copy h2{margin-bottom:5mm}
 .map-copy .body-copy{font-size:12pt;margin:0}
