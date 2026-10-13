@@ -68,6 +68,8 @@ for archive in \
   Etalon_Logos_All_Formats.zip \
   Etalon_Symbol_All_Formats.zip \
   Etalon_Map_All_Formats.zip \
+  Etalon_Colors_All_Formats.zip \
+  Etalon_Brand_Kit.zip \
   Gilroy.zip; do
   fetch_matching_file \
     "brand-center/downloads/$archive" \
@@ -103,7 +105,7 @@ check_range_download() {
 
 # Как и остальные проверки, Range-запрос повторяется: сразу после деплоя
 # отдельные точки CDN могут ненадолго вернуть 404.
-for archive in Etalon_Logos_All_Formats.zip Gilroy.zip; do
+for archive in Etalon_Logos_All_Formats.zip Etalon_Brand_Kit.zip Gilroy.zip; do
   echo "Проверяю браузерную загрузку с Range: $archive"
   for attempt in $(seq 1 10); do
     if check_range_download "$archive"; then
