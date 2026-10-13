@@ -4,8 +4,8 @@ audit=success
 deploy=success
 verify=success
 url=https://etaon.ivankamaldinov.workers.dev
-commit=4797a7268e30501f7e1f6b6f589c6eecd32d3f5d
-run=38364147775
+commit=549e9e91b0bd27d30b0fe4a8948a7e2e5e7fbb14
+run=38364700347
 --- prepare output ---
 Фирменный цвет совпадает во всех мастер-файлах: #223E90
 Производные оттенки: 50% #919FC8, 15% #DEE2EE
@@ -26,12 +26,12 @@ Cropped symbol-blue.svg: 120.77 × 100.01
 Cropped symbol-white.svg: 120.77 × 100.01
 /home/runner/work/etaon/etaon/brand-center/downloads/Etalon_Brand_Guide_2025.pdf
 Download manifest generated: /home/runner/work/etaon/etaon/brand-center/downloads/downloads-manifest.json
--rw-r--r-- 1 runner runner 539K Oct 13 07:41 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
--rw-r--r-- 1 runner runner 686K Oct 13 07:41 brand-center/downloads/Etalon_Logos_All_Formats.zip
--rw-r--r-- 1 runner runner 2.3M Oct 13 07:41 brand-center/downloads/Etalon_Map_All_Formats.zip
--rw-r--r-- 1 runner runner  36K Oct 13 07:41 brand-center/downloads/Etalon_Symbol_All_Formats.zip
--rw-r--r-- 1 runner runner  71K Oct 13 07:41 brand-center/downloads/Gilroy.zip
--rw-r--r-- 1 runner runner  493 Oct 13 07:41 brand-center/downloads/downloads-manifest.json
+-rw-r--r-- 1 runner runner 539K Oct 13 07:46 brand-center/downloads/Etalon_Brand_Guide_2025.pdf
+-rw-r--r-- 1 runner runner 686K Oct 13 07:46 brand-center/downloads/Etalon_Logos_All_Formats.zip
+-rw-r--r-- 1 runner runner 2.3M Oct 13 07:46 brand-center/downloads/Etalon_Map_All_Formats.zip
+-rw-r--r-- 1 runner runner  36K Oct 13 07:46 brand-center/downloads/Etalon_Symbol_All_Formats.zip
+-rw-r--r-- 1 runner runner  71K Oct 13 07:45 brand-center/downloads/Gilroy.zip
+-rw-r--r-- 1 runner runner  493 Oct 13 07:46 brand-center/downloads/downloads-manifest.json
 --- audit output ---
 Проверено ссылок и ресурсов: 60
 Проверено якорей: 23
@@ -54,35 +54,29 @@ Download manifest generated: /home/runner/work/etaon/etaon/brand-center/download
 Uploaded 2 of 6 assets
 Uploaded 4 of 6 assets
 Uploaded 6 of 6 assets
-✨ Success! Uploaded 6 files (42 already uploaded) (2.02 sec)
+✨ Success! Uploaded 6 files (42 already uploaded) (1.59 sec)
 
 Total Upload: 4.15 KiB / gzip: 1.50 KiB
 Your Worker has access to the following bindings:
 Binding            Resource      
 env.ASSETS         Assets        
 
-Uploaded etaon (4.79 sec)
-Deployed etaon triggers (0.65 sec)
+Uploaded etaon (4.25 sec)
+Deployed etaon triggers (0.47 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: 9e5737d1-15c6-49e5-bb5a-29fb91894b17
+Current Version ID: 42b26272-1c0c-4c44-851c-f9e0992c6a9d
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
 --- live verification output ---
 Проверяю: https://etaon.ivankamaldinov.workers.dev/
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Brand_Guide_2025.pdf
-curl: (22) The requested URL returned error: 404
-Попытка 1 не удалась, повтор через 3 секунды...
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Logos_All_Formats.zip
+Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Symbol_All_Formats.zip
 curl: (22) The requested URL returned error: 404
 Попытка 1 не удалась, повтор через 3 секунды...
-Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Symbol_All_Formats.zip
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Map_All_Formats.zip
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Gilroy.zip
 Проверяю браузерную загрузку с Range: Etalon_Logos_All_Formats.zip
 Проверяю браузерную загрузку с Range: Gilroy.zip
-curl: (22) The requested URL returned error: 404
-Range-проверка Gilroy.zip не прошла (попытка 1/10), повтор через 3 с
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/downloads-manifest.json
-curl: (22) The requested URL returned error: 404
-Попытка 1 не удалась, повтор через 3 секунды...
 Живой сайт, размеры и все файлы скачивания проверены и совпадают со собранными версиями.
