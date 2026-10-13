@@ -602,8 +602,8 @@ html body .downloads h2{font-size:var(--fs-h2)!important}
    --map-s = ширина секции / 3260. Выделенные регионы занимают в кадре
    518 единиц по высоте (y 1262–1780), а раздел делается ровно такой высоты,
    чтобы под текстом поместилась эта полоса: север карты уходит за верхний
-   край и лежит под заголовком. Вокруг полосы по 40px воздуха, параллакс
-   ослаблен до ±18px, чтобы синие регионы не заезжали на кнопку.
+   край и лежит под заголовком. Над полосой 76px воздуха, под ней 40px:
+   этого хватает на параллакс ±36px из app.js без наезда на кнопку.
    --map-w это ширина секции без боковой панели (на узких экранах — весь экран).
    Полная карта для скачивания лежит отдельно: assets/regions-map-full.svg. */
 html body .map-section{
@@ -613,11 +613,12 @@ html body .map-section{
   display:block!important;
   min-height:0!important;
   padding-top:72px!important;
-  padding-bottom:calc(518 * var(--map-s) + 80px)!important;
+  padding-bottom:calc(518 * var(--map-s) + 116px)!important;
 }
 html body .map-section::after{
-  /* лёгкая подложка под текстом; на синие регионы не заходит */
-  background:linear-gradient(150deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,.2) 22%,rgba(255,255,255,0) 40%)!important;
+  /* Белая вуаль на верхней половине: гаснет к верхней границе полосы
+     регионов (с запасом на параллакс), так что синие регионы чистые. */
+  background:linear-gradient(180deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.7) 45%,rgba(255,255,255,0) calc(100% - 518 * var(--map-s) - 80px))!important;
 }
 html body .map-section .map-background{
   display:block!important;
@@ -634,7 +635,7 @@ html body .map-section .map-background{
   object-fit:fill;
   opacity:1!important;
   filter:none!important;
-  transform:translate3d(0,calc(var(--map-parallax,0px) * .5),0)!important;
+  transform:translate3d(0,var(--map-parallax,0px),0)!important;
 }
 html body .map-overlay{width:min(560px,100%)!important}
 @media(max-width:900px){
