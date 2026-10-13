@@ -11,7 +11,6 @@ OUTPUT = DOWNLOADS / "downloads-manifest.json"
 
 FILES = {
     "Etalon_Brand_Kit.zip": "ZIP · всё сразу",
-    "Etalon_Brand_Guide_2025.pdf": "PDF",
     "Etalon_Logos_All_Formats.zip": "ZIP · SVG, PNG, EPS, PDF",
     "Etalon_Symbol_All_Formats.zip": "ZIP · SVG, PNG, EPS, PDF",
     "Etalon_Colors_All_Formats.zip": "ZIP · SVG, PNG, PDF, ASE, CSS",

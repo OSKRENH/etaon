@@ -3,7 +3,6 @@
   if (!downloadLinks.length) return;
 
   const fallbackMetadata = {
-    'Etalon_Brand_Guide_2025.pdf': 'PDF · 29 КБ',
     'Etalon_Logos_All_Formats.zip': 'ZIP · SVG, PNG, EPS, PDF · 377 КБ',
     'Etalon_Symbol_All_Formats.zip': 'ZIP · SVG, PNG, EPS, PDF · 23 КБ',
     'Etalon_Map_All_Formats.zip': 'ZIP · SVG, PNG, EPS, PDF · 205 КБ',
