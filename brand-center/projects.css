@@ -1,6 +1,57 @@
 /* Проекты: компактные вкладки городов и плотная сетка карточек */
-.quick-links{grid-template-columns:repeat(5,1fr)}
-.quick-links a{padding-inline:24px}
+/* Меню разделов стоит в синей шапке на месте цифр об Эталоне: пять колонок */
+html body .brand-intro .quick-links{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  width:auto!important;
+  margin:0!important;
+  padding:0 7vw!important;
+  background:transparent!important;
+  border:0!important;
+  border-top:1px solid var(--brand-line)!important;
+  position:relative;
+  z-index:1;
+}
+html body .brand-intro .quick-links a{
+  min-width:0;
+  min-height:150px;
+  padding:28px clamp(16px,1.8vw,30px)!important;
+  background:transparent!important;
+  color:#fff!important;
+  border:0!important;
+  border-right:1px solid var(--brand-line)!important;
+}
+html body .brand-intro .quick-links a:first-child{padding-left:0!important}
+html body .brand-intro .quick-links a:last-child{border-right:0!important;padding-right:0!important}
+html body .brand-intro .quick-links .quick-meta{color:rgba(255,255,255,.62)}
+html body .brand-intro .quick-links .quick-meta i{background:rgba(255,255,255,.5)}
+html body .brand-intro .quick-links strong{color:#fff!important}
+html body .brand-intro .quick-links .quick-desc{color:rgba(255,255,255,.72)!important}
+@media(hover:hover){
+  html body .brand-intro .quick-links a:hover strong,
+  html body .brand-intro .quick-links a:focus-visible strong{color:#ff7540!important}
+}
+@media(max-width:1100px){
+  html body .brand-intro .quick-links strong{font-size:clamp(18px,2.2vw,22px)!important}
+}
+@media(max-width:900px){
+  html body .brand-intro .quick-links{grid-template-columns:repeat(2,minmax(0,1fr))!important;padding:0 24px 40px!important}
+  html body .brand-intro .quick-links a,
+  html body .brand-intro .quick-links a:first-child,
+  html body .brand-intro .quick-links a:last-child{
+    min-height:128px;
+    padding:24px 18px!important;
+    border-right:1px solid var(--brand-line)!important;
+    border-top:1px solid var(--brand-line)!important;
+  }
+  html body .brand-intro .quick-links a:nth-child(odd){padding-left:0!important}
+  html body .brand-intro .quick-links a:nth-child(even){border-right:0!important}
+  html body .brand-intro .quick-links a:last-child:nth-child(odd){grid-column:1/-1;border-right:0!important}
+}
+@media(max-width:540px){
+  html body .brand-intro .quick-links{padding:0 20px 32px!important}
+}
+
 
 .projects-section .project-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
 .projects-section .project-tab{appearance:none;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border:1px solid #e4e7ed;border-radius:999px;background:#fff;color:#1e242e;font:inherit;font-weight:500;font-size:15px;cursor:pointer;transition:background-color .2s,color .2s,border-color .2s}
@@ -10,30 +61,26 @@
 .projects-section .project-tab.is-active small{color:rgba(255,255,255,.76)}
 .projects-section .project-tab:focus-visible,.projects-section .project-card:focus-visible{outline:2px solid #223e90;outline-offset:2px}
 
-.projects-section .project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
-.projects-section .project-card{position:relative;display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:start;min-height:92px;padding:16px 18px;background:#fff;border:1px solid #e4e7ed;border-radius:12px;transition:border-color .2s,box-shadow .2s}
+.projects-section .project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.projects-section .project-card{position:relative;display:grid;grid-template-columns:76px 1fr auto;gap:2px 14px;align-items:start;min-height:104px;padding:14px;background:#fff;border:1px solid #e4e7ed;border-radius:12px;transition:border-color .2s,box-shadow .2s}
 .projects-section .project-card:hover{border-color:#7185ca;box-shadow:0 6px 18px rgba(34,62,144,.08)}
-.projects-section .project-card strong{grid-column:1;font-size:18px;font-weight:500;line-height:1.2;color:#1e242e;overflow-wrap:anywhere}
-.projects-section .project-card i{grid-column:2;grid-row:1;font-style:normal;font-size:16px;color:#8a919d;transition:color .2s,transform .2s}
+.projects-section .project-cover{grid-column:1;grid-row:1/span 3;position:relative;display:block;width:76px;height:76px;border-radius:9px;overflow:hidden;background:#eef1fa}
+.projects-section .project-cover b{position:absolute;inset:0;display:grid;place-items:center;font-size:30px;font-weight:500;color:#7185ca}
+.projects-section .project-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.projects-section .project-cover img.is-broken{display:none}
+.projects-section .project-card strong{grid-column:2;font-size:18px;font-weight:500;line-height:1.2;color:#1e242e;overflow-wrap:anywhere}
+.projects-section .project-card i{grid-column:3;grid-row:1;font-style:normal;font-size:16px;color:#8a919d;transition:color .2s,transform .2s}
 .projects-section .project-card:hover i{color:#223e90;transform:translate(2px,-2px)}
-.projects-section .project-place{grid-column:1/-1;font-size:14px;line-height:1.35;color:#69717e}
-.projects-section .project-status{grid-column:1/-1;justify-self:start;margin-top:8px;padding:3px 9px;border-radius:999px;background:#f1f3f7;color:#5f6875;font-style:normal;font-size:12.5px;font-weight:500}
+.projects-section .project-place{grid-column:2/-1;font-size:14px;line-height:1.35;color:#69717e}
+.projects-section .project-status{grid-column:2/-1;justify-self:start;margin-top:6px;padding:3px 9px;border-radius:999px;background:#f1f3f7;color:#5f6875;font-style:normal;font-size:12.5px;font-weight:500}
 .projects-section .project-status.is-done{background:#eef1fa;color:#223e90}
 .projects-section .project-card[hidden]{display:none}
 
-@media(max-width:900px){
-  .quick-links{grid-template-columns:repeat(2,1fr)}
-  .quick-links a:last-child:nth-child(odd){grid-column:1/-1}
-}
 @media(max-width:640px){
   .projects-section .project-tabs{flex-wrap:nowrap;overflow-x:auto;margin-inline:-24px;padding:2px 24px 8px;scrollbar-width:none}
   .projects-section .project-tabs::-webkit-scrollbar{display:none}
   .projects-section .project-tab{flex:none}
-  .projects-section .project-grid{grid-template-columns:1fr 1fr;gap:8px}
-  .projects-section .project-card{min-height:104px;padding:14px}
-  .projects-section .project-card strong{font-size:16px}
-}
-@media(max-width:420px){
-  .projects-section .project-grid{grid-template-columns:1fr}
+  .projects-section .project-grid{grid-template-columns:1fr;gap:8px}
   .projects-section .project-card{min-height:0}
+  .projects-section .project-card strong{font-size:17px}
 }

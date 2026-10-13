@@ -16,5 +16,12 @@
     });
   }
 
+  // Если обложка не загрузилась, остаётся плитка с первой буквой названия
+  section.querySelectorAll('.project-cover img').forEach((img) => {
+    const hide = () => img.classList.add('is-broken');
+    img.addEventListener('error', hide);
+    if (img.complete && img.naturalWidth === 0) hide();
+  });
+
   tabs.forEach((tab) => tab.addEventListener('click', () => select(tab.dataset.city)));
 })();

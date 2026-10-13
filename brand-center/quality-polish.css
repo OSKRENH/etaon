@@ -576,7 +576,7 @@ html body .footer-changelog-body a{font-size:var(--fs-small)!important}
 html body .stats article>span{font-size:var(--fs-body)!important}
 /* 18: лид и абзацы под заголовками */
 html body .hero .lead,
-html body .map-overlay p,
+html body .map-overlay>p:not(.eyebrow),
 html body .type-demo .alphabet p,
 html body .compact-downloads a>b{font-size:var(--fs-lead)!important}
 @media(max-width:900px){
