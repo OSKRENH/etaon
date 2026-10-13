@@ -598,8 +598,8 @@ html body .map-overlay h2,
 html body .downloads h2{font-size:var(--fs-h2)!important}
 
 /* Карта на всю ширину раздела, раздел низкий.
-   Кадр regions-map.svg — вся страна (viewBox 3260×2040), поэтому масштаб
-   --map-s = ширина секции / 3260. Выделенные регионы занимают в кадре
+   Кадр regions-map.svg — вся страна (viewBox 3260×2040), карта занимает
+   --map-k = 85% ширины секции по центру, масштаб --map-s = ширина карты / 3260. Выделенные регионы занимают в кадре
    518 единиц по высоте (y 1262–1780), а раздел делается ровно такой высоты,
    чтобы под текстом поместилась эта полоса: север карты уходит за верхний
    край и лежит под заголовком. Над полосой 76px воздуха, под ней 40px:
@@ -608,7 +608,8 @@ html body .downloads h2{font-size:var(--fs-h2)!important}
    Полная карта для скачивания лежит отдельно: assets/regions-map-full.svg. */
 html body .map-section{
   --map-w:calc(100vw - 240px);
-  --map-s:calc(var(--map-w) / 3260);
+  --map-k:.85;
+  --map-s:calc(var(--map-w) * var(--map-k) / 3260);
   background:#fff!important;
   display:block!important;
   min-height:0!important;
@@ -623,19 +624,19 @@ html body .map-section::after{
 html body .map-section .map-background{
   display:block!important;
   position:absolute!important;
-  left:0!important;
+  left:50%!important;
   right:auto!important;
   top:auto!important;
   /* нижний край полосы регионов (y 1780) стоит на 40px выше низа секции;
      от него до низа кадра (y 1950) ещё 170 единиц */
   bottom:calc(40px - 170 * var(--map-s))!important;
-  width:100%!important;
+  width:calc(100% * var(--map-k))!important;
   height:calc(2040 * var(--map-s))!important;
   max-width:none!important;
   object-fit:fill;
   opacity:1!important;
   filter:none!important;
-  transform:translate3d(0,var(--map-parallax,0px),0)!important;
+  transform:translate3d(-50%,var(--map-parallax,0px),0)!important;
 }
 html body .map-overlay{width:min(560px,100%)!important}
 @media(max-width:900px){
