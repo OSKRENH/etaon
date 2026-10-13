@@ -4,8 +4,8 @@ audit=success
 deploy=success
 verify=success
 url=https://etaon.ivankamaldinov.workers.dev
-commit=fda6099eb1d4eb8706629910a6497bc7e0839a5f
-run=38394919212
+commit=bf8a4c6ab8f236952acda5e5165252b92280236b
+run=38398367493
 --- prepare output ---
 Фирменный цвет совпадает во всех мастер-файлах: #223E90
 Производные оттенки: 50% #919FC8, 15% #DEE2EE
@@ -16,27 +16,36 @@ Etalon_Colors_All_Formats.zip: 497728 байт, совпадает с маниф
 Etalon_Map_All_Formats.zip: 2400135 байт, совпадает с манифестом
 Gilroy.zip: 72418 байт, совпадает с манифестом
 --- audit output ---
-Проверено ссылок и ресурсов: 62
-Проверено якорей: 20
-Проверено CSS-файлов: 10
+Проверено ссылок и ресурсов: 90
+Проверено якорей: 23
+Проверено CSS-файлов: 11
 Статический аудит пройден без ошибок.
 --- wrangler output ---
 
  ⛅️ wrangler 4.150.0
 ────────────────────
 🌀 Building list of assets...
-✨ Read 53 files from the assets directory /home/runner/work/etaon/etaon/brand-center
+✨ Read 56 files from the assets directory /home/runner/work/etaon/etaon/brand-center
 🌀 Starting asset upload...
-No updated asset files to upload. Proceeding with deployment...
+🌀 Found 4 new or modified static assets to upload. Proceeding with upload...
++ /projects.js
++ /index.html
++ /projects.css
++ /projects.json
+Uploaded 2 of 4 assets
+Uploaded 3 of 4 assets
+Uploaded 4 of 4 assets
+✨ Success! Uploaded 4 files (48 already uploaded) (1.31 sec)
+
 Total Upload: 4.19 KiB / gzip: 1.49 KiB
 Your Worker has access to the following bindings:
 Binding            Resource      
 env.ASSETS         Assets        
 
-Uploaded etaon (4.01 sec)
-Deployed etaon triggers (0.67 sec)
+Uploaded etaon (4.94 sec)
+Deployed etaon triggers (0.53 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: e5287524-5a4e-4191-abc5-cfeb5abfa84f
+Current Version ID: fd143940-2a81-4bcd-b086-ccbfca70049b
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
 --- live verification output ---
