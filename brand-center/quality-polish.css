@@ -597,24 +597,23 @@ html body .section-heading h2,
 html body .map-overlay h2,
 html body .downloads h2{font-size:var(--fs-h2)!important}
 
-/* Карта целиком в кадре.
-   Кадр regions-map.svg охватывает всю страну (ratio ≈1.6), поэтому высота
-   карты считается от ширины секции: --map-w это ширина без боковой панели.
-   Вокруг карты оставлено по 36px свободного места сверху и снизу, чтобы
-   параллакс (±36px из app.js) двигал её без обрезки.
-   Узкий экран: текст сверху, карта под ним. От 1280px высоты карты хватает,
-   чтобы текст лёг на пустой северо-запад, а синие регионы (они ниже 60%
-   высоты кадра) остались чистыми.
+/* Карта на всю ширину раздела, раздел низкий.
+   Кадр regions-map.svg — вся страна (viewBox 3260×2040), поэтому масштаб
+   --map-s = ширина секции / 3260. Выделенные регионы занимают в кадре
+   518 единиц по высоте (y 1262–1780), а раздел делается ровно такой высоты,
+   чтобы под текстом поместилась эта полоса: север карты уходит за верхний
+   край и лежит под заголовком. Вокруг полосы по 40px воздуха, параллакс
+   ослаблен до ±18px, чтобы синие регионы не заезжали на кнопку.
+   --map-w это ширина секции без боковой панели (на узких экранах — весь экран).
    Полная карта для скачивания лежит отдельно: assets/regions-map-full.svg. */
 html body .map-section{
   --map-w:calc(100vw - 240px);
-  --map-k:.85;
-  --map-h:calc(var(--map-w) * var(--map-k) / 1.6);
+  --map-s:calc(var(--map-w) / 3260);
   background:#fff!important;
   display:block!important;
   min-height:0!important;
   padding-top:72px!important;
-  padding-bottom:calc(var(--map-h) + 72px)!important;
+  padding-bottom:calc(518 * var(--map-s) + 80px)!important;
 }
 html body .map-section::after{
   /* лёгкая подложка под текстом; на синие регионы не заходит */
@@ -623,28 +622,22 @@ html body .map-section::after{
 html body .map-section .map-background{
   display:block!important;
   position:absolute!important;
-  left:auto!important;
-  right:0!important;
+  left:0!important;
+  right:auto!important;
   top:auto!important;
-  bottom:0!important;
-  width:calc(100% * var(--map-k))!important;
-  height:calc(var(--map-h) + 72px)!important;
+  /* нижний край полосы регионов (y 1780) стоит на 40px выше низа секции;
+     от него до низа кадра (y 1950) ещё 170 единиц */
+  bottom:calc(40px - 170 * var(--map-s))!important;
+  width:100%!important;
+  height:calc(2040 * var(--map-s))!important;
   max-width:none!important;
-  object-fit:contain;
-  object-position:50% 50%;
+  object-fit:fill;
   opacity:1!important;
   filter:none!important;
-  transform:translate3d(0,var(--map-parallax,0px),0)!important;
+  transform:translate3d(0,calc(var(--map-parallax,0px) * .5),0)!important;
 }
 html body .map-overlay{width:min(560px,100%)!important}
 @media(max-width:900px){
-  html body .map-section{--map-w:100vw;--map-k:1;padding-top:58px!important}
+  html body .map-section{--map-w:100vw;padding-top:58px!important}
   html body .map-overlay{width:100%!important}
-}
-@media(min-width:1280px){
-  html body .map-section{
-    --map-k:.7;
-    min-height:calc(var(--map-h) + 72px + 110px)!important;
-    padding-bottom:0!important;
-  }
 }
