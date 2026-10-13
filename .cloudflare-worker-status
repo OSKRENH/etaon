@@ -4,8 +4,8 @@ audit=success
 deploy=success
 verify=success
 url=https://etaon.ivankamaldinov.workers.dev
-commit=09ca51d218f1d0500a15465edc68db82abebe352
-run=38399142842
+commit=c9f83eab070c4a6cf32263ea39ed638baa8234e2
+run=38399646855
 --- prepare output ---
 Фирменный цвет совпадает во всех мастер-файлах: #223E90
 Производные оттенки: 50% #919FC8, 15% #DEE2EE
@@ -16,7 +16,7 @@ Etalon_Colors_All_Formats.zip: 497728 байт, совпадает с маниф
 Etalon_Map_All_Formats.zip: 2400135 байт, совпадает с манифестом
 Gilroy.zip: 72418 байт, совпадает с манифестом
 --- audit output ---
-Проверено ссылок и ресурсов: 113
+Проверено ссылок и ресурсов: 107
 Проверено якорей: 23
 Проверено CSS-файлов: 11
 Статический аудит пройден без ошибок.
@@ -27,26 +27,24 @@ Gilroy.zip: 72418 байт, совпадает с манифестом
 🌀 Building list of assets...
 ✨ Read 56 files from the assets directory /home/runner/work/etaon/etaon/brand-center
 🌀 Starting asset upload...
-🌀 Found 5 new or modified static assets to upload. Proceeding with upload...
-+ /projects.js
-+ /quality-polish.css
+🌀 Found 3 new or modified static assets to upload. Proceeding with upload...
 + /projects.css
-+ /index.html
 + /projects.json
-Uploaded 2 of 5 assets
-Uploaded 4 of 5 assets
-Uploaded 5 of 5 assets
-✨ Success! Uploaded 5 files (47 already uploaded) (1.02 sec)
++ /index.html
+Uploaded 1 of 3 assets
+Uploaded 2 of 3 assets
+Uploaded 3 of 3 assets
+✨ Success! Uploaded 3 files (49 already uploaded) (1.03 sec)
 
 Total Upload: 4.19 KiB / gzip: 1.49 KiB
 Your Worker has access to the following bindings:
 Binding            Resource      
 env.ASSETS         Assets        
 
-Uploaded etaon (4.54 sec)
-Deployed etaon triggers (0.64 sec)
+Uploaded etaon (5.64 sec)
+Deployed etaon triggers (0.56 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: e8875791-8286-4921-ad3f-998b328d9b61
+Current Version ID: ded0592d-1dcf-4959-9c98-0060f7903c49
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
 --- live verification output ---
