@@ -643,3 +643,29 @@ html body .map-overlay{width:min(560px,100%)!important}
   html body .map-section{--map-w:100vw;padding-top:58px!important}
   html body .map-overlay{width:100%!important}
 }
+
+/* Без разреженного трекинга по всему сайту: эйбрау, номера разделов,
+   подписи футера, метаданные загрузок, подпись переключателя и цифры
+   статистики теперь с обычным межбуквенным интервалом. */
+html body .eyebrow,
+html body .eyebrow span,
+html body .section-kicker span,
+html body .section-kicker>span:first-child,
+html body .section-kicker>span:last-child,
+html body .quick-meta b,
+html body .logo-preview .desc-switch,
+html body .logo-preview .desc-switch span,
+html body .stats strong,
+html body .download-meta,
+html body .page-footer .footer-release-grid small,
+html body .page-footer .footer-release-grid strong,
+html body .page-footer .footer-changelog>summary small,
+html body .page-footer .footer-changelog>summary strong{letter-spacing:normal!important}
+/* У Gilroy есть только Regular и Medium. Жирность 700 браузер рисует
+   искусственно, и мелкие заглавные подписи выглядели другим шрифтом. */
+html body .eyebrow,
+html body .eyebrow span,
+html body .section-kicker span,
+html body .section-kicker>span:first-child,
+html body .section-kicker>span:last-child,
+html body .quick-meta b{font-weight:500!important}
