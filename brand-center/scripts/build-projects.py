@@ -23,10 +23,10 @@ def city_slug(city):
     return str(cities.index(city) + 1)
 
 
-tabs = [f'<button type="button" class="project-tab is-active" data-city="all" aria-pressed="true">Все <small>{len(projects)}</small></button>']
-for city in cities:
+tabs = []
+for i, city in enumerate(cities):
     count = sum(1 for p in projects if p["city"] == city)
-    tabs.append(f'<button type="button" class="project-tab" data-city="{city_slug(city)}" aria-pressed="false">{escape(city)} <small>{count}</small></button>')
+    tabs.append(f'<button type="button" class="project-tab{" is-active" if i == 0 else ""}" data-city="{city_slug(city)}" aria-pressed="{"true" if i == 0 else "false"}">{escape(city)} <small>{count}</small></button>')
 
 cards = []
 for p in projects:

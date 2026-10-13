@@ -61,7 +61,7 @@ html body .brand-intro .quick-links .quick-desc{color:rgba(255,255,255,.72)!impo
 .projects-section .project-tab.is-active small{color:rgba(255,255,255,.76)}
 .projects-section .project-tab:focus-visible,.projects-section .project-card:focus-visible{outline:2px solid #223e90;outline-offset:2px}
 
-.projects-section .project-grid{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding-bottom:2px}
+.projects-section .project-grid{position:relative;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding-bottom:2px}
 .projects-section .project-grid::-webkit-scrollbar{display:none}
 .projects-section .project-card{flex:0 0 clamp(220px,17.5%,264px);scroll-snap-align:start}
 .projects-section .project-nav{display:flex;gap:8px;margin:0 0 12px auto;width:max-content}
