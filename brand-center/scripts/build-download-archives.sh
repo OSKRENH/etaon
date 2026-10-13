@@ -105,7 +105,7 @@ cat > "$SYMBOL_BUILD/README.txt" <<'EOF'
 Форматы: SVG, прозрачный PNG, EPS и PDF.
 EOF
 
-MAP_SVG="$ROOT/assets/regions-map.svg"
+MAP_SVG="$ROOT/assets/regions-map-full.svg"
 test -s "$MAP_SVG"
 export_asset "$MAP_SVG" "$MAP_BUILD" "Etalon_Map" 3600
 cat > "$MAP_BUILD/README.txt" <<'EOF'

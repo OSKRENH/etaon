@@ -16,6 +16,7 @@ python3 brand-center/scripts/crop-logo-variants.py
 
 # The lightweight vector map is stored directly in the repository.
 test -s brand-center/assets/regions-map.svg
+test -s brand-center/assets/regions-map-full.svg
 cp brand-center/assets/regions-map.svg brand-center/assets/regions-map-hero.svg
 
 chmod +x brand-center/scripts/build-download-archives.sh

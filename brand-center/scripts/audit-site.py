@@ -221,6 +221,19 @@ def main() -> int:
     if not symbol_match or symbol_match.group(1) not in favicon_svg:
         errors.append("assets/favicon.svg разошелся с геометрией знака assets/symbol-etalon.svg")
 
+    # Кнопка «Скачать карту» отдаёт полную карту (regions-map-full.svg), а сайт и PDF
+    # показывают кадр regions-map.svg. Кадр делается скриптом и не должен расходиться с полной.
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("make_map_crop", ROOT / "scripts" / "make-map-crop.py")
+    make_map_crop = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(make_map_crop)
+    map_full = (ROOT / "assets" / "regions-map-full.svg").read_text(encoding="utf-8")
+    map_crop = (ROOT / "assets" / "regions-map.svg").read_text(encoding="utf-8")
+    if map_crop != make_map_crop.make_crop(map_full):
+        errors.append("assets/regions-map.svg разошелся с regions-map-full.svg: запустите scripts/make-map-crop.py")
+    if len(re.findall(r'class="st1"', map_full)) < 1:
+        errors.append("В полной карте нет выделенных регионов (class=st1)")
+
     print(f"Проверено ссылок и ресурсов: {len(parser.refs)}")
     print(f"Проверено якорей: {sum(1 for _, _, value, _ in parser.refs if value.startswith('#'))}")
     print(f"Проверено CSS-файлов: {len(parser.stylesheets)}")
