@@ -11,7 +11,7 @@ import sys
 AUDITOR = Path(__file__).resolve()
 ROOT = AUDITOR.parents[1]
 INDEX = ROOT / "index.html"
-ALLOWED_EXTERNAL_HOSTS = {"etaon.ivankamaldinov.workers.dev", "t.me"}
+ALLOWED_EXTERNAL_HOSTS = {"etaon.ivankamaldinov.workers.dev", "t.me", "etalongroup.ru"}
 
 
 class Element:

@@ -1,0 +1,174 @@
+{
+ "cities": [
+  "Москва",
+  "Санкт-Петербург",
+  "Екатеринбург",
+  "Казань",
+  "Новосибирск",
+  "Омск",
+  "Тюмень"
+ ],
+ "projects": [
+  {
+   "city": "Москва",
+   "name": "Воксхолл",
+   "district": "Павелецкая",
+   "status": "Дом сдан",
+   "url": "https://etalongroup.ru/msk/object/voxhall/"
+  },
+  {
+   "city": "Москва",
+   "name": "Десятка",
+   "district": "Раменский",
+   "status": "Дом сдан",
+   "url": "https://etalongroup.ru/msk/object/desyatka/"
+  },
+  {
+   "city": "Москва",
+   "name": "Изумрудные Холмы",
+   "district": "Тушинская",
+   "status": "Дом сдан",
+   "url": "https://etalongroup.ru/msk/object/izumrudnye-kholmy/"
+  },
+  {
+   "city": "Москва",
+   "name": "Мариин Парк",
+   "district": "Марьина Роща",
+   "status": "IV кв. 2027",
+   "url": "https://etalongroup.ru/msk/object/mariinn-park/"
+  },
+  {
+   "city": "Москва",
+   "name": "Нагатино Ай-Лэнд",
+   "district": "Технопарк",
+   "status": "II кв. 2027",
+   "url": "https://etalongroup.ru/msk/object/nagatino-i-land/"
+  },
+  {
+   "city": "Москва",
+   "name": "Соколин Парк",
+   "district": "Бульвар Рокоссовского",
+   "status": "II кв. 2028",
+   "url": "https://etalongroup.ru/msk/object/sokolinn-park/"
+  },
+  {
+   "city": "Москва",
+   "name": "Шагал",
+   "district": "Технопарк",
+   "status": "IV кв. 2026",
+   "url": "https://etalongroup.ru/msk/object/shagal/"
+  },
+  {
+   "city": "Санкт-Петербург",
+   "name": "АВЕНЮ-АПАРТ ПУЛКОВО",
+   "district": "Московский",
+   "status": "Дом сдан",
+   "url": "https://etalongroup.ru/spb/object/avenue-apart-pulkovo/"
+  },
+  {
+   "city": "Санкт-Петербург",
+   "name": "Клюква.Парк",
+   "district": "Купчино",
+   "status": "IV кв. 2028",
+   "url": "https://etalongroup.ru/spb/object/klyukva_park/"
+  },
+  {
+   "city": "Санкт-Петербург",
+   "name": "Монография",
+   "district": "Купчино",
+   "status": "Дом сдан",
+   "url": "https://etalongroup.ru/spb/object/monografiya/"
+  },
+  {
+   "city": "Санкт-Петербург",
+   "name": "Пулковский дом",
+   "district": "Пушкинский",
+   "status": "Дом сдан",
+   "url": "https://etalongroup.ru/spb/object/pulkovskiy-dom/"
+  },
+  {
+   "city": "Санкт-Петербург",
+   "name": "Ягодное Река Парк",
+   "district": "Всеволожский",
+   "status": "IV кв. 2028",
+   "url": "https://etalongroup.ru/spb/object/yagodnoe-reka-park/"
+  },
+  {
+   "city": "Екатеринбург",
+   "name": "Балтым-Парк",
+   "district": "село Балтым",
+   "status": "II кв. 2028",
+   "url": "https://etalongroup.ru/ekb/object/baltym-park/"
+  },
+  {
+   "city": "Екатеринбург",
+   "name": "Раута",
+   "district": "Железнодорожный",
+   "status": "IV кв. 2027",
+   "url": "https://etalongroup.ru/ekb/object/rauta/"
+  },
+  {
+   "city": "Екатеринбург",
+   "name": "Солнечный",
+   "district": "Солнечный",
+   "status": "IV кв. 2026",
+   "url": "https://etalongroup.ru/ekb/object/solnechnyy/"
+  },
+  {
+   "city": "Казань",
+   "name": "Счастье в Казани",
+   "district": "Козья Слобода",
+   "status": "III кв. 2028",
+   "url": "https://etalongroup.ru/kzn/object/schaste-v-kazani/"
+  },
+  {
+   "city": "Новосибирск",
+   "name": "Счастье в Кольцово",
+   "district": "Рабочий посёлок Кольцово",
+   "status": "III кв. 2026",
+   "url": "https://etalongroup.ru/nsk/object/schaste-v-koltsovo/"
+  },
+  {
+   "city": "Омск",
+   "name": "Зеленая Река",
+   "district": "КАО",
+   "status": "III кв. 2026",
+   "url": "https://etalongroup.ru/omsk/object/zelenaya-reka/"
+  },
+  {
+   "city": "Тюмень",
+   "name": "City Life",
+   "district": "Центральный округ",
+   "status": "Дом сдан",
+   "url": "https://etalongroup.ru/tmn/object/city-life/"
+  },
+  {
+   "city": "Тюмень",
+   "name": "City Zen",
+   "district": "Центральный округ",
+   "status": "Дом сдан",
+   "url": "https://etalongroup.ru/tmn/object/city-zen/"
+  },
+  {
+   "city": "Тюмень",
+   "name": "Жуков",
+   "district": "Калининский округ",
+   "status": "Дом сдан",
+   "url": "https://etalongroup.ru/tmn/object/zhukov/"
+  },
+  {
+   "city": "Тюмень",
+   "name": "Счастье в Тюмени",
+   "district": "Центральный округ",
+   "status": "Дом сдан",
+   "url": "https://etalongroup.ru/tmn/object/zhk-schaste-v-tyumeni/"
+  },
+  {
+   "city": "Тюмень",
+   "name": "Финский Залив",
+   "district": "Ленинский округ",
+   "status": "Дом сдан",
+   "url": "https://etalongroup.ru/tmn/object/finskiy-zaliv/"
+  }
+ ]
+}
