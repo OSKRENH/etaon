@@ -669,3 +669,11 @@ html body .section-kicker span,
 html body .section-kicker>span:first-child,
 html body .section-kicker>span:last-child,
 html body .quick-meta b{font-weight:500!important}
+/* Остальная жирность 600/700 (кнопки, названия карточек, HEX-коды,
+   заголовки в футере) тоже переведена на Medium. Запрет синтеза
+   не даёт браузеру (в первую очередь Safari) дорисовывать жирность. */
+html{font-synthesis-weight:none}
+html body b,
+html body strong,
+html body .button,
+html body .hex-text{font-weight:500!important}

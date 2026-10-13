@@ -12,8 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Generated brand-center downloads
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -24,5 +22,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-brand-center/downloads/
 __pycache__/
