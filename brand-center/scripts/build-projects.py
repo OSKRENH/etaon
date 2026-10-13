@@ -31,8 +31,15 @@ for city in cities:
 cards = []
 for p in projects:
     done = p["status"] == "Дом сдан"
+    cover = (
+        f'<span class="project-cover" aria-hidden="true"><b>{escape(p["name"][0])}</b>'
+        f'<img src="{escape(p["image"])}" alt="" width="370" height="370" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span>'
+        if p.get("image")
+        else ""
+    )
     cards.append(
         f'<a class="project-card" data-city="{city_slug(p["city"])}" href="{escape(p["url"])}" target="_blank" rel="noopener noreferrer">'
+        f'{cover}'
         f'<strong>{escape(p["name"])}</strong>'
         f'<span class="project-place">{escape(p["city"])} · {escape(p["district"])}</span>'
         f'<em class="project-status{" is-done" if done else ""}">{escape(status_label(p["status"]))}</em>'

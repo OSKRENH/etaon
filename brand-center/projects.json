@@ -14,161 +14,184 @@
    "name": "Воксхолл",
    "district": "Павелецкая",
    "status": "Дом сдан",
-   "url": "https://etalongroup.ru/msk/object/voxhall/"
+   "url": "https://etalongroup.ru/msk/object/voxhall/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/380/71s892waakve0dacsa0p05tx9vs7umvg/prev.jpg"
   },
   {
    "city": "Москва",
    "name": "Десятка",
    "district": "Раменский",
    "status": "Дом сдан",
-   "url": "https://etalongroup.ru/msk/object/desyatka/"
+   "url": "https://etalongroup.ru/msk/object/desyatka/",
+   "image": "https://etalongroup.ru/upload/kelnik.adminpage/9be/8ylc1eo3jiqsw92hlahc7oci1d5gvfhw.jpeg"
   },
   {
    "city": "Москва",
    "name": "Изумрудные Холмы",
    "district": "Тушинская",
    "status": "Дом сдан",
-   "url": "https://etalongroup.ru/msk/object/izumrudnye-kholmy/"
+   "url": "https://etalongroup.ru/msk/object/izumrudnye-kholmy/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/0cd/zonhs29qb3zgjdmc03ass86zhyao9rpe.jpg"
   },
   {
    "city": "Москва",
    "name": "Мариин Парк",
    "district": "Марьина Роща",
    "status": "IV кв. 2027",
-   "url": "https://etalongroup.ru/msk/object/mariinn-park/"
+   "url": "https://etalongroup.ru/msk/object/mariinn-park/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/369/3edm43xfdil6vu00f5hlp11uo6q1r19b/mariinn_prev1.jpg"
   },
   {
    "city": "Москва",
    "name": "Нагатино Ай-Лэнд",
    "district": "Технопарк",
    "status": "II кв. 2027",
-   "url": "https://etalongroup.ru/msk/object/nagatino-i-land/"
+   "url": "https://etalongroup.ru/msk/object/nagatino-i-land/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/338/7jk0q1ibry6u2yunm022ilq9dyzr46oc.jpg"
   },
   {
    "city": "Москва",
    "name": "Соколин Парк",
    "district": "Бульвар Рокоссовского",
    "status": "II кв. 2028",
-   "url": "https://etalongroup.ru/msk/object/sokolinn-park/"
+   "url": "https://etalongroup.ru/msk/object/sokolinn-park/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/8a9/orvak30dgl06r8srpczscf3vhzqonx63/sokolinn_prev.jpg"
   },
   {
    "city": "Москва",
    "name": "Шагал",
    "district": "Технопарк",
    "status": "IV кв. 2026",
-   "url": "https://etalongroup.ru/msk/object/shagal/"
+   "url": "https://etalongroup.ru/msk/object/shagal/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/e4d/qq6vcfzqmvd3hi4g9oqlnsv85adnvq2o.jpg"
   },
   {
    "city": "Санкт-Петербург",
    "name": "АВЕНЮ-АПАРТ ПУЛКОВО",
    "district": "Московский",
    "status": "Дом сдан",
-   "url": "https://etalongroup.ru/spb/object/avenue-apart-pulkovo/"
+   "url": "https://etalongroup.ru/spb/object/avenue-apart-pulkovo/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/b17/ewjk0wgnu3tta3h9jchv14jon4519y86/avenyu_glavnaya_prevyu.jpg"
   },
   {
    "city": "Санкт-Петербург",
    "name": "Клюква.Парк",
    "district": "Купчино",
    "status": "IV кв. 2028",
-   "url": "https://etalongroup.ru/spb/object/klyukva_park/"
+   "url": "https://etalongroup.ru/spb/object/klyukva_park/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/0f5/5dvtbntwtcgfsd3554b4f5taw7ac2u0j/Klyukva-Park-370_370.webp"
   },
   {
    "city": "Санкт-Петербург",
    "name": "Монография",
    "district": "Купчино",
    "status": "Дом сдан",
-   "url": "https://etalongroup.ru/spb/object/monografiya/"
+   "url": "https://etalongroup.ru/spb/object/monografiya/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/259/i0dxyq9xi1s8fup0ugnjrwaiz2u85uxl/Monografiya-370_370.webp"
   },
   {
    "city": "Санкт-Петербург",
    "name": "Пулковский дом",
    "district": "Пушкинский",
    "status": "Дом сдан",
-   "url": "https://etalongroup.ru/spb/object/pulkovskiy-dom/"
+   "url": "https://etalongroup.ru/spb/object/pulkovskiy-dom/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/3ec/88eh7ami701xuf9lsuqi7nbj6r136bu1.jpg"
   },
   {
    "city": "Санкт-Петербург",
    "name": "Ягодное Река Парк",
    "district": "Всеволожский",
    "status": "IV кв. 2028",
-   "url": "https://etalongroup.ru/spb/object/yagodnoe-reka-park/"
+   "url": "https://etalongroup.ru/spb/object/yagodnoe-reka-park/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/63d/a4w5u56jb8ot4r3jq1e0wm3415xbj9fi/YAgodnoe-Reka-Park-370_370.webp"
   },
   {
    "city": "Екатеринбург",
    "name": "Балтым-Парк",
    "district": "село Балтым",
    "status": "II кв. 2028",
-   "url": "https://etalongroup.ru/ekb/object/baltym-park/"
+   "url": "https://etalongroup.ru/ekb/object/baltym-park/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/957/fnm2wqgpb7u7yed85rhz668g83qnl732.jpg"
   },
   {
    "city": "Екатеринбург",
    "name": "Раута",
    "district": "Железнодорожный",
    "status": "IV кв. 2027",
-   "url": "https://etalongroup.ru/ekb/object/rauta/"
+   "url": "https://etalongroup.ru/ekb/object/rauta/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/133/lnuq096c0pnsn87ez0jh00a5ibeostc6/rauta_prev.webp"
   },
   {
    "city": "Екатеринбург",
    "name": "Солнечный",
    "district": "Солнечный",
    "status": "IV кв. 2026",
-   "url": "https://etalongroup.ru/ekb/object/solnechnyy/"
+   "url": "https://etalongroup.ru/ekb/object/solnechnyy/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/47b/iaz6w2n3sveqh55uk6i6np0ikkou5q12/solnechnyy_prev.webp"
   },
   {
    "city": "Казань",
    "name": "Счастье в Казани",
    "district": "Козья Слобода",
    "status": "III кв. 2028",
-   "url": "https://etalongroup.ru/kzn/object/schaste-v-kazani/"
+   "url": "https://etalongroup.ru/kzn/object/schaste-v-kazani/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/f4c/s29dxxqvo41qi72v95e4ymwo4hz76fi7.jpg"
   },
   {
    "city": "Новосибирск",
    "name": "Счастье в Кольцово",
    "district": "Рабочий посёлок Кольцово",
    "status": "III кв. 2026",
-   "url": "https://etalongroup.ru/nsk/object/schaste-v-koltsovo/"
+   "url": "https://etalongroup.ru/nsk/object/schaste-v-koltsovo/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/97b/cdq2dij5uraqf06av42ndwgxyapbzh4c/koltsovo_prev.jpg"
   },
   {
    "city": "Омск",
    "name": "Зеленая Река",
    "district": "КАО",
    "status": "III кв. 2026",
-   "url": "https://etalongroup.ru/omsk/object/zelenaya-reka/"
+   "url": "https://etalongroup.ru/omsk/object/zelenaya-reka/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/5c7/76dr7momurwy9op1b30ktqb8096im7uw/zel_reka_prev.jpg"
   },
   {
    "city": "Тюмень",
    "name": "City Life",
    "district": "Центральный округ",
    "status": "Дом сдан",
-   "url": "https://etalongroup.ru/tmn/object/city-life/"
+   "url": "https://etalongroup.ru/tmn/object/city-life/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/4dc/iz899fzhaxhpi4c197gfl9181hiih13i/sitilayf_prev.webp"
   },
   {
    "city": "Тюмень",
    "name": "City Zen",
    "district": "Центральный округ",
    "status": "Дом сдан",
-   "url": "https://etalongroup.ru/tmn/object/city-zen/"
+   "url": "https://etalongroup.ru/tmn/object/city-zen/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/7a5/fjsfufoqil87ez70bk6e3kp6qe2r7f0e/sitizen_prev.webp"
   },
   {
    "city": "Тюмень",
    "name": "Жуков",
    "district": "Калининский округ",
    "status": "Дом сдан",
-   "url": "https://etalongroup.ru/tmn/object/zhukov/"
+   "url": "https://etalongroup.ru/tmn/object/zhukov/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/800/sr57t86f4u2jpne71iz9kk5ixvbonzaz.jpeg"
   },
   {
    "city": "Тюмень",
    "name": "Счастье в Тюмени",
    "district": "Центральный округ",
    "status": "Дом сдан",
-   "url": "https://etalongroup.ru/tmn/object/zhk-schaste-v-tyumeni/"
+   "url": "https://etalongroup.ru/tmn/object/zhk-schaste-v-tyumeni/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/62d/28vjtxbaj9k5z4iisd9f90w3r9aij9h2/schaste_v_tyumeni_prev.webp"
   },
   {
    "city": "Тюмень",
    "name": "Финский Залив",
    "district": "Ленинский округ",
    "status": "Дом сдан",
-   "url": "https://etalongroup.ru/tmn/object/finskiy-zaliv/"
+   "url": "https://etalongroup.ru/tmn/object/finskiy-zaliv/",
+   "image": "https://etalongroup.ru/upload/kelnik.estate/605/w6dxan1efosbw82hpi2udzpe5u97n1l2/finzaliv_prev.webp"
   }
  ]
 }
