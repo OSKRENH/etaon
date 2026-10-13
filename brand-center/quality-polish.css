@@ -618,7 +618,7 @@ html body .map-section{
 html body .map-section::after{
   /* Белая вуаль на верхней половине: гаснет к верхней границе полосы
      регионов (с запасом на параллакс), так что синие регионы чистые. */
-  background:linear-gradient(180deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.7) 45%,rgba(255,255,255,0) calc(100% - 518 * var(--map-s) - 80px))!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.3) 45%,rgba(255,255,255,0) calc(100% - 518 * var(--map-s) - 80px))!important;
 }
 html body .map-section .map-background{
   display:block!important;
