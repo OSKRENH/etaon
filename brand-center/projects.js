@@ -26,6 +26,13 @@
     highlight(city);
     const target = cards.find((card) => card.dataset.city === city);
     if (target) grid.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+    // Мигнуть карточками выбранного города, чтобы было видно, что к нему относится
+    cards.forEach((card) => {
+      card.classList.remove('is-flash');
+      if (card.dataset.city !== city) return;
+      void card.offsetWidth;
+      card.classList.add('is-flash');
+    });
   }
 
   // Стрелки для горизонтальной прокрутки ряда
@@ -46,6 +53,7 @@
   next.addEventListener('click', () => grid.scrollBy({ left: step(), behavior: 'smooth' }));
   ['wheel', 'touchstart', 'pointerdown'].forEach((type) => grid.addEventListener(type, () => { locked = false; }, { passive: true }));
   nav.addEventListener('click', () => { locked = false; }, true);
+  cards.forEach((card) => card.addEventListener('animationend', () => card.classList.remove('is-flash')));
   grid.addEventListener('scroll', updateNav, { passive: true });
   window.addEventListener('resize', updateNav);
   updateNav();
