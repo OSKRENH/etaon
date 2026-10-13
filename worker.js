@@ -1,5 +1,4 @@
 const TRACKED_DOWNLOADS = new Set([
-  "/downloads/Etalon_Brand_Guide_2025.pdf",
   "/downloads/Etalon_Logos_All_Formats.zip",
   "/downloads/Etalon_Symbol_All_Formats.zip",
   "/downloads/Etalon_Map_All_Formats.zip",

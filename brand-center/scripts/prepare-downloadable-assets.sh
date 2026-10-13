@@ -22,13 +22,6 @@ cp brand-center/assets/regions-map.svg brand-center/assets/regions-map-hero.svg
 chmod +x brand-center/scripts/build-download-archives.sh
 brand-center/scripts/build-download-archives.sh brand-center
 
-# Generate the guide entirely from local brand-center content and assets.
-GUIDE_PATH="brand-center/downloads/Etalon_Brand_Guide_2025.pdf"
-rm -f "$GUIDE_PATH"
-python3 brand-center/scripts/build-brand-guide.py
-test -s "$GUIDE_PATH"
-pdfinfo "$GUIDE_PATH" | grep -Eq '^Pages:[[:space:]]+6$'
-
 test -s brand-center/downloads/Gilroy.zip
 test -s brand-center/downloads/Etalon_Logos_All_Formats.zip
 test -s brand-center/downloads/Etalon_Symbol_All_Formats.zip
@@ -40,7 +33,7 @@ unzip -t brand-center/downloads/Etalon_Symbol_All_Formats.zip >/dev/null
 unzip -t brand-center/downloads/Etalon_Map_All_Formats.zip >/dev/null
 unzip -t brand-center/downloads/Etalon_Colors_All_Formats.zip >/dev/null
 
-# Общий архив собирается последним: в него входят PDF-руководство и все остальные архивы.
+# Общий архив собирается последним: в него входят все остальные архивы.
 chmod +x brand-center/scripts/build-brand-kit.sh
 brand-center/scripts/build-brand-kit.sh brand-center
 test -s brand-center/downloads/Etalon_Brand_Kit.zip

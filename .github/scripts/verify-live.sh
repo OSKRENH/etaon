@@ -53,16 +53,8 @@ fetch_matching_file() {
 
 fetch_with_retry "$SITE_URL/" "$TMP_DIR/index.html"
 grep -q '<html lang="ru">' "$TMP_DIR/index.html"
-grep -q './downloads/Etalon_Brand_Guide_2025.pdf' "$TMP_DIR/index.html"
 grep -q './quality-polish.css' "$TMP_DIR/index.html"
 ! grep -q 'at.adobe.com' "$TMP_DIR/index.html"
-
-fetch_matching_file \
-  "brand-center/downloads/Etalon_Brand_Guide_2025.pdf" \
-  "$SITE_URL/downloads/Etalon_Brand_Guide_2025.pdf" \
-  "$TMP_DIR/Etalon_Brand_Guide_2025.pdf"
-grep -q '^%PDF-' <(head -c 8 "$TMP_DIR/Etalon_Brand_Guide_2025.pdf")
-pdfinfo "$TMP_DIR/Etalon_Brand_Guide_2025.pdf" | grep -Eq '^Pages:[[:space:]]+6$'
 
 for archive in \
   Etalon_Logos_All_Formats.zip \

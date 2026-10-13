@@ -186,7 +186,6 @@ def main() -> int:
             warnings.append(f"Есть TODO/FIXME: {path.relative_to(ROOT)}")
 
     required_downloads = [
-        "Etalon_Brand_Guide_2025.pdf",
         "Etalon_Logos_All_Formats.zip",
         "Etalon_Symbol_All_Formats.zip",
         "Etalon_Map_All_Formats.zip",
