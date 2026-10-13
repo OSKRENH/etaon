@@ -616,7 +616,10 @@ html body .map-section{
   padding-bottom:calc(var(--map-h) * .66 + 28px)!important;
 }
 html body .map-section::after{
-  background:linear-gradient(180deg,rgba(255,255,255,1) 0%,rgba(255,255,255,.9) 40%,rgba(255,255,255,0) calc(100% - var(--map-h) * .72))!important;
+  /* Стопы идут строго по возрастанию: верх секции полностью белый,
+     затем плавно открывается карта (раньше стоп 40% стоял ниже конца
+     градиента и давал жёсткую горизонтальную кромку). */
+  background:linear-gradient(180deg,#fff calc(100% - var(--map-h) * .9),rgba(255,255,255,0) calc(100% - var(--map-h) * .62))!important;
 }
 html body .map-section .map-background{
   display:block!important;
