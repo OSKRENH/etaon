@@ -3,6 +3,8 @@ const TRACKED_DOWNLOADS = new Set([
   "/downloads/Etalon_Logos_All_Formats.zip",
   "/downloads/Etalon_Symbol_All_Formats.zip",
   "/downloads/Etalon_Map_All_Formats.zip",
+  "/downloads/Etalon_Colors_All_Formats.zip",
+  "/downloads/Etalon_Brand_Kit.zip",
   "/downloads/Gilroy.zip"
 ]);
 

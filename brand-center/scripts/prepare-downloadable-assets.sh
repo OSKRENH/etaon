@@ -33,10 +33,17 @@ test -s brand-center/downloads/Gilroy.zip
 test -s brand-center/downloads/Etalon_Logos_All_Formats.zip
 test -s brand-center/downloads/Etalon_Symbol_All_Formats.zip
 test -s brand-center/downloads/Etalon_Map_All_Formats.zip
+test -s brand-center/downloads/Etalon_Colors_All_Formats.zip
 
 unzip -t brand-center/downloads/Etalon_Logos_All_Formats.zip >/dev/null
 unzip -t brand-center/downloads/Etalon_Symbol_All_Formats.zip >/dev/null
 unzip -t brand-center/downloads/Etalon_Map_All_Formats.zip >/dev/null
+unzip -t brand-center/downloads/Etalon_Colors_All_Formats.zip >/dev/null
+
+# Общий архив собирается последним: в него входят PDF-руководство и все остальные архивы.
+chmod +x brand-center/scripts/build-brand-kit.sh
+brand-center/scripts/build-brand-kit.sh brand-center
+test -s brand-center/downloads/Etalon_Brand_Kit.zip
 
 python3 brand-center/scripts/build-download-manifest.py
 test -s brand-center/downloads/downloads-manifest.json

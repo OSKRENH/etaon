@@ -190,6 +190,8 @@ def main() -> int:
         "Etalon_Logos_All_Formats.zip",
         "Etalon_Symbol_All_Formats.zip",
         "Etalon_Map_All_Formats.zip",
+        "Etalon_Colors_All_Formats.zip",
+        "Etalon_Brand_Kit.zip",
         "Gilroy.zip",
     ]
     for filename in required_downloads:

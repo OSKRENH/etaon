@@ -7,9 +7,10 @@ DOWNLOADS_DIR="$ROOT/downloads"
 LOGOS_BUILD="/tmp/Etalon_Logos_All_Formats"
 SYMBOL_BUILD="/tmp/Etalon_Symbol_All_Formats"
 MAP_BUILD="/tmp/Etalon_Map_All_Formats"
+COLORS_BUILD="/tmp/Etalon_Colors_All_Formats"
 
-rm -rf "$LOGOS_BUILD" "$SYMBOL_BUILD" "$MAP_BUILD"
-mkdir -p "$DOWNLOADS_DIR" "$LOGOS_BUILD" "$SYMBOL_BUILD" "$MAP_BUILD"
+rm -rf "$LOGOS_BUILD" "$SYMBOL_BUILD" "$MAP_BUILD" "$COLORS_BUILD"
+mkdir -p "$DOWNLOADS_DIR" "$LOGOS_BUILD" "$SYMBOL_BUILD" "$MAP_BUILD" "$COLORS_BUILD"
 
 export_asset() {
   local input="$1"
@@ -113,23 +114,43 @@ cat > "$MAP_BUILD/README.txt" <<'EOF'
 Форматы: SVG, прозрачный PNG, EPS и PDF.
 EOF
 
+# Палитра: карточки цветов как на сайте, лист палитры, образцы ASE, CSS и JSON.
+# Gilroy ставится в систему, чтобы Inkscape нарисовал текст карточек тем же шрифтом.
+mkdir -p "$HOME/.local/share/fonts"
+cp "$ROOT"/fonts/*.ttf "$HOME/.local/share/fonts/"
+fc-cache -f >/dev/null 2>&1 || true
+python3 "$ROOT/scripts/build-color-assets.py" "$COLORS_BUILD"
+for svg in "$COLORS_BUILD"/Cards/*.svg "$COLORS_BUILD"/Etalon_Palette.svg; do
+  width=1800
+  [[ "$svg" == */Etalon_Palette.svg ]] && width=3600
+  inkscape "$svg" --export-type=png --export-filename="${svg%.svg}.png" \
+    --export-width="$width" >/dev/null 2>&1
+  inkscape "$svg" --export-type=pdf --export-filename="${svg%.svg}.pdf" >/dev/null 2>&1
+  test -s "${svg%.svg}.png"
+  test -s "${svg%.svg}.pdf"
+done
+
 rm -f \
   "$DOWNLOADS_DIR/Etalon_Logos_All_Colors.zip" \
   "$DOWNLOADS_DIR/Etalon_Logos_All_Formats.zip" \
   "$DOWNLOADS_DIR/Etalon_Symbol_All_Formats.zip" \
-  "$DOWNLOADS_DIR/Etalon_Map_All_Formats.zip"
+  "$DOWNLOADS_DIR/Etalon_Map_All_Formats.zip" \
+  "$DOWNLOADS_DIR/Etalon_Colors_All_Formats.zip"
 
 (
   cd /tmp
   zip -qr "$GITHUB_WORKSPACE/$DOWNLOADS_DIR/Etalon_Logos_All_Formats.zip" "$(basename "$LOGOS_BUILD")"
   zip -qr "$GITHUB_WORKSPACE/$DOWNLOADS_DIR/Etalon_Symbol_All_Formats.zip" "$(basename "$SYMBOL_BUILD")"
   zip -qr "$GITHUB_WORKSPACE/$DOWNLOADS_DIR/Etalon_Map_All_Formats.zip" "$(basename "$MAP_BUILD")"
+  zip -qr "$GITHUB_WORKSPACE/$DOWNLOADS_DIR/Etalon_Colors_All_Formats.zip" "$(basename "$COLORS_BUILD")"
 )
 
 unzip -t "$DOWNLOADS_DIR/Etalon_Logos_All_Formats.zip" >/dev/null
 unzip -t "$DOWNLOADS_DIR/Etalon_Symbol_All_Formats.zip" >/dev/null
 unzip -t "$DOWNLOADS_DIR/Etalon_Map_All_Formats.zip" >/dev/null
+unzip -t "$DOWNLOADS_DIR/Etalon_Colors_All_Formats.zip" >/dev/null
 
 test -s "$DOWNLOADS_DIR/Etalon_Logos_All_Formats.zip"
 test -s "$DOWNLOADS_DIR/Etalon_Symbol_All_Formats.zip"
 test -s "$DOWNLOADS_DIR/Etalon_Map_All_Formats.zip"
+test -s "$DOWNLOADS_DIR/Etalon_Colors_All_Formats.zip"

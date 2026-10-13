@@ -608,7 +608,8 @@ html body .downloads h2{font-size:var(--fs-h2)!important}
    Полная карта для скачивания лежит отдельно: assets/regions-map-full.svg. */
 html body .map-section{
   --map-w:calc(100vw - 240px);
-  --map-h:calc(var(--map-w) / 1.6);
+  --map-k:.85;
+  --map-h:calc(var(--map-w) * var(--map-k) / 1.6);
   background:#fff!important;
   display:block!important;
   min-height:0!important;
@@ -622,11 +623,11 @@ html body .map-section::after{
 html body .map-section .map-background{
   display:block!important;
   position:absolute!important;
-  left:0!important;
-  right:auto!important;
+  left:auto!important;
+  right:0!important;
   top:auto!important;
   bottom:0!important;
-  width:100%!important;
+  width:calc(100% * var(--map-k))!important;
   height:calc(var(--map-h) + 72px)!important;
   max-width:none!important;
   object-fit:contain;
@@ -637,17 +638,13 @@ html body .map-section .map-background{
 }
 html body .map-overlay{width:min(560px,100%)!important}
 @media(max-width:900px){
-  html body .map-section{--map-w:100vw;padding-top:58px!important}
+  html body .map-section{--map-w:100vw;--map-k:1;padding-top:58px!important}
   html body .map-overlay{width:100%!important}
 }
 @media(min-width:1280px){
   html body .map-section{
-    min-height:calc(var(--map-h) + 72px)!important;
+    --map-k:.7;
+    min-height:calc(var(--map-h) + 72px + 110px)!important;
     padding-bottom:0!important;
-  }
-  html body .map-section .map-background{
-    top:0!important;
-    bottom:auto!important;
-    height:100%!important;
   }
 }

@@ -7,6 +7,8 @@
     'Etalon_Logos_All_Formats.zip': 'ZIP · SVG, PNG, EPS, PDF · 377 КБ',
     'Etalon_Symbol_All_Formats.zip': 'ZIP · SVG, PNG, EPS, PDF · 23 КБ',
     'Etalon_Map_All_Formats.zip': 'ZIP · SVG, PNG, EPS, PDF · 205 КБ',
+    'Etalon_Colors_All_Formats.zip': 'ZIP · SVG, PNG, PDF, ASE, CSS',
+    'Etalon_Brand_Kit.zip': 'ZIP · всё сразу',
     'Gilroy.zip': 'ZIP · TTF · 71 КБ',
   };
 
