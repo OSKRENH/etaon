@@ -41,20 +41,16 @@ jobs:
           test -s brand-center/fonts/Gilroy-Regular.ttf
           test -s brand-center/fonts/Gilroy-Medium.ttf
 
-      - name: Install conversion tools
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq poppler-utils zip inkscape python3-pip
-          python3 -m pip install --quiet --break-system-packages weasyprint
-
-      - name: Prepare downloadable assets
+      # Файлы скачивания и обрезанные логотипы лежат в репозитории готовыми
+      # и не пересобираются при каждом деплое. После правки исходников их
+      # пересобирают локально: brand-center/scripts/prepare-downloadable-assets.sh
+      - name: Check committed downloadable assets
         id: prepare
         continue-on-error: true
         shell: bash
         run: |
           set -o pipefail
-          chmod +x brand-center/scripts/*.sh
-          brand-center/scripts/prepare-downloadable-assets.sh 2>&1 | tee /tmp/prepare.log
+          python3 brand-center/scripts/check-downloads.py 2>&1 | tee /tmp/prepare.log
 
       - name: Audit code and local links
         if: steps.prepare.outcome == 'success'

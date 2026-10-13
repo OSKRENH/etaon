@@ -3,6 +3,9 @@
 # Запускать после сборки отдельных архивов.
 set -euo pipefail
 
+# Корень репозитория: в CI это GITHUB_WORKSPACE, локально текущая папка.
+WORKSPACE="${GITHUB_WORKSPACE:-$PWD}"
+
 ROOT="${1:-brand-center}"
 DOWNLOADS_DIR="$ROOT/downloads"
 KIT_DIR="/tmp/Etalon_Brand_Kit"
@@ -47,7 +50,7 @@ TXT
 
 (
   cd /tmp
-  zip -qr "$GITHUB_WORKSPACE/$KIT_ZIP" "$(basename "$KIT_DIR")"
+  zip -qr "$WORKSPACE/$KIT_ZIP" "$(basename "$KIT_DIR")"
 )
 unzip -t "$KIT_ZIP" >/dev/null
 test -s "$KIT_ZIP"

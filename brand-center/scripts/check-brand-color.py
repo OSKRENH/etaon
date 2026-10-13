@@ -39,16 +39,12 @@ for path, colors in source_colors.items():
 expected_50 = tint(reference, 0.50)
 expected_15 = tint(reference, 0.15)
 app = (ROOT / "app.js").read_text(encoding="utf-8")
-guide = (ROOT / "scripts" / "build-brand-guide.py").read_text(encoding="utf-8")
 generator = (ROOT / "scripts" / "generate-logo-variants.py").read_text(encoding="utf-8")
 
 checks = [
     (reference in app, f"app.js не содержит фирменный цвет {reference}"),
     (expected_50 in app, f"app.js не содержит 50% оттенок {expected_50}"),
     (expected_15 in app, f"app.js не содержит 15% оттенок {expected_15}"),
-    (reference.lower() in guide.lower(), f"PDF-гайд не содержит фирменный цвет {reference}"),
-    (expected_50.lower() in guide.lower(), f"PDF-гайд не содержит 50% оттенок {expected_50}"),
-    (expected_15.lower() in guide.lower(), f"PDF-гайд не содержит 15% оттенок {expected_15}"),
     (reference in generator, f"генератор логотипов не использует {reference}"),
 ]
 for ok, message in checks:

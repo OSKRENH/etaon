@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Корень репозитория: в CI это GITHUB_WORKSPACE, локально текущая папка.
+WORKSPACE="${GITHUB_WORKSPACE:-$PWD}"
+
 ROOT="${1:-brand-center}"
 LOGOS_DIR="$ROOT/assets/logos"
 DOWNLOADS_DIR="$ROOT/downloads"
@@ -139,10 +142,10 @@ rm -f \
 
 (
   cd /tmp
-  zip -qr "$GITHUB_WORKSPACE/$DOWNLOADS_DIR/Etalon_Logos_All_Formats.zip" "$(basename "$LOGOS_BUILD")"
-  zip -qr "$GITHUB_WORKSPACE/$DOWNLOADS_DIR/Etalon_Symbol_All_Formats.zip" "$(basename "$SYMBOL_BUILD")"
-  zip -qr "$GITHUB_WORKSPACE/$DOWNLOADS_DIR/Etalon_Map_All_Formats.zip" "$(basename "$MAP_BUILD")"
-  zip -qr "$GITHUB_WORKSPACE/$DOWNLOADS_DIR/Etalon_Colors_All_Formats.zip" "$(basename "$COLORS_BUILD")"
+  zip -qr "$WORKSPACE/$DOWNLOADS_DIR/Etalon_Logos_All_Formats.zip" "$(basename "$LOGOS_BUILD")"
+  zip -qr "$WORKSPACE/$DOWNLOADS_DIR/Etalon_Symbol_All_Formats.zip" "$(basename "$SYMBOL_BUILD")"
+  zip -qr "$WORKSPACE/$DOWNLOADS_DIR/Etalon_Map_All_Formats.zip" "$(basename "$MAP_BUILD")"
+  zip -qr "$WORKSPACE/$DOWNLOADS_DIR/Etalon_Colors_All_Formats.zip" "$(basename "$COLORS_BUILD")"
 )
 
 unzip -t "$DOWNLOADS_DIR/Etalon_Logos_All_Formats.zip" >/dev/null
