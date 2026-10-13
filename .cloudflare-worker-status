@@ -4,8 +4,8 @@ audit=success
 deploy=success
 verify=success
 url=https://etaon.ivankamaldinov.workers.dev
-commit=e47b099331ffceae8924750f045c0e133e391790
-run=38393324219
+commit=fda6099eb1d4eb8706629910a6497bc7e0839a5f
+run=38394919212
 --- prepare output ---
 Фирменный цвет совпадает во всех мастер-файлах: #223E90
 Производные оттенки: 50% #919FC8, 15% #DEE2EE
@@ -17,7 +17,7 @@ Etalon_Map_All_Formats.zip: 2400135 байт, совпадает с манифе
 Gilroy.zip: 72418 байт, совпадает с манифестом
 --- audit output ---
 Проверено ссылок и ресурсов: 62
-Проверено якорей: 23
+Проверено якорей: 20
 Проверено CSS-файлов: 10
 Статический аудит пройден без ошибок.
 --- wrangler output ---
@@ -27,20 +27,16 @@ Gilroy.zip: 72418 байт, совпадает с манифестом
 🌀 Building list of assets...
 ✨ Read 53 files from the assets directory /home/runner/work/etaon/etaon/brand-center
 🌀 Starting asset upload...
-🌀 Found 1 new or modified static asset to upload. Proceeding with upload...
-+ /index.html
-Uploaded 1 of 1 asset
-✨ Success! Uploaded 1 file (48 already uploaded) (0.74 sec)
-
+No updated asset files to upload. Proceeding with deployment...
 Total Upload: 4.19 KiB / gzip: 1.49 KiB
 Your Worker has access to the following bindings:
 Binding            Resource      
 env.ASSETS         Assets        
 
-Uploaded etaon (3.57 sec)
-Deployed etaon triggers (0.42 sec)
+Uploaded etaon (4.01 sec)
+Deployed etaon triggers (0.67 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: 140369b1-f6c5-4df2-b8c0-59fd8b88085c
+Current Version ID: e5287524-5a4e-4191-abc5-cfeb5abfa84f
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
 --- live verification output ---
