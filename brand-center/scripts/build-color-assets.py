@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-INK = "#1E242E"
+INK = "#262A31"
 WHITE = "#FFFFFF"
 
 SLUGS = {
