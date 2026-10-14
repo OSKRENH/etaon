@@ -4,15 +4,15 @@ audit=success
 deploy=success
 verify=success
 url=https://etaon.ivankamaldinov.workers.dev
-commit=8072eb50b42d19cf55fd304ddf14972b50172e59
-run=38404479525
+commit=0845fc218cb797292430c9ae7dea7e84a3cb02d0
+run=38546540688
 --- prepare output ---
 Фирменный цвет совпадает во всех мастер-файлах: #223E90
 Производные оттенки: 50% #919FC8, 15% #DEE2EE
-Etalon_Brand_Kit.zip: 3710838 байт, совпадает с манифестом
+Etalon_Brand_Kit.zip: 3718098 байт, совпадает с манифестом
 Etalon_Logos_All_Formats.zip: 702313 байт, совпадает с манифестом
 Etalon_Symbol_All_Formats.zip: 36807 байт, совпадает с манифестом
-Etalon_Colors_All_Formats.zip: 497728 байт, совпадает с манифестом
+Etalon_Colors_All_Formats.zip: 504988 байт, совпадает с манифестом
 Etalon_Map_All_Formats.zip: 2400135 байт, совпадает с манифестом
 Gilroy.zip: 72418 байт, совпадает с манифестом
 --- audit output ---
@@ -22,25 +22,21 @@ Gilroy.zip: 72418 байт, совпадает с манифестом
 Статический аудит пройден без ошибок.
 --- wrangler output ---
 
- ⛅️ wrangler 4.150.0
+ ⛅️ wrangler 4.151.0
 ────────────────────
 🌀 Building list of assets...
 ✨ Read 56 files from the assets directory /home/runner/work/etaon/etaon/brand-center
 🌀 Starting asset upload...
-🌀 Found 1 new or modified static asset to upload. Proceeding with upload...
-+ /projects.css
-Uploaded 1 of 1 asset
-✨ Success! Uploaded 1 file (51 already uploaded) (0.62 sec)
-
+No updated asset files to upload. Proceeding with deployment...
 Total Upload: 4.19 KiB / gzip: 1.49 KiB
 Your Worker has access to the following bindings:
 Binding            Resource      
 env.ASSETS         Assets        
 
-Uploaded etaon (3.78 sec)
-Deployed etaon triggers (0.80 sec)
+Uploaded etaon (3.79 sec)
+Deployed etaon triggers (0.46 sec)
   https://etaon.ivankamaldinov.workers.dev
-Current Version ID: 891b65dd-42d7-43e2-a901-7a8ef4087537
+Current Version ID: 21792db8-2949-4ce1-a855-dd3dc5e61191
 
 Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
 --- live verification output ---
@@ -50,9 +46,13 @@ Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Map_All_Formats.zip
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Colors_All_Formats.zip
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Etalon_Brand_Kit.zip
+Попытка 1: CDN пока отдает предыдущую версию, повтор через 3 секунды...
+Попытка 2: CDN пока отдает предыдущую версию, повтор через 3 секунды...
+Попытка 3: CDN пока отдает предыдущую версию, повтор через 3 секунды...
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/Gilroy.zip
 Проверяю браузерную загрузку с Range: Etalon_Logos_All_Formats.zip
 Проверяю браузерную загрузку с Range: Etalon_Brand_Kit.zip
+Range-проверка Etalon_Brand_Kit.zip не прошла (попытка 1/10), повтор через 3 с
 Проверяю браузерную загрузку с Range: Gilroy.zip
 Проверяю: https://etaon.ivankamaldinov.workers.dev/downloads/downloads-manifest.json
 Живой сайт, размеры и все файлы скачивания проверены и совпадают со собранными версиями.
